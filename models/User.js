@@ -23,9 +23,17 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  gender: {
+    type: String,
+    // required: true
+  },
   date: {
     type: Date,
     default: Date.now
+  },
+  profileimage: {
+    type: String,
+    default: "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
   },
   dob: {
     type: Date,

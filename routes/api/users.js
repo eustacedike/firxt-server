@@ -35,7 +35,8 @@ router.post("/register", (req, res) => {
           lastname: req.body.lastname,
           email: req.body.Email,
           password: req.body.Psw,
-          link: req.body.link
+          link: req.body.link,
+          gender: req.body.gender
         });
   
   
@@ -110,6 +111,7 @@ router.post("/login", (req, res) => {
               userFirstName: user.firstname,
               userLastName: user.lastname,
               userEmail: user.email,
+              userDP: user.profileimage,
              
               userJoinDate: user.date,
               success: true,
@@ -138,6 +140,32 @@ router.get("/fetchusers", async (req, res) => {
 });
 
 
+
+router.post("/changedp", (req, res) => {
+
+  
+  User.findOne({email: req.body.email})
+  .then(question =>{
+    // console.log(question.question);
+
+    User.findOneAndUpdate({email: req.body.email},{profileimage: req.body.image},{new: true},
+    function(
+      err,
+      inventory
+    ) {
+      if (err) {
+        console.log("err", err);
+        res.status(500).send(err);
+      } else {
+        console.log("success");
+        res.send(inventory);
+      }
+    }
+    );
+  })
+
+
+});
 
 
   module.exports = router;
