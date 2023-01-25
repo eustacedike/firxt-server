@@ -1,0 +1,42 @@
+{
+    "categories": ["Automobiles", "Phones", "Movies", "Music", "Books", "Celebrity", "Sports", "Finance", "Crypto", "Tech", "Food"],
+    "tags": ["twitter", "lagos", "election", "workout", "ronaldo", "burnaboy", "japa", "drake", "sales", "newyear"],
+    "cats":{
+    "Automobiles":
+    {"id": 1, "name": "Automobiles", "desc":"Everything cars, motorbikes, vehicles, luxury cars"},
+    "Phones":
+    {"id": 2, "name": "Phones", "desc":"Discussions on latest mobile phone trends"},
+    "Movies":
+    {"id": 3, "name": "Movies", "desc":"Movie Freak or not? This topic is for you."},
+    "Music":
+    {"id": 4, "name": "Music", "desc":"Discover latest music and music stories"},
+    "Books":
+    {"id": 5, "name": "Books", "desc":"Book discussions, novels, etc."},
+    "Sports":
+    {"id": 6, "name": "Sports", "desc":"Soccer, Basketball, Tennis, Baseball stories; and lots more!!!"},
+    "Finance":
+    {"id": 7, "name": "Finance", "desc":"Money Talks"},
+    "Tech":
+    {"id": 8, "name": "Tech", "desc":"For Programmers and Tech Enthusiasts"},
+    "Food":
+    {"id": 9, "name": "Food", "desc":"Latest Recipes, because we all love food"},
+    "Crypto":
+    {"id": 10, "name": "Crypto", "desc":"Delve into the world of Crypto"},
+    "Celebrity":
+    {"id": 11, "name": "Celebrity", "desc":"Celebrity gists"},
+    "Fashion":
+    {"id": 12, "name": "Fashion", "desc":"Fashion trends, male, female, kids and lots more"},
+    "Pets":
+    {"id": 13, "name": "Pets", "desc":"Got pets? Love Pets? learn more..."},
+    "Forex":
+    {"id": 14, "name": "Forex", "desc":"Forex signals, bears and bulls"},
+    "Nature":
+    {"id": 15, "name": "Nature", "desc":"Mother Nature"},
+    "Romance":
+    {"id": 16, "name": "Romance", "desc":"Love, Romance and Relationships"},
+    "Health":
+    {"id": 17, "name": "Health", "desc":"Health and Fitness"},
+    "Kids":
+    {"id": 18, "name": "Kids", "desc":"Kids, Cartoons, etc."}
+}
+}

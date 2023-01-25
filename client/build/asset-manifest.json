@@ -1,0 +1,42 @@
+{
+  "files": {
+    "main.css": "/Firxt/static/css/main.b1b2df78.css",
+    "main.js": "/Firxt/static/js/main.5a23a889.js",
+    "static/js/787.21c3f140.chunk.js": "/Firxt/static/js/787.21c3f140.chunk.js",
+    "static/media/celeb.png": "/Firxt/static/media/celeb.b7ea4e06228f18d47476.png",
+    "static/media/money2.png": "/Firxt/static/media/money2.ff879b4af27a6960bf9c.png",
+    "static/media/movie.png": "/Firxt/static/media/movie.9bfab7be7cd9e7dbec22.png",
+    "static/media/bg15.png": "/Firxt/static/media/bg15.b11ae20c9347d59f4b5c.png",
+    "static/media/bg19.png": "/Firxt/static/media/bg19.0857c1db31461bb46f1d.png",
+    "static/media/headphones.png": "/Firxt/static/media/headphones.ceebbcc7956c0fea1984.png",
+    "static/media/messi.png": "/Firxt/static/media/messi.1635a34851d71f52d62d.png",
+    "static/media/fashion.png": "/Firxt/static/media/fashion.e2e714cadc92e6ead7c8.png",
+    "static/media/bg20.png": "/Firxt/static/media/bg20.e84e9cc461ad97209616.png",
+    "static/media/baby.png": "/Firxt/static/media/baby.6790d213bfd93ff72a24.png",
+    "static/media/bg17.png": "/Firxt/static/media/bg17.6790d213bfd93ff72a24.png",
+    "static/media/foodie.png": "/Firxt/static/media/foodie.4bda28af669ebc35d23e.png",
+    "static/media/nature.png": "/Firxt/static/media/nature.8df3e5679e19605b5f1d.png",
+    "static/media/bg22.png": "/Firxt/static/media/bg22.2051f6fde2c6d942ab6e.png",
+    "static/media/love.png": "/Firxt/static/media/love.2570b72933c5d43e29c1.png",
+    "static/media/btc.png": "/Firxt/static/media/btc.12f82bee6bd08cd33b09.png",
+    "static/media/books.png": "/Firxt/static/media/books.56cbf7a50ae685176802.png",
+    "static/media/dogs.png": "/Firxt/static/media/dogs.3dceada76b9c8cf247e7.png",
+    "static/media/ifone.png": "/Firxt/static/media/ifone.691e3087db4f800292b3.png",
+    "static/media/fitness.png": "/Firxt/static/media/fitness.dc6050f110178a260611.png",
+    "static/media/bg23.png": "/Firxt/static/media/bg23.1d5e061d01a622f7b850.png",
+    "static/media/giphy.gif": "/Firxt/static/media/giphy.496804276bb6914944bf.gif",
+    "static/media/tech.png": "/Firxt/static/media/tech.90422d5f4e748f339306.png",
+    "static/media/forex.png": "/Firxt/static/media/forex.892a40018ab51c46cd30.png",
+    "static/media/orange.png": "/Firxt/static/media/orange.4126d8fce1d9bc4dfa1a.png",
+    "static/media/bg18.png": "/Firxt/static/media/bg18.7fe45cfcee5117345941.png",
+    "static/media/salt.jfif": "/Firxt/static/media/salt.ae322e268ad17b78a489.jfif",
+    "index.html": "/Firxt/index.html",
+    "main.b1b2df78.css.map": "/Firxt/static/css/main.b1b2df78.css.map",
+    "main.5a23a889.js.map": "/Firxt/static/js/main.5a23a889.js.map",
+    "787.21c3f140.chunk.js.map": "/Firxt/static/js/787.21c3f140.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b1b2df78.css",
+    "static/js/main.5a23a889.js"
+  ]
+}

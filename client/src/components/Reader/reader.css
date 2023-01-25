@@ -1,0 +1,70 @@
+.Reader {
+    width: 95%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 4vw;
+}
+
+.Reader h1 {
+    color: var(--primary);
+    font-family: 'Ubuntu', sans-serif;
+   
+    font-size: var(--h1-font);
+    font-weight: 700;
+}
+
+.main-post {
+    margin: 40px 0;
+    background: rgb(255,255,255, 0.4);
+    /* font-size: larger; */
+    padding: 10px 8px;
+    border-radius: 4px;
+    line-height: clamp(28px, 3vw, 36px);
+}
+
+.main-post img {
+    width: 100%;
+}
+
+.Reader hr {
+    border: 1px solid grey;
+}
+
+.Reader input {
+    padding: 18px 8px;
+    width: 100%;
+    max-width: 480px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid var(--primary);
+    /* border-radius: 5px; */
+}
+
+.Reader form button {
+    padding: 10px 15px;
+    margin-top: 10px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+
+    font-weight: 700;
+    border-radius: 4px;
+    border: 1px solid var(--primary);
+    cursor: pointer;
+    background-color: var(--primary);
+}
+
+.Reader h3 {
+    color: var(--primary);
+   font-family: 'Ubuntu', sans-serif;
+   font-size: var(--h3-font);
+    font-weight: 700;
+}
+
+.reply {
+    max-width: 480px;
+    /* margin: 0 auto; */
+    background-color: white;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 5px;
+}

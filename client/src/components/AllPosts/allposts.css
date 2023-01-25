@@ -1,0 +1,32 @@
+
+.Allposts {
+    /* filter: invert(100); */
+
+}
+
+.Allposts .hero1 h1 {
+    width: auto;
+    color: white;
+}
+
+.Allposts .hero {
+    height: 180px;
+  background: url(../Home/assets/giphy.gif), var(--primary);
+
+    animation: none;
+}
+
+.Allposts .hero p {
+ color: rgb(255, 255, 255, 1);
+}
+
+.Allposts .hero1 {
+        background: none;
+        width: 100%;
+}
+
+.Allposts .posts {
+    padding: 20px;
+    max-width: 800px;
+    margin: 30px auto;
+}

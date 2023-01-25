@@ -1,0 +1,51 @@
+.Categx {
+}
+
+.Categx .hero {
+    height: 250px;
+    /* background: url(./assets/messi.png); */
+    /* background: url(../Images/topics/baby.png); */
+    background-position: bottom right !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    display: flex;
+    justify-content: center;
+    padding: 5vw;
+
+    animation:  none;
+    flex-direction: column;
+}
+
+.Categx .xplore {
+    position: absolute;
+    top: 318px;
+}
+
+.pUsers {
+    /* border: 1px solid var(--primary); */
+    border: none !important;
+    /* box-shadow: 1px 1px 5px 1px grey; */
+    /* padding: 0px; */
+    /* font-family: 'Righteous', cursive; */
+    border-radius: 120px !important;
+    /* width: 130px; */
+    height: 40px;
+    background-color: white;
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.Categx .xplore img {
+    height: 20px;
+    margin-right: 18px;
+    vertical-align: -4px;
+}
+
+@media (max-width: 700px) {
+
+
+    .Categx .Latest {
+        max-height: 90vh;
+        overflow-y: scroll;
+    }
+}
