@@ -178,7 +178,10 @@
 }
 
 .your-profile p {
-    margin-bottom: 13px;
+    margin-bottom: 20px;
+    background-color: rgb(0, 0, 0, 0.1);
+    border-bottom: 2px solid var(--primary);
+    padding: 10px;
 }
 
 .your-posts {
@@ -335,9 +338,9 @@
   
 
     .your-stats div {
-        width: 180px;
+        width: 45%;
         margin: 9px auto;
-        font-size: smaller;
+        font-size: xx-small;
         padding: 10px 0;
         border-radius: 8px;
     }

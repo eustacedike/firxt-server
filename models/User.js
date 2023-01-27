@@ -39,6 +39,18 @@ const UserSchema = new Schema({
     type: Date,
     // required: true
   },
+  country: {
+    type: String,
+    // required: true
+  },
+  specialty: {
+    type: String,
+    // required: true
+  },
+  about: {
+    type: String,
+    // required: true
+  },
   upvotesgiven: {
     type: Number,
   },

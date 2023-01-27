@@ -71,6 +71,7 @@ function Post() {
       title: postTitle,
       postbody: postBody,
       author: cookies.FirstName + " " + cookies.LastName,
+      authormail: cookies.Email,
       readtime: postRead,
       category: postCategory,
       link: postTitle.replace(/ +/g, '-').toLowerCase(),
@@ -88,7 +89,7 @@ function Post() {
 
 
 
-        setTimeout(() => { navigate(`/post/${thePost.link}`) }, 2500);
+        setTimeout(() => { navigate(`/post/${thePost.link}`) }, 500);
         setTimeout(() => { window.location.reload() }, 3000);
       })
       .catch(err => {

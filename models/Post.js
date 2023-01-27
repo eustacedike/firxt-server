@@ -15,6 +15,10 @@ const PostSchema = new Schema({
     type: String,
     required: true
   },
+  authormail: {
+    type: String,
+    required: true
+  },
   readtime: {
     type: Number,
     required: true

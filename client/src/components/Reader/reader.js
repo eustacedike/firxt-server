@@ -183,73 +183,54 @@ function Reader(props) {
 
                 {props.replies.map(eachReply => {
 
-let replyMonth = parseInt(eachReply.replytime.slice(5, 7));
-let replyTime2 = `${months[replyMonth - 1]} ${eachReply.replytime.slice(8, 10)}, ${eachReply.replytime.slice(0, 4)}`
+                    let replyMonth = parseInt(eachReply.replytime.slice(5, 7));
+                    let replyTime2 = `${months[replyMonth - 1]} ${eachReply.replytime.slice(8, 10)}, ${eachReply.replytime.slice(0, 4)}`
                     return (
                         <div className="reply">
                             <div className="post-details">
+                                <div className="the-reply">
+                                    <p>
+                                        {eachReply.reply}
+                                    </p>
+                                </div>
+                                <hr/>
                                 <div className="author">
-                                    <img src={thisPost.authordp} alt="eustace" />
-                                    <h4>{eachReply.replyauthor}</h4>
+                                    <div>
+                                        <img src={thisPost.authordp} alt="" />
+                                        <h4>{eachReply.replyauthor}</h4>
+                                    </div>
+                                    <h5><FaCalendarAlt /> {replyTime2}</h5>
+
                                 </div>
 
-                                <h5><FaCalendarAlt /> {replyTime2}</h5>
                             </div>
-                            <div className="the-reply">
-                                <p>
-                                    {eachReply.reply}
-                                </p>
-                            </div>
+
                         </div>
                     )
                 })}
 
 
-                <div className="reply">
+                {/* <div className="reply">
                     <div className="post-details">
+                        <div className="the-reply">
+                            <p>
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, ratione nisi!
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, ratione nisi!
+                            </p>
+                        </div>
+                        <hr/>
                         <div className="author">
-                            <img src={thisPost.authordp} alt="eustace" />
-                            <h4>{thisPost.author}</h4>
+                            <div>
+                                <img src={thisPost.authordp} alt="eustace" />
+                                <h4>{thisPost.author}</h4>
+                            </div>
+                            <h5><FaCalendarAlt /> {thisPost.date}</h5>
                         </div>
 
-                        <h5><FaCalendarAlt /> {thisPost.date}</h5>
-                    </div>
-                    <div className="the-reply">
-                        <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, ratione nisi!
-                        </p>
-                    </div>
-                </div>
-                <div className="reply">
-                    <div className="post-details">
-                        <div className="author">
-                            <img src={thisPost.authordp} alt="eustace" />
-                            <h4>{thisPost.author}</h4>
-                        </div>
 
-                        <h5><FaCalendarAlt /> {thisPost.date}</h5>
                     </div>
-                    <div className="the-reply">
-                        <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, ratione nisi!
-                        </p>
-                    </div>
-                </div>
-                <div className="reply">
-                    <div className="post-details">
-                        <div className="author">
-                            <img src={thisPost.authordp} alt="eustace" />
-                            <h4>{thisPost.author}</h4>
-                        </div>
 
-                        <h5><FaCalendarAlt /> {thisPost.date}</h5>
-                    </div>
-                    <div className="the-reply">
-                        <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, ratione nisi!
-                        </p>
-                    </div>
-                </div>
+                </div> */}
             </div>
 
 

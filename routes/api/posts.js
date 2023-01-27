@@ -14,6 +14,7 @@ router.post("/postblog", (req, res) => {
     title: req.body.title,
     postbody: req.body.postbody,
     author: req.body.author,
+    authormail: req.body.authormail,
     readtime: req.body.readtime,
     category: req.body.category,
     link: req.body.link,

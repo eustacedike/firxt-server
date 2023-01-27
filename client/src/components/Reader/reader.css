@@ -60,11 +60,55 @@
     font-weight: 700;
 }
 
+.replies {
+    /* background-color: rgb(0,0,0,0.1); */
+}
+
 .reply {
     max-width: 480px;
     /* margin: 0 auto; */
-    background-color: white;
-    padding: 10px;
+        background-color: rgb(0,0,0,0.05);
+    padding: 3px 7px;
     margin-top: 15px;
     border-radius: 5px;
+    font-size: smaller;
+    box-shadow: 2px 2px 7px 1px grey;
+}
+
+.the-reply {
+    background-color: white;
+    /* border-radius: 5px; */
+    padding: 5px;
+    width: 100%;
+}
+
+.reply hr {
+    width: 100%;
+}
+
+.reply .post-details {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.reply .author {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.reply .author div {
+    display: flex;
+    align-items: flex-end;
+}
+
+.reply .author img {
+   height: 25px;
+   width: 25px;
+   background-color: white;
+   border-radius: 50%;
+   margin-right: 10px;
+   padding: 2px;
 }

@@ -168,4 +168,41 @@ router.post("/changedp", (req, res) => {
 });
 
 
+router.post("/changebrief", (req, res) => {
+
+  User.findOneAndUpdate({email: req.body.email},{specialty: req.body.brief},{new: true},
+    function(
+      err,
+      inventory
+    ) {
+      if (err) {
+        console.log("err", err);
+        res.status(500).send(err);
+      } else {
+        console.log("success");
+        res.send(inventory);
+      }
+    }
+    );
+});
+
+
+router.post("/changedesc", (req, res) => {
+
+  User.findOneAndUpdate({email: req.body.email},{about: req.body.desc},{new: true},
+    function(
+      err,
+      inventory
+    ) {
+      if (err) {
+        console.log("err", err);
+        res.status(500).send(err);
+      } else {
+        console.log("success");
+        res.send(inventory);
+      }
+    }
+    );
+});
+
   module.exports = router;

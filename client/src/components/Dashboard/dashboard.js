@@ -1,9 +1,10 @@
 
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
-import { FaTrash, FaSchool, FaAward, FaBook, FaBriefcase, FaCogs, FaGraduationCap, FaMagic, FaCalendarAlt, FaClock, FaThumbsUp, FaThumbsDown, FaBookmark, FaPenAlt, FaPen, FaRecycle } from "react-icons/fa";
+import { FaTrash, FaUser, FaSchool, FaAward, FaBook, FaBriefcase, FaCogs, FaGraduationCap, FaMagic, FaCalendarAlt, FaClock, FaThumbsUp, FaThumbsDown, FaBookmark, FaPenAlt, FaPen, FaRecycle } from "react-icons/fa";
+import { ImEarth } from 'react-icons/im';
 
 import axios from "axios";
 
@@ -34,19 +35,24 @@ function Dashboard() {
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
 
+
+
+
+    // console.log(allUsers.filter(a => {return a.email === cookies.Email})[0].profileimage);
+
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     let theMonth = parseInt(cookies.JoinDate.slice(5, 7));
     let myDate = `${months[theMonth - 1]} ${cookies.JoinDate.slice(8, 10)}, ${cookies.JoinDate.slice(0, 4)}`
 
-
+    const [avatar, setAvatar] = useState("https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg");
 
     const you = {
         firstname: cookies.FirstName,
         lastname: cookies.LastName,
         nationality: "Nigeria",
-        avatar: cookies.ProfileImage,
-        specialty: "Your major..",
-        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex commodi dolorem quasi dignissimos temporibus fugit adipisci voluptatibus esse aliquid quod! Exercitationem, facere aut. Voluptates, voluptatum animi quo incidunt aliquam fugiat perferendis ducimus maiores sunt, velit optio est vitae reiciendis molestias",
+        avatar: avatar,
+        // specialty: "Your major..",
+        // desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex commodi dolorem quasi dignissimos temporibus fugit adipisci voluptatibus esse aliquid quod! Exercitationem, facere aut. Voluptates, voluptatum animi quo incidunt aliquam fugiat perferendis ducimus maiores sunt, velit optio est vitae reiciendis molestias",
         dob: "01/07/2023",
         datejoined: myDate,
         workplace: "Ace Ventures",
@@ -129,7 +135,72 @@ function Dashboard() {
     const [descInput, setDescInput] = useState(false);
     const [briefInput, setBriefInput] = useState(false);
 
+    const [brief, setBrief] = useState("What do you do?");
+    const [desc, setDesc] = useState("Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex commodi dolorem quasi dignissimos temporibus fugit adipisci voluptatibus esse aliquid quod! Exercitationem, facere aut. Voluptates, voluptatum animi quo incidunt aliquam fugiat perferendis ducimus maiores sunt, velit optio est vitae reiciendis molestias");
 
+
+    const changeBrief = () => {
+        axios
+            .post("api/users/changebrief", { email: cookies.Email, brief: brief })
+            .then(res => {
+                console.log(brief);
+                setBrief(res.data.specialty)
+                setBriefInput(false)
+            })
+            .catch(err => console.log(err));
+
+
+    }
+
+    const changeDesc = () => {
+        axios
+            .post("api/users/changedesc", { email: cookies.Email, desc: desc })
+            .then(res => {
+                console.log(res.data.about);
+                setDesc(res.data.about)
+                setDescInput(false)
+            })
+            .catch(err => console.log(err));
+
+
+    }
+
+    const [allUsers, setAllUsers] = useState([]);
+    const getUsers = () => {
+        axios.get("api/users/fetchusers")
+            .then((response) => {
+                // console.log(response.data);
+                setAllUsers(response.data);
+                setAvatar(response.data.filter(a => { return a.email === cookies.Email })[0].profileimage);
+                setBrief(response.data.filter(a => { return a.email === cookies.Email })[0].specialty);
+                setDesc(response.data.filter(a => { return a.email === cookies.Email })[0].about);
+            });
+
+    };
+
+
+    useEffect(() => {
+        getUsers();
+    }, []);
+
+
+
+    const [yourPosts, setYourPosts] = useState([]);
+
+    const getPosts = () => {
+        axios.get("api/posts/fetchposts")
+            .then((response) => {
+                // console.log(response.data.filter(a => {return a.authormail === cookies.Email}));
+                setYourPosts(response.data.filter(a => { return a.authormail === cookies.Email }));
+                // setAllPosts(response.data);
+            });
+
+    };
+
+
+    useEffect(() => {
+        getPosts();
+    }, [yourPosts]);
 
     const highlightStyle = {
         backgroundColor: "#4A0404",
@@ -168,19 +239,21 @@ function Dashboard() {
                     <div>
                         <h1>{you.firstname} {you.lastname}</h1>
                         <i>
-                        {briefInput? 
-                    
-                    <>
-                    <input
-                    type="text"
-                    onChange={()=>{}}
-                    />
-                    <button onClick={()=>{setBriefInput(false)}}>Cancel</button>
-                    <button className="procee">Proceed</button>
-                    </>: you.specialty  }
+                            {briefInput ?
+
+                                <>
+                                    <input
+                                        type="text"
+                                        onChange={(e) => { setBrief(e.target.value) }}
+                                        maxLength="20"
+                                        placeholder="Max: 20 characters"
+                                    />
+                                    <button onClick={() => { setBriefInput(false) }}>Cancel</button>
+                                    <button className="procee" onClick={changeBrief}>Proceed</button>
+                                </> : brief}
                             <FaPen
-                            style={{display: briefInput? "none" : ""}}
-                            onClick={()=>{setBriefInput(true)}}
+                                style={{ display: briefInput ? "none" : "", fontSize: "smaller", marginLeft: "7px", color: "#4A0404", cursor: "pointer" }}
+                                onClick={() => { setBriefInput(true) }}
                             /></i>
                     </div>
                 </div>
@@ -188,33 +261,35 @@ function Dashboard() {
                     <img src={preview} />
                     <div>
                         <button
-                        onClick={()=>{document.getElementById('DP-preview').style.transform = "scale(0)"}}
+                            onClick={() => { document.getElementById('DP-preview').style.transform = "scale(0)" }}
                         >Cancel</button>
                         <button
-                        onClick={changeDP}
-                        className="procee">Proceed</button>
+                            onClick={changeDP}
+                            className="procee">Proceed</button>
                     </div>
-                    
-                    </div>
+
+                </div>
 
                 <br /> <hr /> <br />
                 <div className="about-you">
                     <h3>Description</h3>
-                    <p> {descInput? 
-                    
-                     <>
-                     <textarea
-                     value={you.desc}
-                     rows="8"
-                     onChange={()=>{}}
-                     ></textarea>
-                     <button onClick={()=>{setDescInput(false)}}>Cancel</button>
-                     <button className="procee">Proceed</button>
-                     </>: you.desc  }
-                    <i 
-                    style={{display: descInput? "none" : ""}}
-                    onClick={()=>{setDescInput(true)}}
-                    ><FaPen/></i></p> 
+                    <p> {descInput ?
+
+                        <>
+                            <textarea
+                                value={desc}
+                                rows="8"
+                                onChange={(e) => { setDesc(e.target.value) }}
+                                placeholder="Max: 200 characters"
+                                maxLength="300"
+                            ></textarea>
+                            <button onClick={() => { setDescInput(false) }}>Cancel</button>
+                            <button className="procee" onClick={changeDesc}>Proceed</button>
+                        </> : desc}
+                        <i
+                            style={{ display: descInput ? "none" : "", fontSize: "smaller", marginLeft: "7px", color: "#4A0404", cursor: "pointer" }}
+                            onClick={() => { setDescInput(true) }}
+                        ><FaPen /></i></p>
                 </div>
                 <br /> <hr /> <br />
                 <div className="profile-options">
@@ -245,56 +320,60 @@ function Dashboard() {
                             onClick={() => { setDashbox(4) }}>
                             Stats
                         </button> <hr />
-                        <button
+                        {/* <button
                             style={dashbox === 5 ? highlightStyle : null}
                             onClick={() => { setDashbox(5) }}>
                             Badge
-                        </button> <hr />
+                        </button> <hr /> */}
                     </div>
                     <div className="dashboard-box">
                         <br />
                         <div className="your-profile"
                             style={{ display: dashbox !== 0 ? "none" : null }}
                         >
-                            <p><b>Name: </b>{you.firstname} {you.lastname}</p>
-                            <p><b>Country: </b>{you.nationality}</p>
-                            <p><b>Born: </b>{you.dob}</p>
-                            <p><b>Joined: </b>{you.datejoined}</p>
+                            <p><b><FaUser /> Name: </b>{you.firstname} {you.lastname}</p>
+                            <p><b><ImEarth /> Country: </b>{you.nationality}</p>
+                            <p><b><FaCalendarAlt /> Born: </b>{you.dob}</p>
+                            <p><b><FaCalendarAlt /> Joined: </b>{you.datejoined}</p>
                         </div>
 
                         {/* POSTS */}
                         <div className="your-posts"
                             style={{ display: dashbox !== 1 ? "none" : null }}
                         >
-                            {posts.map(eachPost => {
+                            {yourPosts.map(eachPost => {
                                 return (
                                     <div className="post">
-                                        <Link onClick={takeUp} to="/blog" style={linkStyle}>
-                                            <h3>{eachPost.title}</h3> <br />
+                                        <h3>{eachPost.title}</h3> <br />
+                                        <Link onClick={takeUp} to={`/post/${eachPost.link}`} style={linkStyle}>
+
                                             <p>
-                                                {eachPost.post.substring(0, 70)}...</p>
-
-                                            <div className="post-details">
-                                                <div className="author">
-                                                    <img src={eachPost.authordp} alt="eustace" />
-                                                    <h4>{eachPost.author}</h4>
-                                                </div>
-
-                                                <h5><FaCalendarAlt /> {eachPost.date}</h5>
-                                                <h5><FaClock /> {eachPost.read} min read</h5>
-                                            </div>
-
-                                            <div className="cat-act">
-                                                <button>{eachPost.category}</button>
-                                                <div className="post-actions">
-                                                    <p><FaThumbsUp /></p>
-                                                    <p><FaThumbsDown /></p>
-                                                    <p><FaBookmark /></p>
-                                                    <p><FaPenAlt /></p>
-                                                    <p><FaTrash /></p>
-                                                </div>
-                                            </div>
+                                                {eachPost.postbody.substring(0, 70)}...
+                                            </p>
                                         </Link>
+
+                                        <div className="post-details">
+                                            <div className="author">
+                                                <img src={eachPost.authordp} alt="" />
+                                                <h4>{eachPost.author}</h4>
+                                            </div>
+
+                                            <h5><FaCalendarAlt />  &nbsp;
+                                                {`${months[parseInt(eachPost.date.slice(5, 7)) - 1]} ${eachPost.date.slice(8, 10)}, ${eachPost.date.slice(0, 4)}`}
+                                            </h5>
+                                            <h5><FaClock /> {eachPost.readtime} min read</h5>
+                                        </div>
+
+                                        <div className="cat-act">
+                                            <button>{eachPost.category}</button>
+                                            <div className="post-actions">
+                                                <p><FaThumbsUp /></p>
+                                                <p><FaThumbsDown /></p>
+                                                <p><FaBookmark /></p>
+                                                <p><FaPenAlt /></p>
+                                                <p><FaTrash /></p>
+                                            </div>
+                                        </div>
                                     </div>
                                 )
                             })}
@@ -361,37 +440,37 @@ function Dashboard() {
                                 <h1>{54}</h1>
                             </div>
                             <div>
-                                <h3>Upvotes Received</h3>
+                                <h3>Upvotes <br /> Received</h3>
                                 <h1>{54}</h1>
                             </div>
                             <div>
-                                <h3>Upvotes Given</h3>
+                                <h3>Upvotes <br /> Given</h3>
                                 <h1>{54}</h1>
                             </div>
                             <div>
-                                <h3>Downvotes Receive</h3>
+                                <h3>Downvotes <br /> Receive</h3>
                                 <h1>{54}</h1>
                             </div>
                             <div>
-                                <h3>Downvotes Given</h3>
+                                <h3>Downvotes <br /> Given</h3>
                                 <h1>{54}</h1>
                             </div>
                         </div>
 
                         {/* BADGE */}
-                        <div className="your-badge"
+                        {/* <div className="your-badge"
                             style={{ display: dashbox !== 5 ? "none" : null }}
                         >
                             <img src={badge} alt="" />
                             <h1>ROOKIE</h1>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
 
 
             <div className="dashboard-2">
-                <div className="creds">
+                {/* <div className="creds">
                     <h3><FaBriefcase /> Employment Credential</h3>
                     <p><b>Job Title: </b>{you.specialty}</p>
                     <p><b>Employer: </b>{you.workplace}</p>
@@ -430,7 +509,7 @@ function Dashboard() {
                         Object.keys(sliced).map(key =>
                             <button> <Link onClick={takeUp} to={`/blog/${categories.cats[key].name}`} style={linkStyle}>{categories.cats[key].name}</Link></button>)
                     }
-                </div>
+                </div> */}
             </div>
 
         </div>
