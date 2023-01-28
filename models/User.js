@@ -39,7 +39,11 @@ const UserSchema = new Schema({
     type: Date,
     // required: true
   },
-  country: {
+  origin: {
+    type: String,
+    // required: true
+  },
+  residence: {
     type: String,
     // required: true
   },

@@ -11,6 +11,8 @@ import { useCookies } from 'react-cookie';
 
 import categories from "../categories.json";
 
+// import lalala from '../Images/topics/books.png';
+
 
 import './post.css';
 
@@ -25,20 +27,18 @@ function Post() {
 
   const [postBody, setPostBody] = useState("");
   const [postTitle, setPostTitle] = useState("");
-  const [postRead, setPostRead] = useState("");
+  const [postRead, setPostRead] = useState(1);
   const [postCategory, setPostCategory] = useState("");
   const [image, setImage] = useState();
 
 
 
-  // const thePost = {
-  //     title: postTitle,
-  //     postbody: postBody,
-  //     author: cookies.FirstName + " " + cookies.LastName,
-  //     readtime: postRead,
-  //     category: postCategory,
-  //     link: postTitle.replace(/ +/g, '-').toLowerCase(),
-  // }
+  const [preview, setPreview] = useState();
+  function imagePreview(e) {
+      console.log(e.target.files);
+      setPreview(URL.createObjectURL(e.target.files[0]));
+      setImage(e.target.files[0]);
+  }
 
   const uploadPost = async (e) => {
 
@@ -89,8 +89,8 @@ function Post() {
 
 
 
-        setTimeout(() => { navigate(`/post/${thePost.link}`) }, 500);
-        setTimeout(() => { window.location.reload() }, 3000);
+        setTimeout(() => { navigate(`/post/${thePost.link}`) }, 3100);
+        setTimeout(() => { window.location.reload() }, 3600);
       })
       .catch(err => {
         const errors = err.response.data;
@@ -165,12 +165,12 @@ function Post() {
           name="file"
           id="file"
           accept="image/*"
-          onChange={(e) => setImage(e.target.files[0])}
+          onChange={imagePreview}
         />
         <br />
         <hr />
         <button>Publish</button>
-
+          {/* <img className="blog-image-preview" src={preview}/> */}
       </form>
     </div>
   );

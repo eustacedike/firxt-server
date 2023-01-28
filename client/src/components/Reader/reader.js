@@ -136,8 +136,8 @@ function Reader(props) {
                 <h5><FaClock /> {thisPost.read} min read</h5>
             </div>
             <p className='main-post'>
-                <img src={thisPost.imageUrl} />
                 {thisPost.post}
+                <img src={thisPost.imageUrl} />
             </p>
 
             <div className="cat-act">

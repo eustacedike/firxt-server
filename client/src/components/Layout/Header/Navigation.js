@@ -217,9 +217,9 @@ const logoutUser = () => {
 
         </ul>
         <div>
-        <Link onClick={takeUp} to="/profile" style={linkStyle}><button style={{display: isAuthenticated? "" : "none"}}><FaUser/></button></Link>  <br/>
+        <Link onClick={takeUp} to="/profile" style={linkStyle}><button style={{display: isAuthenticated? "" : "none"}}><FaUser/></button></Link>  
             <Link onClick={takeUp} to="/login" style={linkStyle}><button style={{display: isAuthenticated? "none" : ""}}>Login</button></Link> <br/>
-            <Link onClick={takeUp} to="/register" style={linkStyle}><button style={{display: isAuthenticated? "none" : ""}}>Sign Up</button></Link> <br/>
+            <Link onClick={takeUp} to="/register" style={linkStyle}><button style={{display: isAuthenticated? "none" : ""}}>Sign Up</button></Link>
             <button onClick={logoutUser} style={{display: isAuthenticated? "" : "none"}}>Log Out</button>
         </div>
 

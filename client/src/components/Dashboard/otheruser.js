@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaTrash, FaAward, FaBook, FaSchool, FaBriefcase, FaCogs, FaGraduationCap, FaMagic, FaCalendarAlt, FaClock, FaThumbsUp, FaThumbsDown, FaBookmark, FaPenAlt, FaRecycle } from "react-icons/fa";
+import { FaTrash, FaAward, FaBook, FaSchool, FaBriefcase, FaCogs, FaGraduationCap, FaMagic, FaCalendarAlt, FaClock, FaThumbsUp, FaThumbsDown, FaBookmark, FaPenAlt, FaRecycle, FaUser } from "react-icons/fa";
+import {ImEarth} from "react-icons/im";
+
+import axios from "axios";
+
 
 import "./dashboard.css";
 import dp from "./salt.jfif";
@@ -32,6 +36,24 @@ function OtherUser(props) {
     const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","Nov","Dec"]
     let theMonth = parseInt(props.date.slice(5,7));
     let myDate = `${months[theMonth-1]} ${props.date.slice(8,10)}, ${props.date.slice(0,4)}`
+
+
+    const [countries, setCountries] = useState([]);
+    // const [countryFlags, setCountryFlags] = useState([]);
+
+    const instance = axios.create()
+
+    const res = instance.get(
+           "https://restcountries.com/v3.1/all"
+    ).then((res) => {
+        // console.log(res.data);
+        setCountries(res.data.map(a => {return a}));
+        // setCountries(res.data.map(a => {return a.name.common}));
+        // setCountryFlags(res.data.map(a => {return a.flags.png}));
+    });
+
+    // console.log(countryFlags);
+
 
 
     const you = {
@@ -94,6 +116,15 @@ function OtherUser(props) {
                     <h3>About</h3>
                     <p>{you.desc}</p>
                 </div>
+                {/* {
+                    countries.map(eachCountry => {
+                        return (
+                            <>
+                             <img src={eachCountry.flags.png}/>
+                            </>
+                        )
+                    })
+                } */}
                 <br /> <hr /> <br />
                 <div className="profile-options">
                     <div className="the-options odas">
@@ -109,20 +140,21 @@ function OtherUser(props) {
                             Posts
                         </button> <hr />
                         
-                        <button
+                        {/* <button
                             style={dashbox === 5 ? highlightStyle : null}
                             onClick={() => { setDashbox(5) }}>
                             Badge
-                        </button> <hr />
+                        </button> <hr /> */}
                     </div>
                     <div className="dashboard-box">
                         <br />
                         <div className="your-profile"
                             style={{ display: dashbox !== 0 ? "none" : null }}
                         >
-                            <p><b>Title: </b>{you.title}</p>
-                            <p><b>Name: </b>{you.firstname} {you.lastname}</p>
-                            <p><b>Country: </b>{you.nationality}</p>
+                            <p><b><FaUser/> Name: </b>{you.firstname} {you.lastname}</p>
+                            <p><b><ImEarth/> Country: </b>{you.nationality}</p>
+                            <p><b><FaCalendarAlt/> Joined: </b>{you.datejoined}</p>
+
                         </div>
 
                         {/* POSTS */}

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
-import { FaTrash, FaUser, FaSchool, FaAward, FaBook, FaBriefcase, FaCogs, FaGraduationCap, FaMagic, FaCalendarAlt, FaClock, FaThumbsUp, FaThumbsDown, FaBookmark, FaPenAlt, FaPen, FaRecycle } from "react-icons/fa";
+import { FaTrash, FaUser, FaSchool, FaHome, FaAward, FaBook, FaBriefcase, FaCogs, FaGraduationCap, FaMagic, FaCalendarAlt, FaClock, FaThumbsUp, FaThumbsDown, FaBookmark, FaPenAlt, FaPen, FaRecycle } from "react-icons/fa";
 import { ImEarth } from 'react-icons/im';
 
 import axios from "axios";
@@ -134,9 +134,15 @@ function Dashboard() {
 
     const [descInput, setDescInput] = useState(false);
     const [briefInput, setBriefInput] = useState(false);
+    const [originInput, setOriginInput] = useState(false);
+    const [residenceInput, setResidenceInput] = useState(false);
 
     const [brief, setBrief] = useState("What do you do?");
     const [desc, setDesc] = useState("Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex commodi dolorem quasi dignissimos temporibus fugit adipisci voluptatibus esse aliquid quod! Exercitationem, facere aut. Voluptates, voluptatum animi quo incidunt aliquam fugiat perferendis ducimus maiores sunt, velit optio est vitae reiciendis molestias");
+    const [origin, setOrigin] = useState("Where are you from?");
+    const [residence, setResidence] = useState("Country of residence");
+
+    const [flag, setFlag] = useState("");
 
 
     const changeBrief = () => {
@@ -156,14 +162,36 @@ function Dashboard() {
         axios
             .post("api/users/changedesc", { email: cookies.Email, desc: desc })
             .then(res => {
-                console.log(res.data.about);
+                // console.log(res.data.about);
                 setDesc(res.data.about)
                 setDescInput(false)
             })
             .catch(err => console.log(err));
 
 
-    }
+    };
+
+    const changeOrigin = () => {
+        axios
+            .post("api/users/changeorigin", { email: cookies.Email, origin: origin })
+            .then(res => {
+                setOrigin(res.data.origin);
+                setOriginInput(false)
+            })
+            .catch(err => console.log(err));
+    };
+    
+    const changeResidence = () => {
+        axios
+            .post("api/users/changeresidence", { email: cookies.Email, residence: residence })
+            .then(res => {
+                setResidence(res.data.residence)
+                setResidenceInput(false)
+            })
+            .catch(err => console.log(err));
+
+
+    };
 
     const [allUsers, setAllUsers] = useState([]);
     const getUsers = () => {
@@ -174,6 +202,8 @@ function Dashboard() {
                 setAvatar(response.data.filter(a => { return a.email === cookies.Email })[0].profileimage);
                 setBrief(response.data.filter(a => { return a.email === cookies.Email })[0].specialty);
                 setDesc(response.data.filter(a => { return a.email === cookies.Email })[0].about);
+                setOrigin(response.data.filter(a => { return a.email === cookies.Email })[0].origin);
+                setResidence(response.data.filter(a => { return a.email === cookies.Email })[0].residence);
             });
 
     };
@@ -202,6 +232,22 @@ function Dashboard() {
         getPosts();
     }, [yourPosts]);
 
+
+    const [countries, setCountries] = useState([]);
+
+    const getCountries = axios.create().get(
+        "https://restcountries.com/v3.1/all"
+    ).then((res) => {
+        setCountries(res.data.map(a => { return a }));
+        let filter = countries.filter(filtered => {return filtered.name.common === origin});
+        setFlag(filter[0].flags.png);
+    });
+
+    // const yourFlag = countries.filter(filtered => {return filtered.name.common === origin})[0];
+    // useEffect(() => {
+        //    console.log(flag);
+    // }, [yourFlag]);
+
     const highlightStyle = {
         backgroundColor: "#4A0404",
         color: "white"
@@ -223,7 +269,7 @@ function Dashboard() {
         <div className="Dashboard">
             <div className="dashboard-1">
                 <div className="avatar">
-                    <img src={you.avatar} alt="" />
+                    <img className="avatar-image" src={you.avatar} alt="" />
                     <label
                         className="edit"
                         htmlFor="file"
@@ -237,7 +283,7 @@ function Dashboard() {
                         onChange={imagePreview}
                     />
                     <div>
-                        <h1>{you.firstname} {you.lastname}</h1>
+                        <h1>{you.firstname} {you.lastname} &nbsp; &nbsp; <img className="flag" src={flag}/></h1>
                         <i>
                             {briefInput ?
 
@@ -254,7 +300,8 @@ function Dashboard() {
                             <FaPen
                                 style={{ display: briefInput ? "none" : "", fontSize: "smaller", marginLeft: "7px", color: "#4A0404", cursor: "pointer" }}
                                 onClick={() => { setBriefInput(true) }}
-                            /></i>
+                            />
+                        </i>
                     </div>
                 </div>
                 <div className="DP-preview" id="DP-preview">
@@ -332,7 +379,61 @@ function Dashboard() {
                             style={{ display: dashbox !== 0 ? "none" : null }}
                         >
                             <p><b><FaUser /> Name: </b>{you.firstname} {you.lastname}</p>
-                            <p><b><ImEarth /> Country: </b>{you.nationality}</p>
+
+                            {originInput ?
+
+                                <>
+                                    <select
+                                        onChange={(e) => { setOrigin(e.target.value) }}
+                                    >
+                                        <option>Choose country of origin</option>
+                                        
+                                        {
+                                            countries.sort((a, b) => a.name.common.localeCompare(b.name.common)).map(eachCountry => {
+                                                return (
+                                                    <option value={eachCountry.name.common}>
+                                                        {eachCountry.name.common}
+                                                    </option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                    <button onClick={() => { setOriginInput(false) }}>Cancel</button>
+                                    <button className="procee" onClick={changeOrigin}>Change</button>
+                                </> : <p><b><ImEarth /> Nationality: </b>{origin}
+                                    <FaPen
+                                        style={{ display: originInput ? "none" : "", fontSize: "smaller", marginLeft: "7px", color: "#4A0404", cursor: "pointer" }}
+                                        onClick={() => { setOriginInput(true) }}
+                                    />
+                                </p>}
+
+
+                            {residenceInput ?
+
+                                <>
+                                    <select
+                                        onChange={(e) => { setResidence(e.target.value) }}
+                                    >
+                                        <option>Choose country of residence</option>
+                                        {
+                                            countries.sort((a, b) => a.name.common.localeCompare(b.name.common)).map(eachCountry => {
+                                                return (
+                                                    <option value={eachCountry.name.common}>
+                                                        {eachCountry.name.common}
+                                                    </option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                    <button onClick={() => { setResidenceInput(false) }}>Cancel</button>
+                                    <button className="procee" onClick={changeResidence}>Change</button>
+                                </> : <p><b><FaHome /> Residence: </b>{residence}
+                                    <FaPen
+                                        style={{ display: residenceInput ? "none" : "", fontSize: "smaller", marginLeft: "7px", color: "#4A0404", cursor: "pointer" }}
+                                        onClick={() => { setResidenceInput(true) }}
+                                    />
+                                </p>}
+
                             <p><b><FaCalendarAlt /> Born: </b>{you.dob}</p>
                             <p><b><FaCalendarAlt /> Joined: </b>{you.datejoined}</p>
                         </div>
@@ -437,6 +538,10 @@ function Dashboard() {
                             </div>
                             <div>
                                 <h3>Replies</h3>
+                                <h1>{54}</h1>
+                            </div>
+                            <div>
+                                <h3>Bookmarks</h3>
                                 <h1>{54}</h1>
                             </div>
                             <div>

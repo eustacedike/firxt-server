@@ -205,4 +205,40 @@ router.post("/changedesc", (req, res) => {
     );
 });
 
+router.post("/changeorigin", (req, res) => {
+
+  User.findOneAndUpdate({email: req.body.email},{origin: req.body.origin},{new: true},
+    function(
+      err,
+      inventory
+    ) {
+      if (err) {
+        console.log("err", err);
+        res.status(500).send(err);
+      } else {
+        console.log("success");
+        res.send(inventory);
+      }
+    }
+    );
+});
+
+router.post("/changeresidence", (req, res) => {
+
+  User.findOneAndUpdate({email: req.body.email},{residence: req.body.residence},{new: true},
+    function(
+      err,
+      inventory
+    ) {
+      if (err) {
+        console.log("err", err);
+        res.status(500).send(err);
+      } else {
+        console.log("success");
+        res.send(inventory);
+      }
+    }
+    );
+});
+
   module.exports = router;

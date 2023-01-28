@@ -30,3 +30,7 @@
     max-width: 800px;
     margin: 30px auto;
 }
+
+.Allposts .post {
+    background-color: rgb(255, 255, 255,0.65);
+}
