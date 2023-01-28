@@ -575,7 +575,7 @@ function Dashboard() {
 
 
             <div className="dashboard-2">
-                {/* <div className="creds">
+                <div className="creds">
                     <h3><FaBriefcase /> Employment Credential</h3>
                     <p><b>Job Title: </b>{you.specialty}</p>
                     <p><b>Employer: </b>{you.workplace}</p>
@@ -614,7 +614,7 @@ function Dashboard() {
                         Object.keys(sliced).map(key =>
                             <button> <Link onClick={takeUp} to={`/blog/${categories.cats[key].name}`} style={linkStyle}>{categories.cats[key].name}</Link></button>)
                     }
-                </div> */}
+                </div>
             </div>
 
         </div>
