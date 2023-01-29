@@ -241,4 +241,22 @@ router.post("/changeresidence", (req, res) => {
     );
 });
 
+
+
+router.post("/upvote", (req, res) => {
+
+  const replyObj = {
+    reply: req.body.reply,
+    replyauthor: req.body.replyauthor,
+    replyauthoremail: req.body.replyauthoremail,
+    replytime: req.body.replytime,
+  }
+
+  User.updateOne({email: req.body.email}, {$push: {"liked" : req.body.postId}})
+.then(res => console.log("added to likes"))
+    .catch(err => console.log(err));
+
+
+});
+
   module.exports = router;

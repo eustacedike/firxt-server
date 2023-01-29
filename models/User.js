@@ -67,6 +67,15 @@ const UserSchema = new Schema({
   downvotesreceived: {
     type: Number,
   },
+  liked: {
+    type: Array,
+  },
+  disliked: {
+    type: Array,
+  },
+  bookmarked: {
+    type: Array,
+  },
 
 
 });

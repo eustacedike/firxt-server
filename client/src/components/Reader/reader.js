@@ -13,6 +13,7 @@ import './reader.css';
 import { FaExclamationCircle, FaTrash, FaClock, FaCalendarAlt, FaBook, FaThumbsUp, FaThumbsDown, FaBookmark } from 'react-icons/fa';
 
 
+import {upvote} from '../actions/upvotes.js';
 
 import dp from "../Home/assets/bg17.png";
 
@@ -112,7 +113,37 @@ function Reader(props) {
 
     };
 
+    // const upvote = () => {
+    //     axios.post("/api/posts/upvote", {id: props.id, val: 1})
+    //       .then(console.log("upvoted")
+    //       )
+    //       .catch(err => {
+    //         console.log(err.response.data);
+    //     });
 
+    //     axios
+    //     .post("/api/users/upvote", {
+    //         email: cookies.Email,
+    //         postId: props.id,
+    //     })
+
+    //     .catch(err => {
+    //         const errors = err.response.data;
+    //         console.log(err.response.data)
+    //     });
+  
+    //   };
+
+    const downvote = () => {
+        axios.post("/api/posts/downvote", {id: props.id, val: 1})
+          .then(console.log("downvoted")
+          )
+          .catch(err => {
+            console.log(err.response.data);
+          });
+  
+      };
+  
 
     return (
         <div className="Reader">
@@ -143,7 +174,7 @@ function Reader(props) {
             <div className="cat-act">
                 <button>{thisPost.category}</button>
                 <div className="post-actions">
-                    <p>{thisPost.upvotes} <FaThumbsUp /></p>
+                    <p>{thisPost.upvotes} <FaThumbsUp onClick={()=>{upvote(props.id, cookies.Email)}}/></p>
                     <p>{thisPost.downvotes}<FaThumbsDown /></p>
                     <p><FaBookmark /></p>
                     <p>{thisPost.author === cookies.FirstName + " " + cookies.LastName ? <FaTrash

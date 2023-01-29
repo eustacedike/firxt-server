@@ -93,4 +93,30 @@ router.post("/sendreply", (req, res) => {
 
 });
 
+
+
+
+router.post("/upvote", (req, res) => {
+
+  
+  Post.findOne({_id: req.body.id})
+  .then(post =>{
+
+    Post.findOneAndUpdate({_id: post._id},{upvotes: post.upvotes + req.body.val},{new: true},
+    function(err, inventory) {
+      if (err) {
+        console.log("err", err);
+        res.status(500).send(err);
+      } else {
+        // console.log(inventory);
+        res.send(inventory);
+      }
+    }
+    );
+  })
+
+});
+
+
+
 module.exports = router;

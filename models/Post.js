@@ -33,10 +33,12 @@ const PostSchema = new Schema({
   },
   upvotes: {
     type: Number,
+    default: 0,
     // required: true
   },
   downvotes: {
     type: Number,
+    default: 0,
     // required: true
   },
   image: {
