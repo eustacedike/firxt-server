@@ -180,7 +180,7 @@ function Dashboard() {
             })
             .catch(err => console.log(err));
     };
-    
+
     const changeResidence = () => {
         axios
             .post("api/users/changeresidence", { email: cookies.Email, residence: residence })
@@ -236,16 +236,21 @@ function Dashboard() {
     const [countries, setCountries] = useState([]);
 
     const getCountries = axios.create().get(
-        "https://restcountries.com/v3.1/all"
+        "https://restcountries.com/v3.1/all",{
+            headers: { 
+                'Access-Control-Allow-Origin' : '*',
+                'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+              },
+        }
     ).then((res) => {
         setCountries(res.data.map(a => { return a }));
-        let filter = countries.filter(filtered => {return filtered.name.common === origin});
+        let filter = countries.filter(filtered => { return filtered.name.common === origin });
         setFlag(filter[0].flags.png);
     });
 
     // const yourFlag = countries.filter(filtered => {return filtered.name.common === origin})[0];
     // useEffect(() => {
-        //    console.log(flag);
+    //    console.log(flag);
     // }, [yourFlag]);
 
     const highlightStyle = {
@@ -256,6 +261,29 @@ function Dashboard() {
     const linkStyle = {
         textDecoration: "none",
         color: "unset"
+    }
+
+    const xStyle = {
+        textDecoration: "none",
+        // color: "unset",
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "10px 8px",
+        backgroundColor: "white",
+        borderRadius: "3px",
+        alignItems: "flex-end",
+    }
+
+    const yStyle = {
+        textDecoration: "none",
+        // color: "unset",
+        display: "flex",
+        flexDirection: "column",
+        // justifyContent: "space-between",
+        padding: "10px 8px",
+        backgroundColor: "white",
+        borderRadius: "3px",
+        marginBottom: "12px",
     }
 
     const takeUp = () => {
@@ -283,7 +311,7 @@ function Dashboard() {
                         onChange={imagePreview}
                     />
                     <div>
-                        <h1>{you.firstname} {you.lastname} &nbsp; &nbsp; <img className="flag" src={flag}/></h1>
+                        <h1>{you.firstname} {you.lastname} &nbsp; &nbsp;</h1>
                         <i>
                             {briefInput ?
 
@@ -338,7 +366,11 @@ function Dashboard() {
                             onClick={() => { setDescInput(true) }}
                         ><FaPen /></i></p>
                 </div>
-                <br /> <hr /> <br />
+
+
+                <img className="flag" src={flag} />
+                <br />
+                <hr /> <br />
                 <div className="profile-options">
                     <div className="the-options">
 
@@ -387,7 +419,7 @@ function Dashboard() {
                                         onChange={(e) => { setOrigin(e.target.value) }}
                                     >
                                         <option>Choose country of origin</option>
-                                        
+
                                         {
                                             countries.sort((a, b) => a.name.common.localeCompare(b.name.common)).map(eachCountry => {
                                                 return (
@@ -398,14 +430,15 @@ function Dashboard() {
                                             })
                                         }
                                     </select>
-                                    <button onClick={() => { setOriginInput(false) }}>Cancel</button>
-                                    <button className="procee" onClick={changeOrigin}>Change</button>
+                                    <button onClick={() => { setOriginInput(false) }}>&#10006;</button>
+                                    <button className="procee" onClick={changeOrigin}>&#10003;</button> <br />
                                 </> : <p><b><ImEarth /> Nationality: </b>{origin}
                                     <FaPen
                                         style={{ display: originInput ? "none" : "", fontSize: "smaller", marginLeft: "7px", color: "#4A0404", cursor: "pointer" }}
                                         onClick={() => { setOriginInput(true) }}
                                     />
                                 </p>}
+
 
 
                             {residenceInput ?
@@ -425,8 +458,8 @@ function Dashboard() {
                                             })
                                         }
                                     </select>
-                                    <button onClick={() => { setResidenceInput(false) }}>Cancel</button>
-                                    <button className="procee" onClick={changeResidence}>Change</button>
+                                    <button onClick={() => { setResidenceInput(false) }}>&#10006;</button>
+                                    <button className="procee" onClick={changeResidence}>&#10003;</button> <br />
                                 </> : <p><b><FaHome /> Residence: </b>{residence}
                                     <FaPen
                                         style={{ display: residenceInput ? "none" : "", fontSize: "smaller", marginLeft: "7px", color: "#4A0404", cursor: "pointer" }}
@@ -573,8 +606,64 @@ function Dashboard() {
                 </div>
             </div>
 
-
             <div className="dashboard-2">
+                <h2>Similar users</h2>
+                <div className="x-users">
+                    <Link style={xStyle} to="">
+                        <img className="d-img" src={dp} />
+                        <p>Adekunle Gold</p>
+                    </Link>
+                    <Link style={xStyle} to="">
+                        <img className="d-img" src={dp} />
+                        <p>Adekunle Gold</p>
+                    </Link>
+                    <Link style={xStyle} to="">
+                        <img className="d-img" src={dp} />
+                        <p>Adekunle Gold</p>
+                    </Link>
+                    <Link style={xStyle} to="">
+                        <img className="d-img" src={dp} />
+                        <p>Adekunle Gold</p>
+                    </Link>
+                    <Link style={xStyle} to="">
+                        <img className="d-img" src={dp} />
+                        <p>Adekunle Gold</p>
+                    </Link>
+                    <Link style={xStyle} to="">
+                        <img className="d-img" src={dp} />
+                        <p>Adekunle Gold</p>
+                    </Link>
+                </div>
+
+                <br />
+
+                <h2>New posts</h2>
+                <div className="x-posts">
+                    <div style={yStyle}>
+                        <Link to="">
+                            <h3>Demo post with lorem ipsum as content</h3>
+                        </Link>    <p style={{ margin: "10px 0" }}>lorem is a dummy text used in printing, web development and ui/ux design with a dog jumping over a very lazy fox</p>
+                        <p>by <b>Adekunle Gold</b></p>
+                    </div>
+                    <div style={yStyle}>
+                        <Link to="">
+                            <h3>Demo post with lorem ipsum as content</h3>
+                        </Link>    <p style={{ margin: "10px 0" }}>lorem is a dummy text used in printing, web development and ui/ux design with a dog jumping over a very lazy fox</p>
+                        <p>by <b>Adekunle Gold</b></p>
+                    </div>
+                    <div style={yStyle}>
+                        <Link to="">
+                            <h3>Demo post with lorem ipsum as content</h3>
+                        </Link>    <p style={{ margin: "10px 0" }}>lorem is a dummy text used in printing, web development and ui/ux design with a dog jumping over a very lazy fox</p>
+                        <p>by <b>Adekunle Gold</b></p>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            {/* <div className="dashboard-2">
                 <div className="creds">
                     <h3><FaBriefcase /> Employment Credential</h3>
                     <p><b>Job Title: </b>{you.specialty}</p>
@@ -615,7 +704,7 @@ function Dashboard() {
                             <button> <Link onClick={takeUp} to={`/blog/${categories.cats[key].name}`} style={linkStyle}>{categories.cats[key].name}</Link></button>)
                     }
                 </div>
-            </div>
+            </div> */}
 
         </div>
     );

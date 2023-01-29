@@ -201,7 +201,7 @@
 .your-profile button {
     background-color: white;
     font-weight: bold;
-    border: 1px solid;
+    border: 1px solid black;
     padding: 5px 10px;
     border-radius: 3px;
     margin-left: 15px;
@@ -271,10 +271,32 @@
     margin-bottom: 40px;
 }
 
+.dashboard-2 h2 {
+    font-size: clamp(18px,1.8vw,30px);
+    line-height: clamp(20px,2.1vw,35px);
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
 .dashboard-2 p,
 .dashboard-2 h4 {
-    font-size: clamp(14px,1.25vw,20px);
-    line-height: clamp(20px,2.1vw,35px);;
+    font-size: clamp(12px,1vw,22px);
+    line-height: clamp(14px,1.2vw,26px);;
+}
+
+.x-users {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 12px;
+}
+
+.d-img {
+    height: 30px;
+    width: 30px;
+    background-color:aliceblue;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 1px solid white;
 }
 
 .creds h3 {
@@ -427,6 +449,20 @@
     .your-profile p {
        font-size: smaller;
     }
+
+    .your-profile select {
+       width: 70%;
+       font-size: 10px;
+        padding: 4px 0px;
+    }
+
+    .your-profile button {
+        padding: 3px 6px;
+        border-radius: 1px;
+        margin-left: 4px;
+       font-size: 10px;
+    }
+    
 
     .flag {
         height: 26px;
