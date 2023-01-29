@@ -41,6 +41,11 @@ const PostSchema = new Schema({
     default: 0,
     // required: true
   },
+  bookmarks: {
+    type: Number,
+    default: 0,
+    // required: true
+  },
   image: {
     type: String,
   },

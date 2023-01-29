@@ -117,6 +117,49 @@ router.post("/upvote", (req, res) => {
 
 });
 
+router.post("/downvote", (req, res) => {
+
+  
+  Post.findOne({_id: req.body.id})
+  .then(post =>{
+
+    Post.findOneAndUpdate({_id: post._id},{downvotes: post.downvotes + req.body.val},{new: true},
+    function(err, inventory) {
+      if (err) {
+        console.log("err", err);
+        res.status(500).send(err);
+      } else {
+        // console.log(inventory);
+        res.send(inventory);
+      }
+    }
+    );
+  })
+
+});
+
+
+router.post("/bookmark", (req, res) => {
+
+  
+  Post.findOne({_id: req.body.id})
+  .then(post =>{
+
+    Post.findOneAndUpdate({_id: post._id},{bookmarks: post.bookmarks + req.body.val},{new: true},
+    function(err, inventory) {
+      if (err) {
+        console.log("err", err);
+        res.status(500).send(err);
+      } else {
+        // console.log(inventory);
+        res.send(inventory);
+      }
+    }
+    );
+  })
+
+});
+
 
 
 module.exports = router;

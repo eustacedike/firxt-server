@@ -17,51 +17,51 @@ const User = require("../../models/User");
 // @desc Register user
 // @access Public
 router.post("/register", (req, res) => {
-    // Form validation
-  
-    const { errors, isValid } = validateRegisterInput(req.body);
-  
-    // Check validation
-    if (!isValid) {
-      return res.status(400).json(errors);
+  // Form validation
+
+  const { errors, isValid } = validateRegisterInput(req.body);
+
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  User.findOne({ email: req.body.Email }).then(user => {
+    if (user) {
+      return res.status(400).json({ Email: "Email already exists" });
+    } else {
+      const newUser = new User({
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.Email,
+        password: req.body.Psw,
+        link: req.body.link,
+        gender: req.body.gender
+      });
+
+
+
+
+      // Hash password before saving in database
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+          if (err) throw err;
+          newUser.password = hash;
+
+          newUser
+            .save()
+            .then(user => res.json(user))
+            .catch(err => console.log(err));
+        });
+      });
     }
-  
-    User.findOne({ email: req.body.Email }).then(user => {
-      if (user) {
-        return res.status(400).json({ Email: "Email already exists" });
-      } else {
-        const newUser = new User({
-          firstname: req.body.firstname,
-          lastname: req.body.lastname,
-          email: req.body.Email,
-          password: req.body.Psw,
-          link: req.body.link,
-          gender: req.body.gender
-        });
-  
-  
-  
-  
-        // Hash password before saving in database
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-            newUser.password = hash;
-
-            newUser
-              .save()
-              .then(user => res.json(user))
-              .catch(err => console.log(err));
-          });
-        });
-      }
-    });
   });
+});
 
 
 
 
-  // @route POST api/users/login
+// @route POST api/users/login
 // @desc Login user and return JWT token
 // @access Public
 router.post("/login", (req, res) => {
@@ -112,7 +112,7 @@ router.post("/login", (req, res) => {
               userLastName: user.lastname,
               userEmail: user.email,
               userDP: user.profileimage,
-             
+
               userJoinDate: user.date,
               success: true,
               token: "Bearer " + token
@@ -143,26 +143,26 @@ router.get("/fetchusers", async (req, res) => {
 
 router.post("/changedp", (req, res) => {
 
-  
-  User.findOne({email: req.body.email})
-  .then(question =>{
-    // console.log(question.question);
 
-    User.findOneAndUpdate({email: req.body.email},{profileimage: req.body.image},{new: true},
-    function(
-      err,
-      inventory
-    ) {
-      if (err) {
-        console.log("err", err);
-        res.status(500).send(err);
-      } else {
-        console.log("success");
-        res.send(inventory);
-      }
-    }
-    );
-  })
+  User.findOne({ email: req.body.email })
+    .then(question => {
+      // console.log(question.question);
+
+      User.findOneAndUpdate({ email: req.body.email }, { profileimage: req.body.image }, { new: true },
+        function (
+          err,
+          inventory
+        ) {
+          if (err) {
+            console.log("err", err);
+            res.status(500).send(err);
+          } else {
+            console.log("success");
+            res.send(inventory);
+          }
+        }
+      );
+    })
 
 
 });
@@ -170,8 +170,8 @@ router.post("/changedp", (req, res) => {
 
 router.post("/changebrief", (req, res) => {
 
-  User.findOneAndUpdate({email: req.body.email},{specialty: req.body.brief},{new: true},
-    function(
+  User.findOneAndUpdate({ email: req.body.email }, { specialty: req.body.brief }, { new: true },
+    function (
       err,
       inventory
     ) {
@@ -183,14 +183,14 @@ router.post("/changebrief", (req, res) => {
         res.send(inventory);
       }
     }
-    );
+  );
 });
 
 
 router.post("/changedesc", (req, res) => {
 
-  User.findOneAndUpdate({email: req.body.email},{about: req.body.desc},{new: true},
-    function(
+  User.findOneAndUpdate({ email: req.body.email }, { about: req.body.desc }, { new: true },
+    function (
       err,
       inventory
     ) {
@@ -202,13 +202,13 @@ router.post("/changedesc", (req, res) => {
         res.send(inventory);
       }
     }
-    );
+  );
 });
 
 router.post("/changeorigin", (req, res) => {
 
-  User.findOneAndUpdate({email: req.body.email},{origin: req.body.origin},{new: true},
-    function(
+  User.findOneAndUpdate({ email: req.body.email }, { origin: req.body.origin }, { new: true },
+    function (
       err,
       inventory
     ) {
@@ -220,13 +220,13 @@ router.post("/changeorigin", (req, res) => {
         res.send(inventory);
       }
     }
-    );
+  );
 });
 
 router.post("/changeresidence", (req, res) => {
 
-  User.findOneAndUpdate({email: req.body.email},{residence: req.body.residence},{new: true},
-    function(
+  User.findOneAndUpdate({ email: req.body.email }, { residence: req.body.residence }, { new: true },
+    function (
       err,
       inventory
     ) {
@@ -238,25 +238,72 @@ router.post("/changeresidence", (req, res) => {
         res.send(inventory);
       }
     }
-    );
+  );
 });
 
 
 
 router.post("/upvote", (req, res) => {
 
-  const replyObj = {
-    reply: req.body.reply,
-    replyauthor: req.body.replyauthor,
-    replyauthoremail: req.body.replyauthoremail,
-    replytime: req.body.replytime,
-  }
+  User.findOne({ email: req.body.email })
+    .then(user => {
 
-  User.updateOne({email: req.body.email}, {$push: {"liked" : req.body.postId}})
-.then(res => console.log("added to likes"))
-    .catch(err => console.log(err));
+      if (user.liked.includes(req.body.postId, 0)) {
 
-
+        res.send(JSON.stringify("-1"));
+        User.updateOne({ email: req.body.email }, { $pull: { "liked": req.body.postId } })
+        .then(res => console.log("unliked"))
+        .catch(err => console.log(err));
+      } else {
+        res.send(JSON.stringify("1"));
+        User.updateOne({ email: req.body.email }, { $push: { "liked": req.body.postId } })
+          .then(res => console.log("liked"))
+          .catch(err => console.log(err));
+      }
+    })
 });
 
-  module.exports = router;
+
+router.post("/downvote", (req, res) => {
+
+  User.findOne({ email: req.body.email })
+    .then(user => {
+
+      if (user.disliked.includes(req.body.postId, 0)) {
+
+        res.send(JSON.stringify("-1"));
+        User.updateOne({ email: req.body.email }, { $pull: { "disliked": req.body.postId } })
+        .then(res => console.log("undisliked"))
+        .catch(err => console.log(err));
+      } else {
+        res.send(JSON.stringify("1"));
+        User.updateOne({ email: req.body.email }, { $push: { "disliked": req.body.postId } })
+          .then(res => console.log("disliked"))
+          .catch(err => console.log(err));
+      }
+    })
+});
+
+router.post("/bookmark", (req, res) => {
+
+  User.findOne({ email: req.body.email })
+    .then(user => {
+
+      if (user.bookmarked.includes(req.body.postId, 0)) {
+
+        res.send(JSON.stringify("-1"));
+        User.updateOne({ email: req.body.email }, { $pull: { "bookmarked": req.body.postId } })
+        .then(res => console.log("unbookmarked"))
+        .catch(err => console.log(err));
+      } else {
+        res.send(JSON.stringify("1"));
+        User.updateOne({ email: req.body.email }, { $push: { "bookmarked": req.body.postId } })
+          .then(res => console.log("bookmarked"))
+          .catch(err => console.log(err));
+      }
+    })
+});
+
+
+
+module.exports = router;

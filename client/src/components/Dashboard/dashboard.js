@@ -193,17 +193,20 @@ function Dashboard() {
 
     };
 
+    const [userBookmarks, setUserBookmarks] = useState([]);
+
     const [allUsers, setAllUsers] = useState([]);
     const getUsers = () => {
         axios.get("api/users/fetchusers")
             .then((response) => {
-                // console.log(response.data);
+                // console.log(response.data.filter(a => { return a.email === cookies.Email })[0].bookmarked);
                 setAllUsers(response.data);
                 setAvatar(response.data.filter(a => { return a.email === cookies.Email })[0].profileimage);
                 setBrief(response.data.filter(a => { return a.email === cookies.Email })[0].specialty);
                 setDesc(response.data.filter(a => { return a.email === cookies.Email })[0].about);
                 setOrigin(response.data.filter(a => { return a.email === cookies.Email })[0].origin);
                 setResidence(response.data.filter(a => { return a.email === cookies.Email })[0].residence);
+                setUserBookmarks(response.data.filter(a => { return a.email === cookies.Email })[0].bookmarked);
             });
 
     };
@@ -216,330 +219,298 @@ function Dashboard() {
 
 
     const [yourPosts, setYourPosts] = useState([]);
+    const [yourBookmarks, setYourBookmarks] = useState([]);
+
+
+
 
     const getPosts = () => {
         axios.get("api/posts/fetchposts")
             .then((response) => {
-                // console.log(response.data.filter(a => {return a.authormail === cookies.Email}));
-                setYourPosts(response.data.filter(a => { return a.authormail === cookies.Email }));
-                // setAllPosts(response.data);
-            });
+                // console.log(response.data.filter((a) => {
+                //     return userBookmarks.some((b) => {
+                //         return b === a._id
+                //     })}))
+                
+                    setYourPosts(response.data.filter(a => { return a.authormail === cookies.Email }));
+                    setYourBookmarks(response.data.filter((a) => {
+                        return userBookmarks.some((b) => {
+                            return b === a._id
+                        })}))
+                    // setAllPosts(response.data);
+                });
 
-    };
+            };
 
 
-    useEffect(() => {
-        getPosts();
-    }, [yourPosts]);
+        useEffect(() => {
+            getPosts();
+        }, [yourPosts]);
 
 
-    const [countries, setCountries] = useState([]);
+        const [countries, setCountries] = useState([]);
 
-    const getCountries = axios.create().get(
-        "https://restcountries.com/v3.1/all",{
-            headers: { 
-                'Access-Control-Allow-Origin' : '*',
-                'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-              },
+        const getCountries = axios.create().get(
+            "https://restcountries.com/v3.1/all", {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            },
         }
-    ).then((res) => {
-        setCountries(res.data.map(a => { return a }));
-        let filter = countries.filter(filtered => { return filtered.name.common === origin });
-        setFlag(filter[0].flags.png);
-    });
+        ).then((res) => {
+            setCountries(res.data.map(a => { return a }));
+            let filter = countries.filter(filtered => { return filtered.name.common === origin });
+            setFlag(filter[0].flags.png);
+        });
 
-    // const yourFlag = countries.filter(filtered => {return filtered.name.common === origin})[0];
-    // useEffect(() => {
-    //    console.log(flag);
-    // }, [yourFlag]);
+        // const yourFlag = countries.filter(filtered => {return filtered.name.common === origin})[0];
+        // useEffect(() => {
+        //    console.log(flag);
+        // }, [yourFlag]);
 
-    const highlightStyle = {
-        backgroundColor: "#4A0404",
-        color: "white"
-    }
+        const highlightStyle = {
+            backgroundColor: "#4A0404",
+            color: "white"
+        }
 
-    const linkStyle = {
-        textDecoration: "none",
-        color: "unset"
-    }
+        const linkStyle = {
+            textDecoration: "none",
+            color: "unset"
+        }
 
-    const xStyle = {
-        textDecoration: "none",
-        // color: "unset",
-        display: "flex",
-        justifyContent: "space-between",
-        padding: "10px 8px",
-        backgroundColor: "white",
-        borderRadius: "3px",
-        alignItems: "flex-end",
-    }
+        const xStyle = {
+            textDecoration: "none",
+            // color: "unset",
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "10px 8px",
+            backgroundColor: "white",
+            borderRadius: "3px",
+            alignItems: "flex-end",
+        }
 
-    const yStyle = {
-        textDecoration: "none",
-        // color: "unset",
-        display: "flex",
-        flexDirection: "column",
-        // justifyContent: "space-between",
-        padding: "10px 8px",
-        backgroundColor: "white",
-        borderRadius: "3px",
-        marginBottom: "12px",
-    }
+        const yStyle = {
+            textDecoration: "none",
+            // color: "unset",
+            display: "flex",
+            flexDirection: "column",
+            // justifyContent: "space-between",
+            padding: "10px 8px",
+            backgroundColor: "white",
+            borderRadius: "3px",
+            marginBottom: "12px",
+        }
 
-    const takeUp = () => {
-        window.scroll(0, 0)
-    };
+        const takeUp = () => {
+            window.scroll(0, 0)
+        };
 
-    const sliced = Object.fromEntries(
-        Object.entries(categories.cats).slice(0, 8));
+        const sliced = Object.fromEntries(
+            Object.entries(categories.cats).slice(0, 8));
 
-    return (
-        <div className="Dashboard">
-            <div className="dashboard-1">
-                <div className="avatar">
-                    <img className="avatar-image" src={you.avatar} alt="" />
-                    <label
-                        className="edit"
-                        htmlFor="file"
-                    ><FaPen /></label>
-                    <input
-                        type="file"
-                        name="file"
-                        id="file"
-                        accept="image/*"
-                        style={{ display: "none" }}
-                        onChange={imagePreview}
-                    />
-                    <div>
-                        <h1>{you.firstname} {you.lastname} &nbsp; &nbsp;</h1>
-                        <i>
-                            {briefInput ?
+        return (
+            <div className="Dashboard">
+                <div className="dashboard-1">
+                    <div className="avatar">
+                        <img className="avatar-image" src={you.avatar} alt="" />
+                        <label
+                            className="edit"
+                            htmlFor="file"
+                        ><FaPen /></label>
+                        <input
+                            type="file"
+                            name="file"
+                            id="file"
+                            accept="image/*"
+                            style={{ display: "none" }}
+                            onChange={imagePreview}
+                        />
+                        <div>
+                            <h1>{you.firstname} {you.lastname} &nbsp; &nbsp;</h1>
+                            <i>
+                                {briefInput ?
 
-                                <>
-                                    <input
-                                        type="text"
-                                        onChange={(e) => { setBrief(e.target.value) }}
-                                        maxLength="20"
-                                        placeholder="Max: 20 characters"
-                                    />
-                                    <button onClick={() => { setBriefInput(false) }}>Cancel</button>
-                                    <button className="procee" onClick={changeBrief}>Proceed</button>
-                                </> : brief}
-                            <FaPen
-                                style={{ display: briefInput ? "none" : "", fontSize: "smaller", marginLeft: "7px", color: "#4A0404", cursor: "pointer" }}
-                                onClick={() => { setBriefInput(true) }}
-                            />
-                        </i>
+                                    <>
+                                        <input
+                                            type="text"
+                                            onChange={(e) => { setBrief(e.target.value) }}
+                                            maxLength="20"
+                                            placeholder="Max: 20 characters"
+                                        />
+                                        <button onClick={() => { setBriefInput(false) }}>Cancel</button>
+                                        <button className="procee" onClick={changeBrief}>Proceed</button>
+                                    </> : brief}
+                                <FaPen
+                                    style={{ display: briefInput ? "none" : "", fontSize: "smaller", marginLeft: "7px", color: "#4A0404", cursor: "pointer" }}
+                                    onClick={() => { setBriefInput(true) }}
+                                />
+                            </i>
+                        </div>
                     </div>
-                </div>
-                <div className="DP-preview" id="DP-preview">
-                    <img src={preview} />
-                    <div>
-                        <button
-                            onClick={() => { document.getElementById('DP-preview').style.transform = "scale(0)" }}
-                        >Cancel</button>
-                        <button
-                            onClick={changeDP}
-                            className="procee">Proceed</button>
+                    <div className="DP-preview" id="DP-preview">
+                        <img src={preview} />
+                        <div>
+                            <button
+                                onClick={() => { document.getElementById('DP-preview').style.transform = "scale(0)" }}
+                            >Cancel</button>
+                            <button
+                                onClick={changeDP}
+                                className="procee">Proceed</button>
+                        </div>
+
                     </div>
 
-                </div>
+                    <br /> <hr /> <br />
+                    <div className="about-you">
+                        <h3>Description</h3>
+                        <p> {descInput ?
 
-                <br /> <hr /> <br />
-                <div className="about-you">
-                    <h3>Description</h3>
-                    <p> {descInput ?
-
-                        <>
-                            <textarea
-                                value={desc}
-                                rows="8"
-                                onChange={(e) => { setDesc(e.target.value) }}
-                                placeholder="Max: 200 characters"
-                                maxLength="300"
-                            ></textarea>
-                            <button onClick={() => { setDescInput(false) }}>Cancel</button>
-                            <button className="procee" onClick={changeDesc}>Proceed</button>
-                        </> : desc}
-                        <i
-                            style={{ display: descInput ? "none" : "", fontSize: "smaller", marginLeft: "7px", color: "#4A0404", cursor: "pointer" }}
-                            onClick={() => { setDescInput(true) }}
-                        ><FaPen /></i></p>
-                </div>
+                            <>
+                                <textarea
+                                    value={desc}
+                                    rows="8"
+                                    onChange={(e) => { setDesc(e.target.value) }}
+                                    placeholder="Max: 200 characters"
+                                    maxLength="300"
+                                ></textarea>
+                                <button onClick={() => { setDescInput(false) }}>Cancel</button>
+                                <button className="procee" onClick={changeDesc}>Proceed</button>
+                            </> : desc}
+                            <i
+                                style={{ display: descInput ? "none" : "", fontSize: "smaller", marginLeft: "7px", color: "#4A0404", cursor: "pointer" }}
+                                onClick={() => { setDescInput(true) }}
+                            ><FaPen /></i></p>
+                    </div>
 
 
-                <img className="flag" src={flag} />
-                <br />
-                <hr /> <br />
-                <div className="profile-options">
-                    <div className="the-options">
+                    <img className="flag" src={flag} />
+                    <br />
+                    <hr /> <br />
+                    <div className="profile-options">
+                        <div className="the-options">
 
-                        <button
-                            style={dashbox === 0 ? highlightStyle : null}
-                            onClick={() => { setDashbox(0) }}>
-                            Profile
-                        </button> <hr />
-                        <button
-                            style={dashbox === 1 ? highlightStyle : null}
-                            onClick={() => { setDashbox(1) }}>
-                            Posts
-                        </button> <hr />
-                        {/* <button
+                            <button
+                                style={dashbox === 0 ? highlightStyle : null}
+                                onClick={() => { setDashbox(0) }}>
+                                Profile
+                            </button> <hr />
+                            <button
+                                style={dashbox === 1 ? highlightStyle : null}
+                                onClick={() => { setDashbox(1) }}>
+                                Posts
+                            </button> <hr />
+                            {/* <button
                             style={dashbox === 2 ? highlightStyle : null}
                             onClick={() => { setDashbox(2) }}>
                             Replies
                         </button> <hr /> */}
-                        <button
-                            style={dashbox === 3 ? highlightStyle : null}
-                            onClick={() => { setDashbox(3) }}>
-                            Bookmarks
-                        </button> <hr />
-                        <button
-                            style={dashbox === 4 ? highlightStyle : null}
-                            onClick={() => { setDashbox(4) }}>
-                            Stats
-                        </button> <hr />
-                        {/* <button
+                            <button
+                                style={dashbox === 3 ? highlightStyle : null}
+                                onClick={() => { setDashbox(3) }}>
+                                Bookmarks
+                            </button> <hr />
+                            <button
+                                style={dashbox === 4 ? highlightStyle : null}
+                                onClick={() => { setDashbox(4) }}>
+                                Stats
+                            </button> <hr />
+                            {/* <button
                             style={dashbox === 5 ? highlightStyle : null}
                             onClick={() => { setDashbox(5) }}>
                             Badge
                         </button> <hr /> */}
-                    </div>
-                    <div className="dashboard-box">
-                        <br />
-                        <div className="your-profile"
-                            style={{ display: dashbox !== 0 ? "none" : null }}
-                        >
-                            <p><b><FaUser /> Name: </b>{you.firstname} {you.lastname}</p>
-
-                            {originInput ?
-
-                                <>
-                                    <select
-                                        onChange={(e) => { setOrigin(e.target.value) }}
-                                    >
-                                        <option>Choose country of origin</option>
-
-                                        {
-                                            countries.sort((a, b) => a.name.common.localeCompare(b.name.common)).map(eachCountry => {
-                                                return (
-                                                    <option value={eachCountry.name.common}>
-                                                        {eachCountry.name.common}
-                                                    </option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                    <button onClick={() => { setOriginInput(false) }}>&#10006;</button>
-                                    <button className="procee" onClick={changeOrigin}>&#10003;</button> <br />
-                                </> : <p><b><ImEarth /> Nationality: </b>{origin}
-                                    <FaPen
-                                        style={{ display: originInput ? "none" : "", fontSize: "smaller", marginLeft: "7px", color: "#4A0404", cursor: "pointer" }}
-                                        onClick={() => { setOriginInput(true) }}
-                                    />
-                                </p>}
-
-
-
-                            {residenceInput ?
-
-                                <>
-                                    <select
-                                        onChange={(e) => { setResidence(e.target.value) }}
-                                    >
-                                        <option>Choose country of residence</option>
-                                        {
-                                            countries.sort((a, b) => a.name.common.localeCompare(b.name.common)).map(eachCountry => {
-                                                return (
-                                                    <option value={eachCountry.name.common}>
-                                                        {eachCountry.name.common}
-                                                    </option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                    <button onClick={() => { setResidenceInput(false) }}>&#10006;</button>
-                                    <button className="procee" onClick={changeResidence}>&#10003;</button> <br />
-                                </> : <p><b><FaHome /> Residence: </b>{residence}
-                                    <FaPen
-                                        style={{ display: residenceInput ? "none" : "", fontSize: "smaller", marginLeft: "7px", color: "#4A0404", cursor: "pointer" }}
-                                        onClick={() => { setResidenceInput(true) }}
-                                    />
-                                </p>}
-
-                            <p><b><FaCalendarAlt /> Born: </b>{you.dob}</p>
-                            <p><b><FaCalendarAlt /> Joined: </b>{you.datejoined}</p>
                         </div>
+                        <div className="dashboard-box">
+                            <br />
+                            <div className="your-profile"
+                                style={{ display: dashbox !== 0 ? "none" : null }}
+                            >
+                                <p><b><FaUser /> Name: </b>{you.firstname} {you.lastname}</p>
 
-                        {/* POSTS */}
-                        <div className="your-posts"
-                            style={{ display: dashbox !== 1 ? "none" : null }}
-                        >
-                            {yourPosts.map(eachPost => {
-                                return (
-                                    <div className="post">
-                                        <h3>{eachPost.title}</h3> <br />
-                                        <Link onClick={takeUp} to={`/post/${eachPost.link}`} style={linkStyle}>
+                                {originInput ?
 
-                                            <p>
-                                                {eachPost.postbody.substring(0, 70)}...
-                                            </p>
-                                        </Link>
+                                    <>
+                                        <select
+                                            onChange={(e) => { setOrigin(e.target.value) }}
+                                        >
+                                            <option>Choose country of origin</option>
 
-                                        <div className="post-details">
-                                            <div className="author">
-                                                <img src={eachPost.authordp} alt="" />
-                                                <h4>{eachPost.author}</h4>
-                                            </div>
+                                            {
+                                                countries.sort((a, b) => a.name.common.localeCompare(b.name.common)).map(eachCountry => {
+                                                    return (
+                                                        <option value={eachCountry.name.common}>
+                                                            {eachCountry.name.common}
+                                                        </option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                        <button onClick={() => { setOriginInput(false) }}>&#10006;</button>
+                                        <button className="procee" onClick={changeOrigin}>&#10003;</button> <br />
+                                    </> : <p><b><ImEarth /> Nationality: </b>{origin}
+                                        <FaPen
+                                            style={{ display: originInput ? "none" : "", fontSize: "smaller", marginLeft: "7px", color: "#4A0404", cursor: "pointer" }}
+                                            onClick={() => { setOriginInput(true) }}
+                                        />
+                                    </p>}
 
-                                            <h5><FaCalendarAlt />  &nbsp;
-                                                {`${months[parseInt(eachPost.date.slice(5, 7)) - 1]} ${eachPost.date.slice(8, 10)}, ${eachPost.date.slice(0, 4)}`}
-                                            </h5>
-                                            <h5><FaClock /> {eachPost.readtime} min read</h5>
-                                        </div>
 
-                                        <div className="cat-act">
-                                            <button>{eachPost.category}</button>
-                                            <div className="post-actions">
-                                                <p><FaThumbsUp /></p>
-                                                <p><FaThumbsDown /></p>
-                                                <p><FaBookmark /></p>
-                                                <p><FaPenAlt /></p>
-                                                <p><FaTrash /></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            })}
-                        </div>
 
-                        {/* REPLIES */}
-                        {/* <div className="your-replies"
-                            style={{ display: dashbox !== 2 ? "none" : null }}
-                        >
-                            YO' REPLies
-                        </div> */}
+                                {residenceInput ?
 
-                        {/* BOOKMARKS */}
-                        <div className="your-posts"
-                            style={{ display: dashbox !== 3 ? "none" : null }}
-                        >
-                            {posts.map(eachPost => {
-                                return (
-                                    <div className="post">
-                                        <Link onClick={takeUp} to="/blog" style={linkStyle}>
+                                    <>
+                                        <select
+                                            onChange={(e) => { setResidence(e.target.value) }}
+                                        >
+                                            <option>Choose country of residence</option>
+                                            {
+                                                countries.sort((a, b) => a.name.common.localeCompare(b.name.common)).map(eachCountry => {
+                                                    return (
+                                                        <option value={eachCountry.name.common}>
+                                                            {eachCountry.name.common}
+                                                        </option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                        <button onClick={() => { setResidenceInput(false) }}>&#10006;</button>
+                                        <button className="procee" onClick={changeResidence}>&#10003;</button> <br />
+                                    </> : <p><b><FaHome /> Residence: </b>{residence}
+                                        <FaPen
+                                            style={{ display: residenceInput ? "none" : "", fontSize: "smaller", marginLeft: "7px", color: "#4A0404", cursor: "pointer" }}
+                                            onClick={() => { setResidenceInput(true) }}
+                                        />
+                                    </p>}
+
+                                <p><b><FaCalendarAlt /> Born: </b>{you.dob}</p>
+                                <p><b><FaCalendarAlt /> Joined: </b>{you.datejoined}</p>
+                            </div>
+
+                            {/* POSTS */}
+                            <div className="your-posts"
+                                style={{ display: dashbox !== 1 ? "none" : null }}
+                            >
+                                {yourPosts.map(eachPost => {
+                                    return (
+                                        <div className="post">
                                             <h3>{eachPost.title}</h3> <br />
-                                            <p>
-                                                {eachPost.post.substring(0, 70)}...</p>
+                                            <Link onClick={takeUp} to={`/post/${eachPost.link}`} style={linkStyle}>
+
+                                                <p>
+                                                    {eachPost.postbody.substring(0, 70)}...
+                                                </p>
+                                            </Link>
 
                                             <div className="post-details">
                                                 <div className="author">
-                                                    <img src={eachPost.authordp} alt="eustace" />
+                                                    <img src={eachPost.authordp} alt="" />
                                                     <h4>{eachPost.author}</h4>
                                                 </div>
 
-                                                <h5><FaCalendarAlt /> {eachPost.date}</h5>
-                                                <h5><FaClock /> {eachPost.read} min read</h5>
+                                                <h5><FaCalendarAlt />  &nbsp;
+                                                    {`${months[parseInt(eachPost.date.slice(5, 7)) - 1]} ${eachPost.date.slice(8, 10)}, ${eachPost.date.slice(0, 4)}`}
+                                                </h5>
+                                                <h5><FaClock /> {eachPost.readtime} min read</h5>
                                             </div>
 
                                             <div className="cat-act">
@@ -552,118 +523,166 @@ function Dashboard() {
                                                     <p><FaTrash /></p>
                                                 </div>
                                             </div>
-                                        </Link>
-                                    </div>
-                                )
-                            })}
-                        </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
 
-                        <div className="your-stats"
-                            style={{ display: dashbox !== 4 ? "none" : null }}
+                            {/* REPLIES */}
+                            {/* <div className="your-replies"
+                            style={{ display: dashbox !== 2 ? "none" : null }}
                         >
-                            <div>
-                                <h3>Days</h3>
-                                <h1>{67}</h1>
-                            </div>
-                            <div>
-                                <h3>Posts</h3>
-                                <h1>{123}</h1>
-                            </div>
-                            <div>
-                                <h3>Replies</h3>
-                                <h1>{54}</h1>
-                            </div>
-                            <div>
-                                <h3>Bookmarks</h3>
-                                <h1>{54}</h1>
-                            </div>
-                            <div>
-                                <h3>Upvotes <br /> Received</h3>
-                                <h1>{54}</h1>
-                            </div>
-                            <div>
-                                <h3>Upvotes <br /> Given</h3>
-                                <h1>{54}</h1>
-                            </div>
-                            <div>
-                                <h3>Downvotes <br /> Receive</h3>
-                                <h1>{54}</h1>
-                            </div>
-                            <div>
-                                <h3>Downvotes <br /> Given</h3>
-                                <h1>{54}</h1>
-                            </div>
-                        </div>
+                            YO' REPLies
+                        </div> */}
 
-                        {/* BADGE */}
-                        {/* <div className="your-badge"
+                            {/* BOOKMARKS */}
+                            <div className="your-posts"
+                                style={{ display: dashbox !== 3 ? "none" : null }}
+                            >
+                               {yourBookmarks.map(eachPost => {
+                                    return (
+                                        <div className="post">
+                                            <h3>{eachPost.title}</h3> <br />
+                                            <Link onClick={takeUp} to={`/post/${eachPost.link}`} style={linkStyle}>
+
+                                                <p>
+                                                    {eachPost.postbody.substring(0, 70)}...
+                                                </p>
+                                            </Link>
+
+                                            <div className="post-details">
+                                                <div className="author">
+                                                    <img src={eachPost.authordp} alt="" />
+                                                    <h4>{eachPost.author}</h4>
+                                                </div>
+
+                                                <h5><FaCalendarAlt />  &nbsp;
+                                                    {`${months[parseInt(eachPost.date.slice(5, 7)) - 1]} ${eachPost.date.slice(8, 10)}, ${eachPost.date.slice(0, 4)}`}
+                                                </h5>
+                                                <h5><FaClock /> {eachPost.readtime} min read</h5>
+                                            </div>
+
+                                            <div className="cat-act">
+                                                <button>{eachPost.category}</button>
+                                                <div className="post-actions">
+                                                    <p><FaThumbsUp /></p>
+                                                    <p><FaThumbsDown /></p>
+                                                    <p><FaBookmark /></p>
+                                                    <p><FaPenAlt /></p>
+                                                    <p><FaTrash /></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+
+                            <div className="your-stats"
+                                style={{ display: dashbox !== 4 ? "none" : null }}
+                            >
+                                <div>
+                                    <h3>Days</h3>
+                                    <h1>{67}</h1>
+                                </div>
+                                <div>
+                                    <h3>Posts</h3>
+                                    <h1>{123}</h1>
+                                </div>
+                                <div>
+                                    <h3>Replies</h3>
+                                    <h1>{54}</h1>
+                                </div>
+                                <div>
+                                    <h3>Bookmarks</h3>
+                                    <h1>{54}</h1>
+                                </div>
+                                <div>
+                                    <h3>Upvotes <br /> Received</h3>
+                                    <h1>{54}</h1>
+                                </div>
+                                <div>
+                                    <h3>Upvotes <br /> Given</h3>
+                                    <h1>{54}</h1>
+                                </div>
+                                <div>
+                                    <h3>Downvotes <br /> Receive</h3>
+                                    <h1>{54}</h1>
+                                </div>
+                                <div>
+                                    <h3>Downvotes <br /> Given</h3>
+                                    <h1>{54}</h1>
+                                </div>
+                            </div>
+
+                            {/* BADGE */}
+                            {/* <div className="your-badge"
                             style={{ display: dashbox !== 5 ? "none" : null }}
                         >
                             <img src={badge} alt="" />
                             <h1>ROOKIE</h1>
                         </div> */}
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="dashboard-2">
-                <h2>Similar users</h2>
-                <div className="x-users">
-                    <Link style={xStyle} to="">
-                        <img className="d-img" src={dp} />
-                        <p>Adekunle Gold</p>
-                    </Link>
-                    <Link style={xStyle} to="">
-                        <img className="d-img" src={dp} />
-                        <p>Adekunle Gold</p>
-                    </Link>
-                    <Link style={xStyle} to="">
-                        <img className="d-img" src={dp} />
-                        <p>Adekunle Gold</p>
-                    </Link>
-                    <Link style={xStyle} to="">
-                        <img className="d-img" src={dp} />
-                        <p>Adekunle Gold</p>
-                    </Link>
-                    <Link style={xStyle} to="">
-                        <img className="d-img" src={dp} />
-                        <p>Adekunle Gold</p>
-                    </Link>
-                    <Link style={xStyle} to="">
-                        <img className="d-img" src={dp} />
-                        <p>Adekunle Gold</p>
-                    </Link>
+                <div className="dashboard-2">
+                    <h2>Similar users</h2>
+                    <div className="x-users">
+                        <Link style={xStyle} to="">
+                            <img className="d-img" src={dp} />
+                            <p>Adekunle Gold</p>
+                        </Link>
+                        <Link style={xStyle} to="">
+                            <img className="d-img" src={dp} />
+                            <p>Adekunle Gold</p>
+                        </Link>
+                        <Link style={xStyle} to="">
+                            <img className="d-img" src={dp} />
+                            <p>Adekunle Gold</p>
+                        </Link>
+                        <Link style={xStyle} to="">
+                            <img className="d-img" src={dp} />
+                            <p>Adekunle Gold</p>
+                        </Link>
+                        <Link style={xStyle} to="">
+                            <img className="d-img" src={dp} />
+                            <p>Adekunle Gold</p>
+                        </Link>
+                        <Link style={xStyle} to="">
+                            <img className="d-img" src={dp} />
+                            <p>Adekunle Gold</p>
+                        </Link>
+                    </div>
+
+                    <br />
+
+                    <h2>New posts</h2>
+                    <div className="x-posts">
+                        <div style={yStyle}>
+                            <Link to="">
+                                <h3>Demo post with lorem ipsum as content</h3>
+                            </Link>    <p style={{ margin: "10px 0" }}>lorem is a dummy text used in printing, web development and ui/ux design with a dog jumping over a very lazy fox</p>
+                            <p>by <b>Adekunle Gold</b></p>
+                        </div>
+                        <div style={yStyle}>
+                            <Link to="">
+                                <h3>Demo post with lorem ipsum as content</h3>
+                            </Link>    <p style={{ margin: "10px 0" }}>lorem is a dummy text used in printing, web development and ui/ux design with a dog jumping over a very lazy fox</p>
+                            <p>by <b>Adekunle Gold</b></p>
+                        </div>
+                        <div style={yStyle}>
+                            <Link to="">
+                                <h3>Demo post with lorem ipsum as content</h3>
+                            </Link>    <p style={{ margin: "10px 0" }}>lorem is a dummy text used in printing, web development and ui/ux design with a dog jumping over a very lazy fox</p>
+                            <p>by <b>Adekunle Gold</b></p>
+                        </div>
+
+
+                    </div>
+
                 </div>
 
-                <br />
-
-                <h2>New posts</h2>
-                <div className="x-posts">
-                    <div style={yStyle}>
-                        <Link to="">
-                            <h3>Demo post with lorem ipsum as content</h3>
-                        </Link>    <p style={{ margin: "10px 0" }}>lorem is a dummy text used in printing, web development and ui/ux design with a dog jumping over a very lazy fox</p>
-                        <p>by <b>Adekunle Gold</b></p>
-                    </div>
-                    <div style={yStyle}>
-                        <Link to="">
-                            <h3>Demo post with lorem ipsum as content</h3>
-                        </Link>    <p style={{ margin: "10px 0" }}>lorem is a dummy text used in printing, web development and ui/ux design with a dog jumping over a very lazy fox</p>
-                        <p>by <b>Adekunle Gold</b></p>
-                    </div>
-                    <div style={yStyle}>
-                        <Link to="">
-                            <h3>Demo post with lorem ipsum as content</h3>
-                        </Link>    <p style={{ margin: "10px 0" }}>lorem is a dummy text used in printing, web development and ui/ux design with a dog jumping over a very lazy fox</p>
-                        <p>by <b>Adekunle Gold</b></p>
-                    </div>
-
-
-                </div>
-
-            </div>
-
-            {/* <div className="dashboard-2">
+                {/* <div className="dashboard-2">
                 <div className="creds">
                     <h3><FaBriefcase /> Employment Credential</h3>
                     <p><b>Job Title: </b>{you.specialty}</p>
@@ -706,8 +725,8 @@ function Dashboard() {
                 </div>
             </div> */}
 
-        </div>
-    );
-}
+            </div>
+        );
+    }
 
-export default Dashboard;
+    export default Dashboard;
