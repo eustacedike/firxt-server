@@ -11,7 +11,13 @@ import axios from 'axios';
 import './home.css';
 
 import { FaChevronRight, FaBolt, FaClock, FaCalendarAlt, FaExclamationCircle, FaBook, FaThumbsUp, FaThumbsDown, FaBookmark } from 'react-icons/fa';
-import {ImFire} from 'react-icons/im';
+import { ImFire } from 'react-icons/im';
+
+import {upvote} from '../actions/votes.js';
+import {downvote} from '../actions/votes.js';
+import {bookmark} from '../actions/votes.js';
+
+import { getCurrentUser } from '../actions/getCurrentUser';
 
 
 import dp from "./assets/bg17.png"
@@ -19,24 +25,46 @@ import dp from "./assets/bg17.png"
 
 function Trending() {
 
-  const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","Nov","Dec"]
+  const [user, setUser] = useState({isAuthenticated: false});
+
+  useEffect(()=>{
+    setUser(getCurrentUser());
+  }, []);
+
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+
+  const [posts, setPosts] = useState([]);
+
+  const getPosts = () => {
+    axios.get("api/posts/fetchposts")
+      .then((response) => {
+
+        setPosts(response.data.reverse().slice(0, 3));
+      });
+
+  };
+
+  const [allUsers, setAllUsers] = useState([]);
+  const getUsers = () => {
+      axios.get("api/users/fetchusers")
+          .then((response) => {
+              // console.log(response.data.filter(a => { return a.email === user.email })[0].profileimage);
+              setAllUsers(response.data);
+          });
+
+  };
+
   
-
-const [posts, setPosts] = useState([]);
-
-const getPosts = () => {
-  axios.get("api/posts/fetchposts")
-    .then((response) => {
-
-      setPosts(response.data.reverse().slice(0,3));
-    });
-
-};
+  useEffect(() => {
+    getPosts();
+  }, [allUsers]);
 
 
-useEffect (()=>{
-getPosts();
-}, [posts]);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
 
   const linkStyle = {
@@ -45,7 +73,7 @@ getPosts();
   }
 
   const takeUp = () => {
-    window.scroll(0,0)
+    window.scroll(0, 0)
   };
 
   return (
@@ -55,46 +83,48 @@ getPosts();
       <div className="posts">
 
 
-      {posts.map(eachPost => {
+        {posts.map(eachPost => {
           return (
             <div className="post">
-              
-          <h3>{eachPost.title}</h3> <br />
-          <Link onClick={takeUp} to={`/post/${eachPost.link}`} style={linkStyle}>
-          <p>
-            <FaBook /> {eachPost.postbody.substring(0,200)}...</p>
-            </Link>
-          <div className="post-details">
-            <div className="author">
-              <img src={dp} alt="" />
-              <h4>{eachPost.author}</h4>
+
+              <h3>{eachPost.title}</h3> <br />
+              <Link onClick={takeUp} to={`/post/${eachPost.link}`} style={linkStyle}>
+                <p>
+                  <FaBook /> {eachPost.postbody.substring(0, 200)}...</p>
+              </Link>
+              <div className="post-details">
+                <Link onClick={takeUp} to={`/user/${eachPost.authorlink}`} style={linkStyle}>
+                  <div className="author">
+                  <img wait={2000} src={allUsers.filter(a => { return a.email === eachPost.authormail })[0].profileimage} alt="" />
+
+                    <h4>{eachPost.author}</h4>
+                  </div>
+                </Link>
+
+                <h5><FaCalendarAlt />
+                  {` ${months[parseInt(eachPost.date.slice(5, 7)) - 1]} ${eachPost.date.slice(8, 10)}, ${eachPost.date.slice(0, 4)}`
+
+                  }
+                </h5>
+                <h5><FaClock /> {eachPost.readtime} min read</h5>
+              </div>
+
+              <div className="cat-act">
+                <button>{eachPost.category}</button>
+                <div className="post-actions">
+                <p>{eachPost.upvotes} <FaThumbsUp onClick={()=>{upvote(eachPost._id, user.email)}}/></p>
+            <p>{eachPost.downvotes} <FaThumbsDown onClick={()=>{downvote(eachPost._id, user.email)}}/></p>
+            <p><FaBookmark onClick={()=>{bookmark(eachPost._id, user.email)}}/></p>
+                </div>
+              </div>
+
             </div>
-
-            <h5><FaCalendarAlt/> 
-            {` ${months[parseInt(eachPost.date.slice(5,7))-1]} ${eachPost.date.slice(8,10)}, ${eachPost.date.slice(0,4)}`
-
-}
-            </h5>
-            <h5><FaClock/> {eachPost.readtime} min read</h5>
-          </div>
-
-            <div className="cat-act">
-              <button>{eachPost.category}</button>
-          <div className="post-actions">
-            <p><FaThumbsUp /></p>
-            <p><FaThumbsDown /></p>
-            <p><FaBookmark /></p>
-            {/* <p><FaExclamationCircle /></p> */}
-          </div>
-          </div>
-          
-        </div>
           )
         })}
       </div>
 
       <button className="more">
-      <Link onClick={takeUp} to="/trending" style={linkStyle}>Trending Posts <FaChevronRight style={{verticalAlign: "-2.5px", marginLeft: "10px"}}/> </Link>
+        <Link onClick={takeUp} to="/trending" style={linkStyle}>Trending Posts <FaChevronRight style={{ verticalAlign: "-2.5px", marginLeft: "10px" }} /> </Link>
       </button>
     </div>
   );

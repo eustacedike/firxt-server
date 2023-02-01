@@ -101,7 +101,7 @@ function App() {
                       title={eachPost.title}
                       category={eachPost.category}
                       author={eachPost.author}
-                      // authormail={}
+                      authorlink={eachPost.authorlink}
                       date={eachPost.date}
                       read={eachPost.readtime}
                       mainpost={eachPost.postbody}
@@ -125,12 +125,14 @@ function App() {
                       firstname={eachUser.firstname}
                       lastname={eachUser.lastname}
                       specialty={eachUser.specialty}
+                      gender={eachUser.gender}
                       about={eachUser.about}
-                      country={eachUser.country}
+                      origin={eachUser.origin}
+                      residence={eachUser.residence}
+                      avatar={eachUser.profileimage}
                       date={eachUser.date}
-                      workplace={eachUser.workplace}
-                      jobdesc={eachUser.jobdesc}
-
+           
+                      posts={allPosts.filter(a => { return a.authormail === eachUser.email })}
                     />}
                   />
 

@@ -161,6 +161,8 @@
 
 .author img {
     height: 30px;
+    width: 30px;
+    border-radius: 50%;
 }
 
 .cat-act {
@@ -187,8 +189,8 @@
 }
 
 .post-actions p:hover {
-    transform: scale(1.06);
-    color: red;
+    transform: scale(1.01);
+    color: var(--primary);
     transition: 0s;
 }
 

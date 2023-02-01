@@ -100,3 +100,13 @@ background-color: rgb(0, 0, 0, 0.95);
  color: white;
 }
 
+#remove-image {
+    color: white;
+    text-align: right;
+    cursor: pointer;
+    display: none;
+}
+
+.blog-image-preview {
+    width: 100%;
+}

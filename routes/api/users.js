@@ -94,7 +94,9 @@ router.post("/login", (req, res) => {
         const payload = {
           id: user.id,
           email: user.email,
-          name: user.firstname,
+          name: user.firstname + " " + user.lastname,
+          link: user.link,
+          isAuthenticated: true,
         };
 
         console.log(user.firstname);

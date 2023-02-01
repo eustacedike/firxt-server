@@ -2,9 +2,9 @@
 
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import { useCookies } from "react-cookie";
+// import { useCookies } from "react-cookie";
 
 import axios from 'axios';
 
@@ -17,10 +17,19 @@ import {upvote} from '../actions/votes.js';
 import {downvote} from '../actions/votes.js';
 import {bookmark} from '../actions/votes.js';
 
+import { getCurrentUser } from '../actions/getCurrentUser';
+
 import dp from "../Home/assets/bg17.png";
 
 
 function Reader(props) {
+
+    
+  const [user, setUser] = useState({isAuthenticated: false});
+
+  useEffect(()=>{
+    setUser(getCurrentUser());
+  }, []);
 
     const navigate = useNavigate();
 
@@ -36,9 +45,9 @@ function Reader(props) {
 
     // };
 
-    const [cookies, setCookie, removeCookie] = useCookies(['user']);
+    // const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
-    const isAuthenticated = (cookies.isAuthenticated === 'true');
+    // const isAuthenticated = (cookies.isAuthenticated === 'true');
 
     // console.log(new Date());
 
@@ -53,7 +62,7 @@ function Reader(props) {
         title: props.title,
         category: props.category,
         author: props.author,
-        // authormail: props.authormail,
+        authorlink: props.authorlink,
         authordp: dp,
         date: myDate,
         read: props.read,
@@ -68,6 +77,9 @@ function Reader(props) {
         color: "unset"
     }
 
+    const takeUp = () => {
+        window.scroll(0, 0)
+      };
 
 
     const deletePost = () => {
@@ -101,8 +113,9 @@ function Reader(props) {
             .post("/api/posts/sendreply", {
                 reply: reply,
                 id: props.id,
-                replyauthor: cookies.FirstName + " " + cookies.LastName,
-                replyauthoremail: cookies.Email,
+                replyauthor: user.name,
+                replyauthoremail: user.email,
+                replyauthorlink: user.link,
                 replytime: time,
             })
 
@@ -117,7 +130,7 @@ function Reader(props) {
 
  
 
-    return (
+    return (  
         <div className="Reader">
 
             <h1>
@@ -130,10 +143,12 @@ function Reader(props) {
 
 
             <div className="post-details">
-                <div className="author">
-                    <img src={thisPost.authordp} alt="eustace" />
+            <Link onClick={takeUp} to={`/user/${thisPost.authorlink}`} style={linkStyle}>
+                  <div className="author">
+                    <img src={dp} alt="" />
                     <h4>{thisPost.author}</h4>
-                </div>
+                  </div>
+                </Link>
 
                 <h5><FaCalendarAlt /> {thisPost.date}</h5>
                 <h5><FaClock /> {thisPost.read} min read</h5>
@@ -146,10 +161,10 @@ function Reader(props) {
             <div className="cat-act">
                 <button>{thisPost.category}</button>
                 <div className="post-actions">
-                    <p>{thisPost.upvotes} <FaThumbsUp onClick={()=>{upvote(props.id, cookies.Email)}}/></p>
-                    <p>{thisPost.downvotes}<FaThumbsDown onClick={()=>{downvote(props.id, cookies.Email)}}/></p>
-                    <p><FaBookmark onClick={()=>{bookmark(props.id, cookies.Email)}}/></p>
-                    <p>{thisPost.author === cookies.FirstName + " " + cookies.LastName ? <FaTrash
+                    <p>{thisPost.upvotes} <FaThumbsUp onClick={()=>{upvote(props.id, user.email)}}/></p>
+                    <p>{thisPost.downvotes}<FaThumbsDown onClick={()=>{downvote(props.id, user.email)}}/></p>
+                    <p><FaBookmark onClick={()=>{bookmark(props.id, user.email)}}/></p>
+                    <p>{thisPost.authormail === user.email ? <FaTrash
                         onClick={deletePost}
                     /> : <FaExclamationCircle />}</p>
                     {/* <p><FaExclamationCircle /></p> */}
@@ -166,7 +181,7 @@ function Reader(props) {
                 <button>Comment</button>
             </form> */}
             <form
-                style={{ display: isAuthenticated ? "" : "none" }}
+                style={{ display: user.isAuthenticated ? "" : "none" }}
                 onSubmit={sendReply}
                 noValidate> <br />
                 <input

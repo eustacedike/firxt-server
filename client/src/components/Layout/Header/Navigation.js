@@ -9,6 +9,8 @@ import { useCookies } from 'react-cookie';
 
 import axios from 'axios';
 
+import { getCurrentUser } from '../../actions/getCurrentUser';
+
 
 import { FaBolt, FaChevronDown, FaSearch, FaPenFancy, FaClock, FaUser } from 'react-icons/fa';
 import { ImFire } from 'react-icons/im';
@@ -21,12 +23,21 @@ let Topics = [];
 Object.keys(categories.cats).map(key =>
   Topics.push(categories.cats[key].name)
   )
-// console.log(Topics);
+
 
 
 
 
 function Navigation() {
+
+
+  const [user, setUser] = useState({isAuthenticated: false});
+
+  useEffect(()=>{
+    setUser(getCurrentUser());
+  }, []);
+
+  // console.log(user);
 
   const [whitenav, setWhitenav] = useState(false);
   const [mobile, setMobile] = useState(false);
@@ -109,7 +120,7 @@ const logoutUser = () => {
 
 
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
-  const isAuthenticated = (cookies.isAuthenticated === 'true');
+  // const isAuthenticated = (cookies.isAuthenticated === 'true');
 
 
 
@@ -168,10 +179,10 @@ const logoutUser = () => {
 
           </ul>
           <div className="auth">
-            <Link onClick={takeUp} to="/profile" style={linkStyle}><button style={{display: isAuthenticated? "" : "none"}}><FaUser/></button></Link>
-            <Link onClick={takeUp} to="/login" style={linkStyle}><button style={{display: isAuthenticated? "none" : ""}}>Login</button></Link>
-            <Link onClick={takeUp} to="/register" style={linkStyle}><button style={{display: isAuthenticated? "none" : ""}}>Sign Up</button></Link>
-            <button onClick={logoutUser} style={{display: isAuthenticated? "" : "none"}}>Log Out</button>
+            <Link onClick={takeUp} to="/profile" style={linkStyle}><button style={{display: user.isAuthenticated? "" : "none"}}><FaUser/></button></Link>
+            <Link onClick={takeUp} to="/login" style={linkStyle}><button style={{display: user.isAuthenticated? "none" : ""}}>Login</button></Link>
+            <Link onClick={takeUp} to="/register" style={linkStyle}><button style={{display: user.isAuthenticated? "none" : ""}}>Sign Up</button></Link>
+            <button onClick={logoutUser} style={{display: user.isAuthenticated? "" : "none"}}>Log Out</button>
           </div>
           <div className="search">
             <input
@@ -217,10 +228,10 @@ const logoutUser = () => {
 
         </ul>
         <div>
-        <Link onClick={takeUp} to="/profile" style={linkStyle}><button style={{display: isAuthenticated? "" : "none"}}><FaUser/></button></Link>  
-            <Link onClick={takeUp} to="/login" style={linkStyle}><button style={{display: isAuthenticated? "none" : ""}}>Login</button></Link> <br/>
-            <Link onClick={takeUp} to="/register" style={linkStyle}><button style={{display: isAuthenticated? "none" : ""}}>Sign Up</button></Link>
-            <button onClick={logoutUser} style={{display: isAuthenticated? "" : "none"}}>Log Out</button>
+        <Link onClick={takeUp} to="/profile" style={linkStyle}><button style={{display: user.isAuthenticated? "" : "none"}}><FaUser/></button></Link>  
+            <Link onClick={takeUp} to="/login" style={linkStyle}><button style={{display: user.isAuthenticated? "none" : ""}}>Login</button></Link> <br/>
+            <Link onClick={takeUp} to="/register" style={linkStyle}><button style={{display: user.isAuthenticated? "none" : ""}}>Sign Up</button></Link>
+            <button onClick={logoutUser} style={{display: user.isAuthenticated? "" : "none"}}>Log Out</button>
         </div>
 
       </div>

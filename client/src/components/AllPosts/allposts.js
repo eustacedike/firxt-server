@@ -11,6 +11,11 @@ import './allposts.css';
 
 import { FaExclamationCircle, FaChevronRight, FaClock, FaCalendarAlt, FaBook, FaThumbsUp, FaThumbsDown, FaBookmark } from 'react-icons/fa';
 
+import {upvote} from '../actions/votes.js';
+import {downvote} from '../actions/votes.js';
+import {bookmark} from '../actions/votes.js';
+
+import { getCurrentUser } from '../actions/getCurrentUser';
 
 
 import dp from "../Home/assets/bg17.png";
@@ -19,13 +24,24 @@ import dp from "../Home/assets/bg17.png";
 function AllPosts(props) {
 
 
-  // const posts = [
-  //   { id: 1, title: "Metalogy X Global Ambassador Program", category: "Tech", author: "Eustace Dike", authordp: dp, date: "Jan 01, 2023", read: 5, post: "What’s the Metalogy X Ambassadors Program? This Ambassadors Program is created by/for individuals that are enthusiastic about all-things Web3 and are willing to help the Metalogy X's community grow.." },
-  //   { id: 2, title: "Why you should care about p2p social", category: "Finance", author: "Uri Valeski", authordp: dp, date: "Dec 04, 2022", read: 10, post: "What’s the Metalogy X Ambassadors Program? This Ambassadors Program is created by/for individuals that are enthusiastic about all-things Web3 and are willing to help the Metalogy X's community grow.." },
-  //   { id: 3, title: "Top ten best meals for breakfast", category: "Food", author: "Salt Bae", authordp: dp, date: "Sep 02, 2021", read: 2, post: "What’s the Metalogy X Ambassadors Program? This Ambassadors Program is created by/for individuals that are enthusiastic about all-things Web3 and are willing to help the Metalogy X's community grow.." },
+
+  const [user, setUser] = useState({isAuthenticated: false});
+
+  useEffect(()=>{
+    setUser(getCurrentUser());
+  }, []);
 
 
-  // ]
+  const [allUsers, setAllUsers] = useState([]);
+
+  const getUsers = () => {
+    axios.get("api/users/fetchusers")
+        .then((response) => {
+            // console.log(response.data.filter(a => { return a.email === user.email })[0].profileimage);
+            setAllUsers(response.data);
+        });
+
+};
 
   const [posts, setPosts] = useState([]);
 
@@ -39,10 +55,21 @@ function AllPosts(props) {
   };
 
 
-useEffect (()=>{
+
+
+useEffect(() => {
   getPosts();
 }, [posts]);
 
+
+
+useEffect(() => {
+  getUsers();
+}, []);
+
+setInterval(()=>{
+// console.log(allUsers.filter(a => { return a.email === "eustacedyke@gmail.com" })[0].profileimage)
+}, 3000)
 
 const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","Nov","Dec"]
 
@@ -94,10 +121,13 @@ const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","No
 
 
           <div className="post-details">
-            <div className="author">
-              <img src={eachPost.authordp} alt="" />
-              <h4>{eachPost.author}</h4>
-            </div>
+          <Link onClick={takeUp} to={`/user/${eachPost.authorlink}`} style={linkStyle}>
+                  <div className="author">
+                  <img wait={2000} src={allUsers.filter(a => { return a.email === eachPost.authormail })[0].profileimage} alt="" />
+
+                    <h4>{eachPost.author}</h4>
+                  </div>
+                </Link>
 
             <h5><FaCalendarAlt/>  {` ${months[parseInt(eachPost.date.slice(5,7))-1]} ${eachPost.date.slice(8,10)}, ${eachPost.date.slice(0,4)}`}</h5>
             <h5><FaClock/> {eachPost.readtime} min read</h5>
@@ -106,10 +136,10 @@ const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","No
             <div className="cat-act">
               <button>{eachPost.category}</button>
           <div className="post-actions">
-            <p><FaThumbsUp /></p>
-            <p><FaThumbsDown /></p>
-            <p><FaBookmark /></p>
-            {/* <p><FaExclamationCircle /></p> */}
+          <p>{eachPost.upvotes} <FaThumbsUp onClick={()=>{upvote(eachPost._id, user.email)}}/></p>
+            <p>{eachPost.downvotes} <FaThumbsDown onClick={()=>{downvote(eachPost._id, user.email)}}/></p>
+            <p><FaBookmark onClick={()=>{bookmark(eachPost._id, user.email)}}/></p>
+             
           </div>
           </div>
         </div>
