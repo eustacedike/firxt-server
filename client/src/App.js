@@ -17,6 +17,7 @@ import Topics from "./components/Topics/topics";
 import Dashboard from "./components/Dashboard/dashboard";
 import OtherUser from "./components/Dashboard/otheruser";
 import Loading from "./components/Loading/loading";
+import Error from "./components/ErrorPage/404page";
 
 import './App.css';
 
@@ -79,6 +80,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="blog" element={<Reader />} />
             <Route path="loading" element={<Loading />} />
+            <Route path="*" element={<Error />} />
 
             {
               Object.keys(categories.cats).map(key =>
@@ -102,6 +104,9 @@ function App() {
                       category={eachPost.category}
                       author={eachPost.author}
                       authordp={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.profileimage}
+                      userlikes={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.liked}
+                      userdislikes={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.disliked}
+                      userbookmarks={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.bookmarked}
                       authorlink={eachPost.authorlink}
                       date={eachPost.date}
                       read={eachPost.readtime}

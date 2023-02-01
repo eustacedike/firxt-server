@@ -1,0 +1,34 @@
+.Alert {
+    padding: 20px;
+    background-color: rgb(244, 67, 54, 0.95);
+    color: white;
+    max-width: 600px;
+    width: 100vw;
+    font-size: clamp(12px,1.8vw,18px);
+}
+  
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+  
+.closebtn:hover {
+    color: black;
+}
+
+.Alert hr {
+    width: 100%;
+    animation: rundown 3s linear;
+    border: 1px solid pink !important;
+}
+
+@keyframes rundown {
+    from {width: 100%;}
+    to {width: 0%;}
+}

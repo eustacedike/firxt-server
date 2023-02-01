@@ -1,5 +1,5 @@
 .Reader {
-    width: 95%;
+    width: 98%;
     max-width: 800px;
     margin: 0 auto;
     padding: 40px 4vw;
@@ -15,17 +15,18 @@
 
 .main-post {
     margin: 40px 0;
-    background: rgb(255,255,255, 0.4);
-    /* font-size: larger; */
+    background: rgb(255,255,255);
+    font-size: clamp(13px, 1.8vw, 18px);
     padding: 10px 8px;
     border-radius: 4px;
-    line-height: clamp(28px, 3vw, 36px);
+    line-height: clamp(26px, 3.2vw, 32px);
     display: flex;
 }
 
 .main-post img {
     width: 100%;
     max-width: 400px;
+    height: fit-content;
 }
 
 .Reader hr {
@@ -39,7 +40,6 @@
     border: none;
     outline: none;
     border-bottom: 1px solid var(--primary);
-    /* border-radius: 5px; */
 }
 
 .Reader form button {

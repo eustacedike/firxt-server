@@ -19,7 +19,7 @@ import {bookmark} from '../actions/votes.js';
 
 import { getCurrentUser } from '../actions/getCurrentUser';
 
-import dp from "../Home/assets/bg17.png";
+import Alert from '../CustomAlert/alert';
 
 
 function Reader(props) {
@@ -33,23 +33,7 @@ function Reader(props) {
 
     const navigate = useNavigate();
 
-    // const thisPost =
-    // {
-    //     title: "Metalogy X Global Ambassador Program",
-    //     category: "Tech",
-    //     author: "Eustace Dike",
-    //     authordp: dp,
-    //     date: "Jan 01, 2023",
-    //     read: 5,
-    //     post: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam aperiam aliquam consequatur asperiores magni impedit debitis maiores nulla sequi ut delectus esse magnam vitae obcaecati totam itaque maxime, laboriosam accusantium ullam? Modi, voluptate ipsum. What’s the Metalogy X Ambassadors Program? This Ambassadors Program is created by/for individuals that are enthusiastic about all-things Web3 and are willing to help the Metalogy X's community grow.."
-
-    // };
-
-    // const [cookies, setCookie, removeCookie] = useCookies(['user']);
-
-    // const isAuthenticated = (cookies.isAuthenticated === 'true');
-
-    // console.log(new Date());
+  
 
 
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -129,10 +113,16 @@ function Reader(props) {
     };
 
  
+    const alertBox = () => {
+        document.getElementById('alert').style.display = "block";
+        setTimeout(() => { document.getElementById('alert').style.display = "none" }, 3000);
+      };
 
     return (  
         <div className="Reader">
-
+ <div id='alert'>
+        <Alert/>
+      </div>
             <h1>
                 {/* <FaClock style={{verticalAlign: "-4.5px"}}/> */}
                 {thisPost.title}</h1>
@@ -161,14 +151,24 @@ function Reader(props) {
             <div className="cat-act">
                 <button>{thisPost.category}</button>
                 <div className="post-actions">
-                    <p>{thisPost.upvotes} <FaThumbsUp onClick={()=>{upvote(props.id, user.email)}}/></p>
+                <p style={{ color: props.userlikes?.includes(props.id) ? "red" : "" }}>
+                    {thisPost.upvotes} &nbsp;
+                    <FaThumbsUp onClick={user.isAuthenticated ? () => { upvote(props.id, user.email) } : alertBox} />
+                  </p>
+                  <p style={{ color: props.userdislikes?.includes(props.id) ? "red" : "" }}>
+                    {thisPost.downvotes} &nbsp;
+                    <FaThumbsDown onClick={user.isAuthenticated ? () => { downvote(props.id, user.email) } : alertBox} />
+                  </p>
+                  <p style={{ color: props.userbookmarks?.includes(props.id) ? "red" : "" }}>
+                    <FaBookmark onClick={user.isAuthenticated ? () => { bookmark(props.id, user.email) } : alertBox} />
+                  </p>
+                    {/* <p>{thisPost.upvotes} <FaThumbsUp onClick={()=>{upvote(props.id, user.email)}}/></p>
                     <p>{thisPost.downvotes}<FaThumbsDown onClick={()=>{downvote(props.id, user.email)}}/></p>
-                    <p><FaBookmark onClick={()=>{bookmark(props.id, user.email)}}/></p>
+                    <p><FaBookmark onClick={()=>{bookmark(props.id, user.email)}}/></p> */}
                     <p>{thisPost.authormail === user.email ? <FaTrash
-                        onClick={deletePost}
+                        onClick={user.isAuthenticated ? deletePost : alertBox}
                     /> : <FaExclamationCircle />}</p>
-                    {/* <p><FaExclamationCircle /></p> */}
-                    {/* <p><FaTrash /></p> */}
+                   
                 </div>
             </div>
 

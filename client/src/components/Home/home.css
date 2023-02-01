@@ -19,6 +19,15 @@
     flex-direction: column;
 }
 
+#alert {
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 7;
+    display: none;
+}
+
 @keyframes bgchange {
     0% {
         background-image: url(./assets/bg15.png);

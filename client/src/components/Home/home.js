@@ -9,12 +9,14 @@ import Hero from './hero';
 import Latest from './latest';
 import Trending from './trending';
 import Explore from './explore';
+import Alert from '../CustomAlert/alert';
 
 function Home() {
 
 
   const [xplore, setXplore] = useState(false);
-  // const homee = useRef();
+  
+  
 
 
  window.onscroll = () => {
@@ -27,6 +29,10 @@ function Home() {
 
   return (
     <div className="Home">
+      <div id='alert'>
+        <Alert/>
+      </div>
+      
       <div className="big-hero">
         <Hero/>
       </div>

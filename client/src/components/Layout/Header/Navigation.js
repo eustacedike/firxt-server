@@ -142,6 +142,7 @@ const logoutUser = () => {
             location.pathname === "/write" ? "Navigation nav-alt" :
               location.pathname === "/categories" ? "Navigation nav-alt2" :
                 location.pathname === "/loading" ? "Navigation nav-alt2" :
+                location.pathname === '/error' ? "Navigation nav-alt2" :
                 "Navigation"}
 
         style={{
