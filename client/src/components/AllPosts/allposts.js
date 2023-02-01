@@ -59,13 +59,13 @@ function AllPosts(props) {
 
 useEffect(() => {
   getPosts();
-}, [posts]);
+}, []);
 
 
 
 useEffect(() => {
   getUsers();
-}, []);
+}, [posts]);
 
 setInterval(()=>{
 // console.log(allUsers.filter(a => { return a.email === "eustacedyke@gmail.com" })[0].profileimage)
@@ -123,8 +123,8 @@ const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","No
           <div className="post-details">
           <Link onClick={takeUp} to={`/user/${eachPost.authorlink}`} style={linkStyle}>
                   <div className="author">
-                  <img wait={2000} src={allUsers.filter(a => { return a.email === eachPost.authormail })[0].profileimage} alt="" />
-
+                  <img wait={3000} src={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.profileimage} alt="" />
+                {/* <p wait={3000}>{allUsers.filter(a => { return a.email === eachPost.authormail })[0]._id}</p> */}
                     <h4>{eachPost.author}</h4>
                   </div>
                 </Link>

@@ -101,6 +101,7 @@ function App() {
                       title={eachPost.title}
                       category={eachPost.category}
                       author={eachPost.author}
+                      authordp={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.profileimage}
                       authorlink={eachPost.authorlink}
                       date={eachPost.date}
                       read={eachPost.readtime}

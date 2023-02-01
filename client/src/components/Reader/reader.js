@@ -63,7 +63,7 @@ function Reader(props) {
         category: props.category,
         author: props.author,
         authorlink: props.authorlink,
-        authordp: dp,
+        authordp: props.authordp,
         date: myDate,
         read: props.read,
         post: props.mainpost,
@@ -145,7 +145,7 @@ function Reader(props) {
             <div className="post-details">
             <Link onClick={takeUp} to={`/user/${thisPost.authorlink}`} style={linkStyle}>
                   <div className="author">
-                    <img src={dp} alt="" />
+                    <img src={thisPost.authordp} alt="" />
                     <h4>{thisPost.author}</h4>
                   </div>
                 </Link>

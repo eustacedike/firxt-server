@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { useState, useEffect } from 'react';
 
-// import { useCookies } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 
 import axios from 'axios';
 
@@ -32,7 +32,7 @@ function Latest() {
     setUser(getCurrentUser());
   }, []);
 
-  // const [cookies, setCookie, removeCookie] = useCookies(['user']);
+  const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
 
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -43,11 +43,19 @@ function Latest() {
  
 
   const [allUsers, setAllUsers] = useState([]);
+
+  const [userBookmarks, setUserBookmarks] = useState([]);
+  const [userLikes, setUserLikes] = useState([]);
+  const [userDislikes, setUserDislikes] = useState([]);
+
   const getUsers = () => {
       axios.get("api/users/fetchusers")
           .then((response) => {
               // console.log(response.data.filter(a => { return a.email === user.email })[0].profileimage);
               setAllUsers(response.data);
+              setUserBookmarks(response.data.filter(a => { return a.email === cookies.Email })[0]?.bookmarked);
+                setUserLikes(response.data.filter(a => { return a.email === cookies.Email })[0].liked);
+                setUserDislikes(response.data.filter(a => { return a.email === cookies.Email })[0]?.disliked);
           });
 
   };
@@ -76,6 +84,8 @@ function Latest() {
     getUsers();
 }, []);
 
+  // console.log(userLikes.includes('63da5f20e00a30e89f7f0e6d'));
+  // console.log(posts[0]);
 
   const linkStyle = {
     textDecoration: "none",
@@ -106,7 +116,7 @@ function Latest() {
               <div className="post-details">
                 <Link onClick={takeUp} to={`/user/${eachPost.authorlink}`} style={linkStyle}>
                   <div className="author">
-                    <img wait={2000} src={allUsers.filter(a => { return a.email === eachPost.authormail })[0].profileimage} alt="" />
+                    <img wait={2000} src={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.profileimage} alt="" />
                     <h4>{eachPost.author}</h4>
                   </div>
                 </Link>
@@ -122,9 +132,11 @@ function Latest() {
               <div className="cat-act">
                 <button>{eachPost.category}</button>
                 <div className="post-actions">
-                <p>{eachPost.upvotes} <FaThumbsUp onClick={()=>{upvote(eachPost._id, user.email)}}/></p>
-            <p>{eachPost.downvotes} <FaThumbsDown onClick={()=>{downvote(eachPost._id, user.email)}}/></p>
-            <p><FaBookmark onClick={()=>{bookmark(eachPost._id, user.email)}}/></p>
+                <p
+                style={{color: userLikes.includes(eachPost._id)? "red" : ""}}
+                >{eachPost.upvotes} <FaThumbsUp onClick={()=>{upvote(eachPost._id, user.email)}}/></p>
+            <p style={{color: userDislikes.includes(eachPost._id)? "red" : ""}}>{eachPost.downvotes} <FaThumbsDown onClick={()=>{downvote(eachPost._id, user.email)}}/></p>
+            <p style={{color: userBookmarks.includes(eachPost._id)? "red" : ""}}><FaBookmark onClick={()=>{bookmark(eachPost._id, user.email)}}/></p>
                 </div>
               </div>
 

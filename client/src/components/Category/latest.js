@@ -32,6 +32,17 @@ function Latest(props) {
     setUser(getCurrentUser());
   }, []);
 
+  const [allUsers, setAllUsers] = useState([]);
+  const getUsers = () => {
+      axios.get("api/users/fetchusers")
+          .then((response) => {
+              // console.log(response.data.filter(a => { return a.email === user.email })[0].profileimage);
+              setAllUsers(response.data);
+          });
+
+  };
+
+
   
   const [posts, setPosts] = useState([]);
 
@@ -46,9 +57,13 @@ function Latest(props) {
   };
 
 
-useEffect (()=>{
-  getPosts();
-}, [posts]);
+  useEffect(() => {
+    getPosts();
+  }, [allUsers]);
+
+  useEffect(() => {
+    getUsers();
+}, []);
 
 
 const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","Nov","Dec"]
@@ -83,7 +98,7 @@ const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","No
           <div className="post-details">
           <Link onClick={takeUp} to={`/user/${eachPost.authorlink}`} style={linkStyle}>
                   <div className="author">
-                    <img src={dp} alt="" />
+                  <img wait={3000} src={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.profileimage} alt="" />
                     <h4>{eachPost.author}</h4>
                   </div>
                 </Link>
