@@ -13,9 +13,9 @@ import './reader.css';
 import { FaExclamationCircle, FaTrash, FaClock, FaCalendarAlt, FaBook, FaThumbsUp, FaThumbsDown, FaBookmark } from 'react-icons/fa';
 
 
-import {upvote} from '../actions/votes.js';
-import {downvote} from '../actions/votes.js';
-import {bookmark} from '../actions/votes.js';
+import { upvote } from '../actions/votes.js';
+import { downvote } from '../actions/votes.js';
+import { bookmark } from '../actions/votes.js';
 
 import { getCurrentUser } from '../actions/getCurrentUser';
 
@@ -24,16 +24,16 @@ import Alert from '../CustomAlert/alert';
 
 function Reader(props) {
 
-    
-  const [user, setUser] = useState({isAuthenticated: false});
 
-  useEffect(()=>{
-    setUser(getCurrentUser());
-  }, []);
+    const [user, setUser] = useState({ isAuthenticated: false });
+
+    useEffect(() => {
+        setUser(getCurrentUser());
+    }, []);
 
     const navigate = useNavigate();
 
-  
+
 
 
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -63,7 +63,7 @@ function Reader(props) {
 
     const takeUp = () => {
         window.scroll(0, 0)
-      };
+    };
 
 
     const deletePost = () => {
@@ -112,17 +112,35 @@ function Reader(props) {
 
     };
 
- 
+    const deleteReply = (a) => {
+
+
+
+        axios
+            .post("/api/posts/deletereply", { id: props.id, replyIndex: a})
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                const errors = err.response.data;
+                console.log(err.response.data)
+            });
+
+    }
+
+
     const alertBox = () => {
         document.getElementById('alert').style.display = "block";
         setTimeout(() => { document.getElementById('alert').style.display = "none" }, 3000);
-      };
+    };
 
-    return (  
+    // console.log(props.allUsers.filter(a => { return a.email === "eustacedyke@gmail.com" })[0]?.profileimage);
+
+    return (
         <div className="Reader">
- <div id='alert'>
-        <Alert/>
-      </div>
+            <div id='alert'>
+                <Alert />
+            </div>
             <h1>
                 {/* <FaClock style={{verticalAlign: "-4.5px"}}/> */}
                 {thisPost.title}</h1>
@@ -133,11 +151,11 @@ function Reader(props) {
 
 
             <div className="post-details">
-            <Link onClick={takeUp} to={`/user/${thisPost.authorlink}`} style={linkStyle}>
-                  <div className="author">
-                    <img src={thisPost.authordp} alt="" />
-                    <h4>{thisPost.author}</h4>
-                  </div>
+                <Link onClick={takeUp} to={`/user/${thisPost.authorlink}`} style={linkStyle} className="author">
+                    <div className="author">
+                        <img src={thisPost.authordp} alt="" />
+                        <h4>{thisPost.author}</h4>
+                    </div>
                 </Link>
 
                 <h5><FaCalendarAlt /> {thisPost.date}</h5>
@@ -145,30 +163,30 @@ function Reader(props) {
             </div>
             <p className='main-post'>
                 {thisPost.post}
-                <img src={thisPost.imageUrl} />
+                {thisPost.imageUrl !==""? <img src={thisPost.imageUrl} />: ""}
             </p>
 
             <div className="cat-act">
                 <button>{thisPost.category}</button>
                 <div className="post-actions">
-                <p style={{ color: props.userlikes?.includes(props.id) ? "red" : "" }}>
-                    {thisPost.upvotes} &nbsp;
-                    <FaThumbsUp onClick={user.isAuthenticated ? () => { upvote(props.id, user.email) } : alertBox} />
-                  </p>
-                  <p style={{ color: props.userdislikes?.includes(props.id) ? "red" : "" }}>
-                    {thisPost.downvotes} &nbsp;
-                    <FaThumbsDown onClick={user.isAuthenticated ? () => { downvote(props.id, user.email) } : alertBox} />
-                  </p>
-                  <p style={{ color: props.userbookmarks?.includes(props.id) ? "red" : "" }}>
-                    <FaBookmark onClick={user.isAuthenticated ? () => { bookmark(props.id, user.email) } : alertBox} />
-                  </p>
+                    <p style={{ color: props.userlikes?.includes(props.id) ? "red" : "" }}>
+                        {thisPost.upvotes} &nbsp;
+                        <FaThumbsUp onClick={user.isAuthenticated ? () => { upvote(props.id, user.email) } : alertBox} />
+                    </p>
+                    <p style={{ color: props.userdislikes?.includes(props.id) ? "red" : "" }}>
+                        {thisPost.downvotes} &nbsp;
+                        <FaThumbsDown onClick={user.isAuthenticated ? () => { downvote(props.id, user.email) } : alertBox} />
+                    </p>
+                    <p style={{ color: props.userbookmarks?.includes(props.id) ? "red" : "" }}>
+                        <FaBookmark onClick={user.isAuthenticated ? () => { bookmark(props.id, user.email) } : alertBox} />
+                    </p>
                     {/* <p>{thisPost.upvotes} <FaThumbsUp onClick={()=>{upvote(props.id, user.email)}}/></p>
                     <p>{thisPost.downvotes}<FaThumbsDown onClick={()=>{downvote(props.id, user.email)}}/></p>
                     <p><FaBookmark onClick={()=>{bookmark(props.id, user.email)}}/></p> */}
                     <p>{thisPost.authormail === user.email ? <FaTrash
                         onClick={user.isAuthenticated ? deletePost : alertBox}
                     /> : <FaExclamationCircle />}</p>
-                   
+
                 </div>
             </div>
 
@@ -211,14 +229,14 @@ function Reader(props) {
                                         {eachReply.reply}
                                     </p>
                                 </div>
-                                <hr/>
+                                <hr />
                                 <div className="author">
                                     <div>
-                                        <img src={thisPost.authordp} alt="" />
+                                        <img src={props.allUsers.filter(a => { return a.email === eachReply.replyauthoremail })[0]?.profileimage} alt="" />
                                         <h4>{eachReply.replyauthor}</h4>
                                     </div>
                                     <h5><FaCalendarAlt /> {replyTime2}</h5>
-
+                                    <button onClick={()=>{deleteReply(props.replies.indexOf(eachReply))}}>delete</button>
                                 </div>
 
                             </div>

@@ -7,7 +7,7 @@
 
 .hero {
     height: 550px;
-    background: url(./assets/bg15.png);
+    background: url(../Images/topics/bg16.png);
     background-position: 95%;
     background-size: 40vw 95%;
     background-repeat: no-repeat;
@@ -15,7 +15,7 @@
     justify-content: center;
     padding: 5vw;
 
-    animation: bgchange 30s infinite;
+    animation: bgchange 45s ease-in-out infinite;
     flex-direction: column;
 }
 
@@ -30,7 +30,7 @@
 
 @keyframes bgchange {
     0% {
-        background-image: url(./assets/bg15.png);
+        background-image: url(../Images/topics/bg16.png);
     }
 
     14% {
@@ -172,6 +172,7 @@
     height: 30px;
     width: 30px;
     border-radius: 50%;
+    background-color: var(--primary);
 }
 
 .cat-act {

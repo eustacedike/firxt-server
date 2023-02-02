@@ -89,7 +89,7 @@ function Post() {
       authorlink: user.link,
       readtime: postRead,
       category: postCategory,
-      link: postTitle.replace(/ +/g, '-').toLowerCase(),
+      link: postTitle.replace(/ +/g, '-').toLowerCase() + "-" + Math.floor(Math.random()*500000),
       image: imageUrl,
     }
 

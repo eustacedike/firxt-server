@@ -32,6 +32,8 @@ import categories from "./components/categories.json";
 //Private Route
 import PrivateRoute from "./Protected Routes/PrivateRoute";
 
+import { getCurrentUser } from "./components/actions/getCurrentUser";
+
 function App() {
 
   const [allPosts, setAllPosts] = useState([]);
@@ -44,6 +46,12 @@ function App() {
       });
 
   };
+
+  const [user, setUser] = useState({isAuthenticated: false});
+
+  useEffect(()=>{
+    setUser(getCurrentUser());
+  }, []);
 
 
   useEffect (()=>{
@@ -104,9 +112,9 @@ function App() {
                       category={eachPost.category}
                       author={eachPost.author}
                       authordp={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.profileimage}
-                      userlikes={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.liked}
-                      userdislikes={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.disliked}
-                      userbookmarks={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.bookmarked}
+                      userlikes={allUsers.filter(a => { return a.email === user.email })[0]?.liked}
+                      userdislikes={allUsers.filter(a => { return a.email === user.email })[0]?.disliked}
+                      userbookmarks={allUsers.filter(a => { return a.email === user.email })[0]?.bookmarked}
                       authorlink={eachPost.authorlink}
                       date={eachPost.date}
                       read={eachPost.readtime}
@@ -116,6 +124,7 @@ function App() {
                       id={eachPost._id}
                       image={eachPost.image}
                       replies={eachPost.replies}
+                      allUsers={allUsers}
                     />}
                   />
 

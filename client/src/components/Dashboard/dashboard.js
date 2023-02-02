@@ -43,12 +43,14 @@ function Dashboard() {
     let myDate = `${months[theMonth - 1]} ${cookies.JoinDate.slice(8, 10)}, ${cookies.JoinDate.slice(0, 4)}`
 
     const [avatar, setAvatar] = useState("https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg");
+    const [gender, setGender] = useState([]);
+
 
     const you = {
         name: user.name,
         nationality: "Nigeria",
         avatar: avatar,
-        gender: "male",
+        gender: gender,
         // specialty: "Your major..",
         // desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex commodi dolorem quasi dignissimos temporibus fugit adipisci voluptatibus esse aliquid quod! Exercitationem, facere aut. Voluptates, voluptatum animi quo incidunt aliquam fugiat perferendis ducimus maiores sunt, velit optio est vitae reiciendis molestias",
         dob: "01/07/2023",
@@ -202,6 +204,7 @@ function Dashboard() {
                 console.log(response.data.filter(a => { return a.email === user.email })[0].profileimage);
                 setAllUsers(response.data);
                 setAvatar(response.data.filter(a => { return a.email === user.email })[0].profileimage);
+                setGender(response.data.filter(a => { return a.email === user.email })[0].gender);
                 setBrief(response.data.filter(a => { return a.email === user.email })[0].specialty);
                 setDesc(response.data.filter(a => { return a.email === user.email })[0].about);
                 setOrigin(response.data.filter(a => { return a.email === user.email })[0].origin);
@@ -404,8 +407,8 @@ function Dashboard() {
                         ><FaPen /></i></p>
                 </div>
 
-
-                <img className="flag" src={flag} />
+                {origin !=="" || origin? <img className="flag" src={flag} />: ""}
+                {/* <img className="flag" src={flag} /> */}
                 <br />
                 <hr /> <br />
                 <div className="profile-options">

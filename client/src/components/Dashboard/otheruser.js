@@ -106,7 +106,9 @@ function OtherUser(props) {
                     <p>{you.about}</p>
                 </div>
                
-                <img className="flag" src={flag} />
+                {you.origin !=="" || you.origin? <img className="flag" src={flag} />: ""}
+
+                {/* <img className="flag" src={flag} /> */}
             
                 <br /> <hr /> <br />
                 <div className="profile-options">

@@ -59,22 +59,6 @@ router.get("/fetchposts", async (req, res) => {
 });
 
 
-// router.post("/uploadimage", async (req, res) => {
-
-
-  
-//   if (req.body.image === "") {
-//     console.log('no image');
-//   } else {
-//       Post.updateOne({message: req.body.topic}, {$push: {"messageArray" : req.body.image}})
-//       .then(res => console.log("sent"))
-//           .catch(err => console.log(err));
-      
-//   }  
- 
-
-    
-// });
 
 
 
@@ -95,6 +79,29 @@ router.post("/sendreply", (req, res) => {
 });
 
 
+router.post("/deletereply", (req, res) => {
+
+  
+  Post.findOne({_id: req.body.id})
+  .then(post =>{
+    let thereplies = post.replies
+
+    thereplies.splice(req.body.replyIndex,1)
+
+    Post.findOneAndUpdate({_id: post._id},{replies: thereplies},{new: true},
+    function(err, inventory) {
+      if (err) {
+        console.log("err", err);
+        res.status(500).send(err);
+      } else {
+        console.log("reply deleted");
+        res.send(inventory);
+      }
+    }
+    );
+  })
+
+});
 
 
 router.post("/upvote", (req, res) => {

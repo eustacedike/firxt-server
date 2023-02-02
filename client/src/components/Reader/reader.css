@@ -16,7 +16,7 @@
 .main-post {
     margin: 40px 0;
     background: rgb(255,255,255);
-    font-size: clamp(13px, 1.8vw, 18px);
+    font-size: clamp(15px, 1.8vw, 18px);
     padding: 10px 8px;
     border-radius: 4px;
     line-height: clamp(26px, 3.2vw, 32px);
