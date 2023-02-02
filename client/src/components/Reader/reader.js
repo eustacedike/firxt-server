@@ -236,7 +236,11 @@ function Reader(props) {
                                         <h4>{eachReply.replyauthor}</h4>
                                     </div>
                                     <h5><FaCalendarAlt /> {replyTime2}</h5>
-                                    <button onClick={()=>{deleteReply(props.replies.indexOf(eachReply))}}>delete</button>
+                                        <FaTrash
+                                        
+                                        style={{display: eachReply.replyauthoremail === user.email ? "":"none"}}
+                                        onClick={()=>{deleteReply(props.replies.indexOf(eachReply))}}
+                                        />
                                 </div>
 
                             </div>
