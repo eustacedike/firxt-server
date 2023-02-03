@@ -46,6 +46,7 @@ function Reader(props) {
         title: props.title,
         category: props.category,
         author: props.author,
+        authormail: props.authormail,
         authorlink: props.authorlink,
         authordp: props.authordp,
         date: myDate,
@@ -134,7 +135,7 @@ function Reader(props) {
         setTimeout(() => { document.getElementById('alert').style.display = "none" }, 3000);
     };
 
-    // console.log(props.allUsers.filter(a => { return a.email === "eustacedyke@gmail.com" })[0]?.profileimage);
+    // console.log(props.authorlink);
 
     return (
         <div className="Reader">
@@ -152,10 +153,10 @@ function Reader(props) {
 
             <div className="post-details">
                 <Link onClick={takeUp} to={`/user/${thisPost.authorlink}`} style={linkStyle} className="author">
-                    <div className="author">
+                    {/* <div className="author"> */}
                         <img src={thisPost.authordp} alt="" />
                         <h4>{thisPost.author}</h4>
-                    </div>
+                    {/* </div> */}
                 </Link>
 
                 <h5><FaCalendarAlt /> {thisPost.date}</h5>

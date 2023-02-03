@@ -2,7 +2,8 @@
 
 import { Link } from 'react-router-dom';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import Pagination from '../Pagination/Pagination';
 
 import axios from 'axios';
 
@@ -91,7 +92,18 @@ const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","No
     window.scroll(0,0)
   }
 
-// console.log(posts)
+
+
+  let PageSize = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const postsToDisplay = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return posts.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, posts]);
+
+// console.log(postsToDisplay)
 
   return (
     <div className="Allposts">
@@ -117,7 +129,7 @@ const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","No
       <div className="posts">
 
 
-        {posts.map(eachPost => {
+        {postsToDisplay.map(eachPost => {
           return (
             <div className="post">
           <h3>{eachPost.title}</h3> <br />
@@ -131,12 +143,12 @@ const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","No
 
 
           <div className="post-details">
-          <Link onClick={takeUp} to={`/user/${eachPost.authorlink}`} style={linkStyle}>
-                  <div className="author">
+          <Link className='author' onClick={takeUp} to={`/user/${eachPost.authorlink}`} style={linkStyle}>
+                  {/* <div className="author"> */}
                   <img wait={3000} src={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.profileimage} alt="" />
                 {/* <p wait={3000}>{allUsers.filter(a => { return a.email === eachPost.authormail })[0]._id}</p> */}
                     <h4>{eachPost.author}</h4>
-                  </div>
+                  {/* </div> */}
                 </Link>
 
             <h5><FaCalendarAlt/>  {` ${months[parseInt(eachPost.date.slice(5,7))-1]} ${eachPost.date.slice(8,10)}, ${eachPost.date.slice(0,4)}`}</h5>
@@ -164,7 +176,13 @@ const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","No
         })}
       </div>
 
-     
+      <Pagination
+        className="pagination-bar"
+        currentPage={currentPage}
+        totalCount={posts.length}
+        pageSize={PageSize}
+        onPageChange={page => setCurrentPage(page)}
+      />
     </div>
   );
 }

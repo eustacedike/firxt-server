@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
-import { FaTrash, FaUser, FaSchool, FaVenusMars, FaHome, FaAward, FaBook, FaBriefcase, FaCogs, FaGraduationCap, FaMagic, FaCalendarAlt, FaClock, FaThumbsUp, FaThumbsDown, FaBookmark, FaPenAlt, FaPen, FaRecycle } from "react-icons/fa";
+import { FaTrash, FaUser, FaUsers, FaBirthdayCake, FaVenusMars, FaHome, FaAward, FaBook, FaBriefcase, FaCogs, FaGraduationCap, FaMagic, FaCalendarAlt, FaClock, FaThumbsUp, FaThumbsDown, FaBookmark, FaPenAlt, FaPen, FaRecycle } from "react-icons/fa";
 import { ImEarth } from 'react-icons/im';
 
 import axios from "axios";
@@ -28,10 +28,10 @@ function Dashboard() {
 
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
-    const [user, setUser] = useState({isAuthenticated: false});
+    const [user, setUser] = useState({ isAuthenticated: false });
 
-    useEffect(()=>{
-      setUser(getCurrentUser());
+    useEffect(() => {
+        setUser(getCurrentUser());
     }, []);
 
 
@@ -44,6 +44,7 @@ function Dashboard() {
 
     const [avatar, setAvatar] = useState("https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg");
     const [gender, setGender] = useState([]);
+    const [DOB, setDOB] = useState("");
 
 
     const you = {
@@ -53,7 +54,7 @@ function Dashboard() {
         gender: gender,
         // specialty: "Your major..",
         // desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex commodi dolorem quasi dignissimos temporibus fugit adipisci voluptatibus esse aliquid quod! Exercitationem, facere aut. Voluptates, voluptatum animi quo incidunt aliquam fugiat perferendis ducimus maiores sunt, velit optio est vitae reiciendis molestias",
-        dob: "01/07/2023",
+        dob: `${months[parseInt(DOB.slice(5, 7)) - 1]} ${DOB.slice(8, 10)}, ${DOB.slice(0, 4)}`,
         datejoined: myDate,
         workplace: "Ace Ventures",
         jobdesc: "Frontend Development using HTML, CSS, Javascript and React.",
@@ -136,9 +137,10 @@ function Dashboard() {
     const [briefInput, setBriefInput] = useState(false);
     const [originInput, setOriginInput] = useState(false);
     const [residenceInput, setResidenceInput] = useState(false);
+    const [DOBInput, setDOBInput] = useState(false);
 
     const [brief, setBrief] = useState("What do you do?");
-    const [desc, setDesc] = useState("Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex commodi dolorem quasi dignissimos temporibus fugit adipisci voluptatibus esse aliquid quod! Exercitationem, facere aut. Voluptates, voluptatum animi quo incidunt aliquam fugiat perferendis ducimus maiores sunt, velit optio est vitae reiciendis molestias");
+    const [desc, setDesc] = useState("Describe yourself...");
     const [origin, setOrigin] = useState("Where are you from?");
     const [residence, setResidence] = useState("Country of residence");
 
@@ -193,6 +195,19 @@ function Dashboard() {
 
     };
 
+
+    const changeDOB = () => {
+        axios
+            .post("api/users/changedob", { email: user.email, dob: DOB })
+            .then(res => {
+                setDOB(res.data.dob)
+                setDOBInput(false)
+            })
+            .catch(err => console.log(err));
+
+
+    };
+
     const [userBookmarks, setUserBookmarks] = useState([]);
     const [userLikes, setUserLikes] = useState([]);
     const [userDislikes, setUserDislikes] = useState([]);
@@ -201,9 +216,10 @@ function Dashboard() {
     const getUsers = () => {
         axios.get("api/users/fetchusers")
             .then((response) => {
-                console.log(response.data.filter(a => { return a.email === user.email })[0].profileimage);
+                // console.log(response.data.filter(a => { return a.email === user.email })[0].profileimage);
                 setAllUsers(response.data);
                 setAvatar(response.data.filter(a => { return a.email === user.email })[0].profileimage);
+                setDOB(response.data.filter(a => { return a.email === user.email })[0].dob);
                 setGender(response.data.filter(a => { return a.email === user.email })[0].gender);
                 setBrief(response.data.filter(a => { return a.email === user.email })[0].specialty);
                 setDesc(response.data.filter(a => { return a.email === user.email })[0].about);
@@ -266,8 +282,10 @@ function Dashboard() {
     }
     ).then((res) => {
         setCountries(res.data.map(a => { return a }));
+        if (origin !== "") {
         let filter = countries.filter(filtered => { return filtered.name.common === origin });
-        setFlag(filter[0].flags.png);
+        setFlag(filter[0].flags.png)
+    };
     });
 
     // const yourFlag = countries.filter(filtered => {return filtered.name.common === origin})[0];
@@ -277,15 +295,15 @@ function Dashboard() {
 
 
     // const date1 = new Date('7/13/2010');
-    const date1 = new Date(`${cookies.JoinDate.slice(5,7)}/${cookies.JoinDate.slice(8,10)}/${cookies.JoinDate.slice(0, 4)}`);
+    const date1 = new Date(`${cookies.JoinDate.slice(5, 7)}/${cookies.JoinDate.slice(8, 10)}/${cookies.JoinDate.slice(0, 4)}`);
     const date2 = new Date();
     const diffTime = Math.abs(date2 - date1);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
-    const upvotesReceived = yourPosts.reduce((acc, obj)=>{
+
+    const upvotesReceived = yourPosts.reduce((acc, obj) => {
         return acc + obj.upvotes;
     }, 0);
-    const downvotesReceived = yourPosts.reduce((acc, obj)=>{
+    const downvotesReceived = yourPosts.reduce((acc, obj) => {
         return acc + obj.downvotes;
     }, 0);
 
@@ -407,7 +425,7 @@ function Dashboard() {
                         ><FaPen /></i></p>
                 </div>
 
-                {origin !=="" || origin? <img className="flag" src={flag} />: ""}
+                {origin !== "" || origin ? <img className="flag" src={flag} /> : ""}
                 {/* <img className="flag" src={flag} /> */}
                 <br />
                 <hr /> <br />
@@ -510,7 +528,24 @@ function Dashboard() {
                                     />
                                 </p>}
 
-                            <p><b><FaCalendarAlt /> Born: </b>{you.dob}</p>
+
+                            {DOBInput ?
+
+                                <>
+                                    <input
+                                        type="date"
+                                        onChange={(e) => { setDOB(e.target.value) }}
+                                    />
+                                    <button onClick={() => { setDOBInput(false) }}>&#10006;</button>
+                                    <button className="procee" onClick={changeDOB}>&#10003;</button> <br />
+                                </> : <p><b><FaBirthdayCake /> Date of Birth: </b>{you.dob}
+                                    <FaPen
+                                        style={{ display: DOBInput ? "none" : "", fontSize: "smaller", marginLeft: "7px", color: "#4A0404", cursor: "pointer" }}
+                                        onClick={() => { setDOBInput(true) }}
+                                    />
+                                </p>}
+
+                            {/* <p><b><FaCalendarAlt /> Born: </b>{you.dob}</p> */}
                             <p><b><FaCalendarAlt /> Joined: </b>{you.datejoined}</p>
                         </div>
 
@@ -654,37 +689,23 @@ function Dashboard() {
             </div>
 
             <div className="dashboard-2">
-                <h2>Similar users</h2>
+                <h2><FaUsers/> Similar users</h2>
                 <div className="x-users">
-                    <Link style={xStyle} to="">
-                        <img className="d-img" src={dp} />
-                        <p>Adekunle Gold</p>
-                    </Link>
-                    <Link style={xStyle} to="">
-                        <img className="d-img" src={dp} />
-                        <p>Adekunle Gold</p>
-                    </Link>
-                    <Link style={xStyle} to="">
-                        <img className="d-img" src={dp} />
-                        <p>Adekunle Gold</p>
-                    </Link>
-                    <Link style={xStyle} to="">
-                        <img className="d-img" src={dp} />
-                        <p>Adekunle Gold</p>
-                    </Link>
-                    <Link style={xStyle} to="">
-                        <img className="d-img" src={dp} />
-                        <p>Adekunle Gold</p>
-                    </Link>
-                    <Link style={xStyle} to="">
-                        <img className="d-img" src={dp} />
-                        <p>Adekunle Gold</p>
-                    </Link>
+                    {
+                        allUsers.slice(0,6).map(similarUser => {
+                            return (
+                                <Link style={xStyle} to={`/user/${similarUser.link}`}>
+                                <img className="d-img" src={similarUser.profileimage} />
+                                <p>{similarUser.firstname} {similarUser.lastname}</p>
+                            </Link>
+                            )
+                        })
+                    }
                 </div>
 
                 <br />
 
-                <h2>New posts</h2>
+                <h2><FaClock/> New posts</h2>
                 <div className="x-posts">
                     {latestPosts.map(eachPost => {
                         return (

@@ -26,14 +26,14 @@ router.post("/register", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email: req.body.Email }).then(user => {
+  User.findOne({ email: req.body.Email.toLowerCase() }).then(user => {
     if (user) {
       return res.status(400).json({ Email: "Email already exists" });
     } else {
       const newUser = new User({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
-        email: req.body.Email,
+        email: req.body.Email.toLowerCase(),
         password: req.body.Psw,
         link: req.body.link,
         gender: req.body.gender
@@ -75,7 +75,7 @@ router.post("/login", (req, res) => {
 
   }
 
-  const email = req.body.Email;
+  const email = req.body.Email.toLowerCase();
   const password = req.body.Psw;
 
   // Find user by email
@@ -243,7 +243,23 @@ router.post("/changeresidence", (req, res) => {
   );
 });
 
+router.post("/changedob", (req, res) => {
 
+  User.findOneAndUpdate({ email: req.body.email }, { dob: req.body.dob }, { new: true },
+    function (
+      err,
+      inventory
+    ) {
+      if (err) {
+        console.log("err", err);
+        res.status(500).send(err);
+      } else {
+        console.log("success");
+        res.send(inventory);
+      }
+    }
+  );
+});
 
 router.post("/upvote", (req, res) => {
 

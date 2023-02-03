@@ -191,7 +191,7 @@
     padding: 10px;
 }
 
-.your-profile select {
+.your-profile select, .your-profile input[type=date] {
     margin-bottom: 20px;
     /* background-color: ; */
     border: none;

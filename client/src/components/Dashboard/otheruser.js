@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaTrash, FaAward, FaBook, FaSchool, FaBriefcase, FaCogs, FaGraduationCap, FaMagic, FaCalendarAlt, FaClock, FaThumbsUp, FaThumbsDown, FaBookmark, FaPenAlt, FaVenusMars, FaHome, FaUser } from "react-icons/fa";
+import { FaTrash, FaUsers, FaBook, FaSchool, FaBriefcase, FaCogs, FaGraduationCap, FaMagic, FaCalendarAlt, FaClock, FaThumbsUp, FaThumbsDown, FaBookmark, FaPenAlt, FaVenusMars, FaHome, FaUser } from "react-icons/fa";
 import {ImEarth} from "react-icons/im";
 
 import axios from "axios";
@@ -66,8 +66,9 @@ function OtherUser(props) {
         },
     }
     ).then((res) => {
+        if (you.origin !== "" || you.origin) {
         let filter = res.data.map(a => { return a }).filter(filtered => { return filtered.name.common === you.origin });
-        setFlag(filter[0].flags.png);
+        setFlag(filter[0].flags.png);}
     });
     
 
@@ -81,6 +82,29 @@ function OtherUser(props) {
     const linkStyle = {
         textDecoration: "none",
         color: "unset"
+    }
+
+    const xStyle = {
+        textDecoration: "none",
+        // color: "unset",
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "10px 8px",
+        backgroundColor: "white",
+        borderRadius: "3px",
+        alignItems: "flex-end",
+    }
+
+    const yStyle = {
+        textDecoration: "none",
+        // color: "unset",
+        display: "flex",
+        flexDirection: "column",
+        // justifyContent: "space-between",
+        padding: "10px 8px",
+        backgroundColor: "white",
+        borderRadius: "3px",
+        marginBottom: "12px",
     }
 
     const takeUp = () => {
@@ -97,13 +121,15 @@ function OtherUser(props) {
                     <img className="avatar-image" src={you.avatar} alt="" />
                     <div>
                         <h1>{you.firstname} {you.lastname}</h1>
-                        <i>{you.specialty}</i>
+                    {you.specialty === "What do you do?"? <i>Not specified. </i>:  <i>{you.specialty}</i>}
+
                     </div>
                 </div>
                 <br /> <hr /> <br />
                 <div className="about-you">
                     <h3>About</h3>
-                    <p>{you.about}</p>
+                    {you.about === "Describe yourself..."? <p>Nothing to show... </p>:  <p>{you.about}</p>}
+                    
                 </div>
                
                 {you.origin !=="" || you.origin? <img className="flag" src={flag} />: ""}
@@ -154,16 +180,19 @@ function OtherUser(props) {
                                     <div className="post">
                                         <Link onClick={takeUp} to="/blog" style={linkStyle}>
                                             <h3>{eachPost.title}</h3> <br />
-                                            <p>
-                                                {eachPost.postbody.substring(0, 70)}...</p>
+                                            <Link onClick={takeUp} to={`/post/${eachPost.link}`} style={linkStyle}>
 
+<p>
+    {eachPost.postbody.substring(0, 70)}...
+</p>
+</Link>
                                             <div className="post-details">
                                                 <div className="author">
                                                     <img src={eachPost.authordp} alt="eustace" />
                                                     <h4>{eachPost.author}</h4>
                                                 </div>
 
-                                                <h5><FaCalendarAlt /> {eachPost.date}</h5>
+                                                <h5><FaCalendarAlt /> {`${months[parseInt(eachPost.date.slice(5, 7)) - 1]} ${eachPost.date.slice(8, 10)}, ${eachPost.date.slice(0, 4)}`}</h5>
                                                 <h5><FaClock /> {eachPost.readtime} min read</h5>
                                             </div>
 
@@ -196,7 +225,38 @@ function OtherUser(props) {
 
 
             <div className="dashboard-2">
-                
+                <h2><FaUsers/> Similar users</h2>
+                <div className="x-users">
+                    {
+                        props.allUsers?.slice(0,6).map(similarUser => {
+                            return (
+                                <Link style={xStyle} to={`/user/${similarUser.link}`}>
+                                <img className="d-img" src={similarUser.profileimage} />
+                                <p>{similarUser.firstname} {similarUser.lastname}</p>
+                            </Link>
+                            )
+                        })
+                    }
+                </div>
+
+                <br />
+
+                <h2><FaClock/> New posts</h2>
+                <div className="x-posts">
+                    {props.allPosts.slice(0,3).map(eachPost => {
+                        return (
+                            <div style={yStyle}>
+                                <Link onClick={takeUp} to={`/post/${eachPost.link}`}>
+                                    <h3>{eachPost.title}</h3>
+                                </Link>    <p style={{ margin: "10px 0" }}>{eachPost.postbody.substring(0, 70)}...</p>
+                                <p>by <Link onClick={takeUp} to={`/user/${eachPost.authorlink}`}><b>{eachPost.author}</b></Link></p>
+                            </div>
+
+                        )
+                    })}
+
+                </div>
+
             </div>
 
         </div>

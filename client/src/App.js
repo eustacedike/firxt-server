@@ -19,6 +19,7 @@ import OtherUser from "./components/Dashboard/otheruser";
 import Loading from "./components/Loading/loading";
 import Error from "./components/ErrorPage/404page";
 
+
 import './App.css';
 
 import { FaClock } from "react-icons/fa";
@@ -83,12 +84,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            {/* <Route path="write" element={<Post />} /> */}
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
             <Route path="blog" element={<Reader />} />
             <Route path="loading" element={<Loading />} />
+            {/* <Route path="user/*" element={<Loading />} /> */}
             <Route path="*" element={<Error />} />
+            {/* <Route path="paga" element={<Paga />} /> */}
 
             {
               Object.keys(categories.cats).map(key =>
@@ -111,6 +113,7 @@ function App() {
                       title={eachPost.title}
                       category={eachPost.category}
                       author={eachPost.author}
+                      authormail={eachPost.authormail}
                       authordp={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.profileimage}
                       userlikes={allUsers.filter(a => { return a.email === user.email })[0]?.liked}
                       userdislikes={allUsers.filter(a => { return a.email === user.email })[0]?.disliked}
@@ -147,6 +150,8 @@ function App() {
                       avatar={eachUser.profileimage}
                       date={eachUser.date}
            
+                      allUsers={allUsers}
+                      allPosts={allPosts}
                       posts={allPosts.filter(a => { return a.authormail === eachUser.email })}
                     />}
                   />
@@ -170,8 +175,7 @@ function App() {
             }
             />
             <Route path="categories" element={<Topics />} />
-            {/* <Route path="profile" element={<Dashboard />} /> */}
-            <Route path="profile/salt-bae" element={<OtherUser />} />
+            {/* <Route path="profile/salt-bae" element={<OtherUser />} /> */}
             <Route path="blogposts" element={<AllPosts icon={<FaClock />} latestOrtrending="RECENT POSTS" sub="Check out the most recent blogs on Firxt.." />} />
             <Route path="trending" element={<AllPosts icon={<ImFire />} latestOrtrending="TRENDING NOW" sub="Hot topics right now..." />} />
 

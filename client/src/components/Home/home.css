@@ -195,6 +195,7 @@
     display: flex;
     justify-content: right;
     gap: 25px;
+    cursor: pointer;
 
 }
 

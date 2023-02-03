@@ -23,7 +23,7 @@ function Hero() {
             Share your thoughts Firxt!
         </h1>
         <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eos quasi odit, quo earum natus nisi iste.
+            Post news, blogs, stories, ideas... There are absolutely no limits to what you can share, on <b style={{color: "#4A0404", fontFamily: "'Prosto One', cursive"}}>Firxt</b>
         </p>
 
         

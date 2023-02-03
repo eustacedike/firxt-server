@@ -221,7 +221,7 @@ const logoutUser = () => {
 
         <ul>
 
-          <li> <button className='write'><Link onClick={takeUp} to="/write" style={linkStyle}><span>Post</span><FaPenFancy /></Link></button>
+          <li> <button className='smwrite write'><Link onClick={takeUp} to="/write" style={linkStyle}><span>Post</span><FaPenFancy /></Link></button>
           </li>
           <li><FaClock /> <Link onClick={takeUp} to="/blogposts" style={linkStyle}>Latest</Link></li>
           <li><ImFire /> <Link onClick={takeUp} to="/trending" style={linkStyle}>Hottest</Link></li>

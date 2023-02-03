@@ -120,11 +120,11 @@ function Latest() {
                   <FaBook /> {eachPost.postbody.substring(0, 200)}...</p>
               </Link>
               <div className="post-details">
-                <Link onClick={takeUp} to={`/user/${eachPost.authorlink}`} style={linkStyle}>
-                  <div className="author">
+                <Link className='author' onClick={takeUp} to={`/user/${eachPost.authorlink}`} style={linkStyle}>
+                  {/* <div className="author"> */}
                     <img wait={2000} src={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.profileimage} alt="" />
                     <h4>{eachPost.author}</h4>
-                  </div>
+                  {/* </div> */}
                 </Link>
 
                 <h5><FaCalendarAlt />

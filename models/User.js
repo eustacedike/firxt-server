@@ -37,44 +37,35 @@ const UserSchema = new Schema({
   },
   dob: {
     type: Date,
-    // required: true
+    default: new Date("1900-01-01T00:00:00Z")
   },
   origin: {
     type: String,
-    // required: true
+    default: ""
   },
   residence: {
     type: String,
-    // required: true
+    default: ""
   },
   specialty: {
     type: String,
-    // required: true
+    default: "What do you do?"
   },
   about: {
     type: String,
-    // required: true
-  },
-  upvotesgiven: {
-    type: Number,
-  },
-  upvotesreceived: {
-    type: Number,
-  },
-  downvotesgiven: {
-    type: Number,
-  },
-  downvotesreceived: {
-    type: Number,
+    default: "Describe yourself..."
   },
   liked: {
     type: Array,
+    default: []
   },
   disliked: {
     type: Array,
+    default: []
   },
   bookmarked: {
     type: Array,
+    default: []
   },
 
 
