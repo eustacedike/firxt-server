@@ -3,7 +3,7 @@ import '../layout.css';
 
 import { useState, useEffect } from 'react';
 
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { useCookies } from 'react-cookie';
 
@@ -30,6 +30,8 @@ Object.keys(categories.cats).map(key =>
 
 function Navigation() {
 
+  const navigate = useNavigate();
+
 
   const [user, setUser] = useState({isAuthenticated: false});
 
@@ -55,12 +57,21 @@ function Navigation() {
   );
 
 
-  const findThem = (e) => {
-    setSearchitems(e.target.value.toLocaleLowerCase());
+  const findThem = () => {
+    // setSearchitems(e.target.value.toLocaleLowerCase());
     // filteredItems.length !== 0 ? setItemsToDisplay(filteredItems) : setItemsToDisplay(["Not found"]);
-    setItemsToDisplay(filteredItems)
-    console.log(itemsToDisplay.length>0)
-    console.log(itemsToDisplay.length)
+    // setItemsToDisplay(filteredItems)
+    
+  setCookie('searchitem', searchitems, { path: '/' });
+
+  navigate(`/searchloading`);
+
+
+
+
+        setTimeout(() => { navigate(`/search`) }, 1500);
+        setTimeout(() => { window.location.reload() }, 1510);
+
   }
 
   const openMobile = () => {
@@ -189,18 +200,18 @@ const logoutUser = () => {
             <input
             className='searchinput'
               value={searchitems}
-              onChange={findThem}
+              onChange={ (e)=>{setSearchitems(e.target.value.toLocaleLowerCase())}}
               type="text" name="" id="" placeholder='Search...' />
-            <FaSearch />
+            <FaSearch style={{cursor: "pointer"}} onClick={findThem} />
           
-          <div className='search-result'>
+          {/* <div className='search-result'>
         {itemsToDisplay.length !== 0 ? <p></p>:<p>Not Found</p>}
           {itemsToDisplay.map(item => (
             <div className='trial'>
             <Link to={`/blog/${item}`}><p>{item}</p></Link>
             </div>
           ))}
-</div>
+</div> */}
         </div>
         </nav>
 

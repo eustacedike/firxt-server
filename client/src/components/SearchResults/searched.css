@@ -1,0 +1,121 @@
+
+
+.Searched {
+    width: 80%;
+    margin: 15px auto;
+    min-height: 85vh;
+}
+
+.Searched h1 {
+    font-size: clamp(13px, 2vw, 28px);
+}
+
+
+.search-cat {
+    /* width: 90%; */
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--primary);
+}
+
+.search-cat button {
+    padding: 10px 30px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 17px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-weight: bold;
+    width: 32%;
+}
+
+.searchedposts .post {
+    background-color: white;
+}
+
+
+.founduser {
+    background-color: white;
+    display: flex;
+    gap: 40px;
+    border-radius: 35px;
+    padding: 15px;
+    margin-bottom: 20px;
+    max-width: 500px;
+    margin: 15px auto;
+}
+
+.founduser img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+.searchedcategories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.foundcategories {
+    background-color: white;
+    display: flex;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 15px 0;
+    width: 30%;
+    /* max-width: 400px; */
+    justify-content: space-between;
+    font-weight: bold;
+    align-items: center;
+}
+
+.foundcategories img {
+    height: 40px;
+}
+
+
+@media (max-width: 900px) {
+    .foundcategories {
+
+        width: 47%;
+
+    }
+
+}
+
+@media (max-width: 550px) {
+
+
+    .Searched {
+        width: 92%;
+        margin: 40px auto;
+    }
+
+    .search-cat button {
+        padding: 4px 0px;
+        font-size: 14px;
+       
+        width: 33%;
+    }
+
+
+.founduser {
+    font-size: smaller;
+    padding: 10px;
+}
+
+
+    .founduser img {
+        height: 30px;
+        width: 30px;
+    }
+
+    .foundcategories {
+        padding: 12px;
+        margin: 9px 0;
+        width: 98%;
+ 
+    }
+}

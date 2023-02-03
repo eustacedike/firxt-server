@@ -17,7 +17,9 @@ import Topics from "./components/Topics/topics";
 import Dashboard from "./components/Dashboard/dashboard";
 import OtherUser from "./components/Dashboard/otheruser";
 import Loading from "./components/Loading/loading";
+import Searched from "./components/SearchResults/searched";
 import Error from "./components/ErrorPage/404page";
+
 
 
 import './App.css';
@@ -87,10 +89,11 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
             <Route path="blog" element={<Reader />} />
-            <Route path="loading" element={<Loading />} />
+            <Route path="loading" element={<Loading h1="PUBLISHING" timer={24.3} />} />
+            <Route path="searchloading" element={<Loading h1="SEARCHING" timer={200} />} />
             {/* <Route path="user/*" element={<Loading />} /> */}
             <Route path="*" element={<Error />} />
-            {/* <Route path="paga" element={<Paga />} /> */}
+            <Route path="search" element={<Searched />} />
 
             {
               Object.keys(categories.cats).map(key =>
