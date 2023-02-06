@@ -118,7 +118,7 @@ function Reader(props) {
 
 
         axios
-            .post("/api/posts/deletereply", { id: props.id, replyIndex: a})
+            .post("/api/posts/deletereply", { id: props.id, replyIndex: a })
             .then(res => {
                 console.log(res);
             })
@@ -137,6 +137,27 @@ function Reader(props) {
 
     // console.log(props.authorlink);
 
+
+    const [reportModal, setReportModal] = useState(false);
+    const [reportReason, setReportReason] = useState("profanity");
+    const [reportInfo, setReportInfo] = useState("");
+    const [reportSent, setReportSent] = useState(false);
+
+    const reportPost = (e) => {
+        e.preventDefault();
+
+        axios.create()
+            .post(
+                "https://formspree.io/f/mgebawzn",
+                { email: user.email, post: thisPost.title, reason: reportReason, message: reportInfo }
+            )
+            .then(res => {console.log(res); setReportSent(true)})
+            .catch(err => console.log(err));
+
+
+        // setReportModal(false);
+    }
+
     return (
         <div className="Reader">
             <div id='alert'>
@@ -154,8 +175,8 @@ function Reader(props) {
             <div className="post-details">
                 <Link onClick={takeUp} to={`/user/${thisPost.authorlink}`} style={linkStyle} className="author">
                     {/* <div className="author"> */}
-                        <img src={thisPost.authordp} alt="" />
-                        <h4>{thisPost.author}</h4>
+                    <img src={thisPost.authordp} alt="" />
+                    <h4>{thisPost.author}</h4>
                     {/* </div> */}
                 </Link>
 
@@ -164,7 +185,7 @@ function Reader(props) {
             </div>
             <p className='main-post'>
                 {thisPost.post}
-                {thisPost.imageUrl !==""? <img src={thisPost.imageUrl} />: ""}
+                {thisPost.imageUrl !== "" ? <img src={thisPost.imageUrl} /> : ""}
             </p>
 
             <div className="cat-act">
@@ -186,7 +207,7 @@ function Reader(props) {
                     <p><FaBookmark onClick={()=>{bookmark(props.id, user.email)}}/></p> */}
                     <p>{thisPost.authormail === user.email ? <FaTrash
                         onClick={user.isAuthenticated ? deletePost : alertBox}
-                    /> : <FaExclamationCircle />}</p>
+                    /> : <FaExclamationCircle onClick={() => { setReportModal(true) }} />}</p>
 
                 </div>
             </div>
@@ -200,6 +221,7 @@ function Reader(props) {
                 <button>Comment</button>
             </form> */}
             <form
+                className='reply-form'
                 style={{ display: user.isAuthenticated ? "" : "none" }}
                 onSubmit={sendReply}
                 noValidate> <br />
@@ -218,7 +240,7 @@ function Reader(props) {
 
             <div className="replies">
 
-                {props.replies.map(eachReply => {
+                {props.replies.reverse().map(eachReply => {
 
                     let replyMonth = parseInt(eachReply.replytime.slice(5, 7));
                     let replyTime2 = `${months[replyMonth - 1]} ${eachReply.replytime.slice(8, 10)}, ${eachReply.replytime.slice(0, 4)}`
@@ -237,11 +259,11 @@ function Reader(props) {
                                         <h4>{eachReply.replyauthor}</h4>
                                     </div>
                                     <h5><FaCalendarAlt /> {replyTime2}</h5>
-                                        <FaTrash
-                                        
-                                        style={{display: eachReply.replyauthoremail === user.email ? "":"none"}}
-                                        onClick={()=>{deleteReply(props.replies.indexOf(eachReply))}}
-                                        />
+                                    <FaTrash
+
+                                        style={{ display: eachReply.replyauthoremail === user.email ? "" : "none" }}
+                                        onClick={() => { deleteReply(props.replies.indexOf(eachReply)) }}
+                                    />
                                 </div>
 
                             </div>
@@ -251,27 +273,56 @@ function Reader(props) {
                 })}
 
 
-                {/* <div className="reply">
-                    <div className="post-details">
-                        <div className="the-reply">
-                            <p>
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, ratione nisi!
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, ratione nisi!
-                            </p>
-                        </div>
-                        <hr/>
-                        <div className="author">
-                            <div>
-                                <img src={thisPost.authordp} alt="eustace" />
-                                <h4>{thisPost.author}</h4>
+                <div className="report-modal"
+                    style={{ transform: reportModal ? "scale(1) translateX(-50%)" : "" }}>
+                    {
+                        reportSent ?
+                            <div>     <h3>
+                                <FaExclamationCircle /> We have received your report
+                            </h3>
+
+                                <br />
+
+                                <p>We want to assure you that we take reports seriously. We will review the post and take it down if it fails the review according to community guidelines.</p>
+                                <br />
+
+                                <button
+                                onClick={() => { setReportModal(false); setReportSent(false) }}>Close</button>
                             </div>
-                            <h5><FaCalendarAlt /> {thisPost.date}</h5>
-                        </div>
+                            :
 
+                            <form>
+                                <h3>REPORT POST</h3>
+                                <h4>"{thisPost.title}"</h4>
+                                <br />
+                                <label htmlFor="">Your email</label> <br />
+                                <input type="mail" value={user.email} readOnly style={{ backgroundColor: "lightgrey" }} /> <br />
+                                <select name="" id=""
+                                    onChange={(e) => { setReportReason(e.target.value) }}
+                                >
+                                    <option value="profanity">Profanity</option>
+                                    <option value="harrassment">Harrassment</option>
+                                    <option value="violence">Violence</option>
+                                    <option value="abuse">Abuse</option>
+                                    <option value="uninteresting">Uninteresting</option>
+                                    <option value="racism">Racism</option>
+                                    <option value="other">Other (please, explain)</option>
+                                </select> <br />
+                                <textarea
+                                    onChange={(e) => { setReportInfo(e.target.value) }}
 
-                    </div>
+                                    name="" id="" cols="30" rows="10" placeholder='Additional Information'>
 
-                </div> */}
+                                </textarea>
+                                <div className='report-modal-btns'>
+                                    <button onClick={() => { setReportModal(false) }}>Cancel</button>
+                                    <button onClick={reportPost} className='procee'>Submit</button>
+                                    {/* <button onClick={()=>{setReportSent(true)}} className='procee'>Submit</button> */}
+                                </div>
+                            </form>
+                    }
+
+                </div>
             </div>
 
 

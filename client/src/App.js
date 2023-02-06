@@ -45,22 +45,22 @@ function App() {
     axios.get("api/posts/fetchposts")
       .then((response) => {
         // console.log(response.data);
-        setAllPosts(response.data);
+        setAllPosts(response.data.reverse());
       });
 
   };
 
-  const [user, setUser] = useState({isAuthenticated: false});
+  const [user, setUser] = useState({ isAuthenticated: false });
 
-  useEffect(()=>{
+  useEffect(() => {
     setUser(getCurrentUser());
   }, []);
 
 
-  useEffect (()=>{
+  useEffect(() => {
     getPosts();
   }, [allPosts]);
-  
+
 
 
   const [allUsers, setAllUsers] = useState([]);
@@ -69,13 +69,13 @@ function App() {
     axios.get("api/users/fetchusers")
       .then((response) => {
         // console.log(response.data);
-        setAllUsers(response.data);
+        setAllUsers(response.data.reverse());
       });
 
   };
 
 
-  useEffect (()=> {
+  useEffect(() => {
     getUsers();
   }, [allUsers])
 
@@ -88,10 +88,10 @@ function App() {
             <Route index element={<Home />} />
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
-            <Route path="blog" element={<Reader />} />
+            {/* <Route path="blog" element={<Reader />} /> */}
             <Route path="loading" element={<Loading h1="PUBLISHING" timer={24.3} />} />
             <Route path="searchloading" element={<Loading h1="SEARCHING" timer={200} />} />
-            {/* <Route path="user/*" element={<Loading />} /> */}
+            {/* <Route path="post/*" element={<Loading />} /> */}
             <Route path="*" element={<Error />} />
             <Route path="search" element={<Searched />} />
 
@@ -115,7 +115,7 @@ function App() {
                     path={`post/${eachPost.link}`} element={<Reader
                       title={eachPost.title}
                       category={eachPost.category}
-                      author={eachPost.author}
+                      author={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.firstname + " " + allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.lastname}
                       authormail={eachPost.authormail}
                       authordp={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.profileimage}
                       userlikes={allUsers.filter(a => { return a.email === user.email })[0]?.liked}
@@ -138,7 +138,7 @@ function App() {
               })
             }
 
-{
+            {
               allUsers.map(eachUser => {
                 return (
                   <Route
@@ -152,7 +152,7 @@ function App() {
                       residence={eachUser.residence}
                       avatar={eachUser.profileimage}
                       date={eachUser.date}
-           
+
                       allUsers={allUsers}
                       allPosts={allPosts}
                       posts={allPosts.filter(a => { return a.authormail === eachUser.email })}
@@ -179,9 +179,22 @@ function App() {
             />
             <Route path="categories" element={<Topics />} />
             {/* <Route path="profile/salt-bae" element={<OtherUser />} /> */}
-            <Route path="blogposts" element={<AllPosts icon={<FaClock />} latestOrtrending="RECENT POSTS" sub="Check out the most recent blogs on Firxt.." />} />
-            <Route path="trending" element={<AllPosts icon={<ImFire />} latestOrtrending="TRENDING NOW" sub="Hot topics right now..." />} />
 
+
+            <Route path="trending" element={<AllPosts
+              icon={<ImFire />}
+              latestOrtrending="TRENDING NOW"
+              sub="Hot topics right now..."
+              posts={allPosts.sort((a, b) => (b.upvotes + b.downvotes) - (a.upvotes + a.downvotes))}
+            />} />
+
+
+            <Route path="blogposts" element={<AllPosts
+              icon={<FaClock />}
+              latestOrtrending="RECENT POSTS"
+              sub="Check out the most recent blogs on Firxt.."
+              posts={allPosts}
+            />} />
             {/* <Route path="*" element={<NoPage />} /> */}
           </Route>
         </Routes>

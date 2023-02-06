@@ -34,16 +34,20 @@
     background-color: white;
 }
 
+.searchedusers {
+    background-color: white;
+    padding: 15px;
+}
 
 .founduser {
-    background-color: white;
     display: flex;
     gap: 40px;
-    border-radius: 35px;
+    /* border-radius: 35px; */
     padding: 15px;
     margin-bottom: 20px;
-    max-width: 500px;
-    margin: 15px auto;
+    /* max-width: 500px; */
+    border-bottom: 1px solid var(--primary);
+    /* margin: 15px auto; */
 }
 
 .founduser img {

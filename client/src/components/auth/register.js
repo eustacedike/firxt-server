@@ -31,7 +31,7 @@ function Register() {
           Email: email,
           Psw: password,
           Psw2: password2,
-          link: `${fName}-${lName}-${Math.floor(Math.random()*10000)}`.toLowerCase(),
+          link: `${fName}-${lName}-${Math.floor(Math.random()*10000)}`.toLowerCase().replace(/^\s+|\s+$/gm,''),
           gender: gender,
       }
 

@@ -186,26 +186,17 @@ function OtherUser(props) {
     {eachPost.postbody.substring(0, 70)}...
 </p>
 </Link>
-                                            <div className="post-details">
+                                            <div className="post-details cat-act">
                                                 <div className="author">
-                                                    <img src={eachPost.authordp} alt="eustace" />
-                                                    <h4>{eachPost.author}</h4>
+                                                <button>{eachPost.category}</button>
+
                                                 </div>
 
                                                 <h5><FaCalendarAlt /> {`${months[parseInt(eachPost.date.slice(5, 7)) - 1]} ${eachPost.date.slice(8, 10)}, ${eachPost.date.slice(0, 4)}`}</h5>
                                                 <h5><FaClock /> {eachPost.readtime} min read</h5>
                                             </div>
 
-                                            <div className="cat-act">
-                                                <button>{eachPost.category}</button>
-                                                <div className="post-actions">
-                                                    <p><FaThumbsUp /></p>
-                                                    <p><FaThumbsDown /></p>
-                                                    <p><FaBookmark /></p>
-                                                    <p><FaPenAlt /></p>
-                                                    <p><FaTrash /></p>
-                                                </div>
-                                            </div>
+                                           
                                         </Link>
                                     </div>
                                 )

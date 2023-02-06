@@ -217,7 +217,7 @@ function Dashboard() {
         axios.get("api/users/fetchusers")
             .then((response) => {
                 // console.log(response.data.filter(a => { return a.email === user.email })[0].profileimage);
-                setAllUsers(response.data);
+                setAllUsers(response.data.reverse());
                 setAvatar(response.data.filter(a => { return a.email === user.email })[0].profileimage);
                 setDOB(response.data.filter(a => { return a.email === user.email })[0].dob);
                 setGender(response.data.filter(a => { return a.email === user.email })[0].gender);
@@ -564,10 +564,10 @@ function Dashboard() {
                                             </p>
                                         </Link>
 
-                                        <div className="post-details">
+                                        <div className="post-details cat-act">
                                             <div className="author">
-                                                <img src={eachPost.authordp} alt="" />
-                                                <h4>{eachPost.author}</h4>
+                                            <button>{eachPost.category}</button>
+
                                             </div>
 
                                             <h5><FaCalendarAlt />  &nbsp;
@@ -576,7 +576,7 @@ function Dashboard() {
                                             <h5><FaClock /> {eachPost.readtime} min read</h5>
                                         </div>
 
-                                        <div className="cat-act">
+                                        {/* <div className="cat-act">
                                             <button>{eachPost.category}</button>
                                             <div className="post-actions">
                                                 <p><FaThumbsUp /></p>
@@ -585,7 +585,7 @@ function Dashboard() {
                                                 <p><FaPenAlt /></p>
                                                 <p><FaTrash /></p>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 )
                             })}

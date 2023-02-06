@@ -89,7 +89,7 @@ function Post() {
       authorlink: user.link,
       readtime: postRead,
       category: postCategory,
-      link: postTitle.replace(/ +/g, '-').toLowerCase() + "-" + Math.floor(Math.random()*500000),
+      link: postTitle.replace(/ +/g, '-').toLowerCase().replace(/^\s+|\s+$/gm,'') + "-" + Math.floor(Math.random()*500000),
       image: imageUrl,
     }
 
@@ -99,13 +99,15 @@ function Post() {
       .then(res => {
         console.log(res);
 
-        navigate(`/loading`);
+        // navigate(`/loading`);
 
 
 
 
-        setTimeout(() => { navigate(`/post/${thePost.link}`) }, 3100);
-        setTimeout(() => { window.location.reload() }, 3600);
+        // setTimeout(() => {
+          navigate(`/post/${thePost.link}`) 
+        // } , 3100);
+        setTimeout(() => { window.location.reload() }, 200);
       })
       .catch(err => {
         const errors = err.response.data;

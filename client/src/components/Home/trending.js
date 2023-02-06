@@ -40,7 +40,7 @@ function Trending() {
     axios.get("api/posts/fetchposts")
       .then((response) => {
 
-        setPosts(response.data.reverse().slice(0, 3));
+        setPosts(response.data.sort((a, b) => (b.upvotes+b.downvotes)-(a.upvotes+a.downvotes)).slice(0, 3));
       });
 
   };
@@ -110,7 +110,8 @@ function Trending() {
                   {/* <div  className="author"> */}
                   <img wait={2000} src={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.profileimage} alt="" />
 
-                    <h4>{eachPost.author}</h4>
+                    <h4>{allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.firstname} &nbsp;
+                    {allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.lastname}</h4>
                   {/* </div> */}
                 </Link>
 

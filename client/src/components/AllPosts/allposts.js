@@ -50,25 +50,29 @@ function AllPosts(props) {
 
   };
 
-  const [posts, setPosts] = useState([]);
+//   const [posts, setPosts] = useState([]);
 
-  const getPosts = () => {
-    axios.get("api/posts/fetchposts")
-      .then((response) => {
+//   const getPosts = () => {
+//     axios.get("api/posts/fetchposts")
+//       .then((response) => {
 
-        setPosts(response.data.reverse());
-      });
+//         setPosts(response.data.reverse());
+//       });
 
-  };
-
-
+//   };
 
 
-useEffect(() => {
-  getPosts();
-}, []);
 
 
+// useEffect(() => {
+//   getPosts();
+// }, []);
+
+const posts = props.posts;
+
+// console.log(posts);
+// console.log(posts.reverse());
+// console.log(props.posts.reverse());
 
 useEffect(() => {
   getUsers();
@@ -100,7 +104,7 @@ const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","No
   const postsToDisplay = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
-    return posts.slice(firstPageIndex, lastPageIndex);
+    return posts?.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, posts]);
 
 // console.log(postsToDisplay)
@@ -147,7 +151,8 @@ const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","No
                   {/* <div className="author"> */}
                   <img wait={3000} src={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.profileimage} alt="" />
                 {/* <p wait={3000}>{allUsers.filter(a => { return a.email === eachPost.authormail })[0]._id}</p> */}
-                    <h4>{eachPost.author}</h4>
+                    <h4>{allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.firstname} &nbsp;
+                    {allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.lastname}</h4>
                   {/* </div> */}
                 </Link>
 

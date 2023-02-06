@@ -10,17 +10,17 @@ import { FaExclamationCircle} from 'react-icons/fa';
 
 function Loading(props) {
 
-    const timer = props.timer;
+    // const timer = props.timer;
 
-    const [count, setCount] = useState(0);
+    // const [count, setCount] = useState(0);
 
-    useEffect (()=>{
-       const interval = setInterval(()=>{setCount(count+1)},{timer});
+    // useEffect (()=>{
+    //    const interval = setInterval(()=>{setCount(count+1)},{timer});
 
-        return()=>{
-            clearInterval(interval)
-        }
-    }, [count]);
+    //     return()=>{
+    //         clearInterval(interval)
+    //     }
+    // }, [count]);
     
 
     return (
@@ -28,7 +28,8 @@ function Loading(props) {
 
             {/* <h1>{props.h1}...</h1> */}
 
-            <div class="ring">{props.h1} <p>{count<100 ? count : 100}%</p>
+            <div class="ring">{props.h1} 
+            {/* <p>{count<100 ? count : 100}%</p> */}
   <span></span>
 </div>
 

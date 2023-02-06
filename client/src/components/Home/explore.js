@@ -1,6 +1,9 @@
 
 
-import { Link } from 'react-router-dom';
+
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+import { useCookies } from 'react-cookie';
 
 
 import './home.css';
@@ -29,9 +32,20 @@ function Explore() {
 
   ]
 
-  // const categories = ["Automobiles", "Phones", "Movies", "Music", "Books", "Celebrity", "Sports", "Finance", "Crypto", "Tech", "Food"]
-  // const tags = ["twitter", "lagos", "election", "workout", "ronaldo", "burnaboy", "japa", "drake", "sales", "newyear"]
+  const navigate = useNavigate();
 
+  const [cookies, setCookie, removeCookie] = useCookies(['user']);
+
+
+  const findThem = (a) => {
+    
+      setCookie('searchitem', a, { path: '/' })
+
+      navigate(`/search`)
+
+      setTimeout(() => { window.location.reload() }, 200);
+    
+  }
 
   const linkStyle = {
     textDecoration: "none",
@@ -79,7 +93,7 @@ function Explore() {
         
         {categories.tags.map(tag => {
           return (
-            <button> <Link onClick={takeUp} to="/" style={linkStyle}>#{tag}</Link></button>
+            <button onClick={()=>{findThem(tag)}} > #{tag} </button>
           )
         })}
 
@@ -87,7 +101,7 @@ function Explore() {
         
 
       </div>
-      <Link onClick={takeUp} to="/categories">check out more tags</Link>
+      {/* <Link onClick={takeUp} to="/categories">check out more tags</Link> */}
 </div>
     
   );

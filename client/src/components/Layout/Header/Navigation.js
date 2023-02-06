@@ -58,19 +58,15 @@ function Navigation() {
 
 
   const findThem = () => {
-    // setSearchitems(e.target.value.toLocaleLowerCase());
-    // filteredItems.length !== 0 ? setItemsToDisplay(filteredItems) : setItemsToDisplay(["Not found"]);
-    // setItemsToDisplay(filteredItems)
+    if (!searchitems || searchitems === 0) {
+      alert("Enter a search term")
+    } else {
+      setCookie('searchitem', searchitems, { path: '/' });
+      navigate(`/search`);
+        setTimeout(() => { window.location.reload() }, 200);
+    }
     
-  setCookie('searchitem', searchitems, { path: '/' });
 
-  navigate(`/searchloading`);
-
-
-
-
-        setTimeout(() => { navigate(`/search`) }, 1500);
-        setTimeout(() => { window.location.reload() }, 1510);
 
   }
 

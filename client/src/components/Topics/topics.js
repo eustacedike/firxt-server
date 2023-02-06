@@ -1,6 +1,9 @@
 
 
-import { Link } from 'react-router-dom';
+
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+import { useCookies } from 'react-cookie';
 
 import './topics.css';
 
@@ -33,6 +36,21 @@ import cryptoPic from "../Images/topics/btc.png";
 const TopicImages = [motorPic, phonePic, moviePic, musicPic, bookPic, sportPic, financePic, techPic,  foodPic, cryptoPic, celebPic, fashionPic, petPic, forexPic, naturePic, lovePic, healthPic, kidPic]
 
 function Topics() {
+
+  const navigate = useNavigate();
+
+  const [cookies, setCookie, removeCookie] = useCookies(['user']);
+
+
+  const findThem = (a) => {
+    
+      setCookie('searchitem', a, { path: '/' })
+
+      navigate(`/search`)
+
+      setTimeout(() => { window.location.reload() }, 200);
+    
+  }
 
     const linkStyle = {
         textDecoration: "none",
@@ -82,7 +100,7 @@ function Topics() {
 
     {categories.tags.map(tag => {
           return (
-            <button> <Link onClick={takeUp} to="/" style={linkStyle}>#{tag}</Link></button>
+            <button onClick={()=>{findThem(tag)}} > #{tag} </button>
           )
         })}
     </div>
