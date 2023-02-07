@@ -1,6 +1,6 @@
 {
     "categories": ["Automobiles", "Phones", "Movies", "Music", "Books", "Celebrity", "Sports", "Finance", "Crypto", "Tech", "Food"],
-    "tags": ["twitter", "lagos", "election", "workout", "ronaldo", "burnaboy", "japa", "drake", "sales", "newyear"],
+    "tags": ["twitter", "develop", "election", "workout", "trading", "burnaboy", "japa", "drake", "sales", "newyear"],
     "cats":{
     "Automobiles":
     {"id": 1, "name": "Automobiles", "desc":"Everything cars, motorbikes, vehicles, luxury cars"},

@@ -339,23 +339,22 @@
         font-size: smaller;
     }
 
-    .profile-options {
+    /* .profile-options {
         display: flex;
         gap: 15px;
         border-top: 2px dashed rgb(74, 4, 4,0.5);
         border-bottom: 2px dashed rgb(74, 4, 4, 0.5);
-    } 
+    }  */
 
-    .Dashboard hr {
+    /* .Dashboard hr {
         display: none;
-    }
+    } */
 
-    .the-options {
+    /* .the-options {
         width: 65px;
-        /* width: 10%; */
         flex-direction: column;
         border-bottom: none;
-    }
+    } */
 
     .odas {
         justify-content: flex-start;

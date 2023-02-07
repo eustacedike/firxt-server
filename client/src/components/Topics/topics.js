@@ -46,7 +46,7 @@ function Topics() {
     
       setCookie('searchitem', a, { path: '/' })
 
-      navigate(`/search`)
+      navigate(`/tag`)
 
       setTimeout(() => { window.location.reload() }, 200);
     

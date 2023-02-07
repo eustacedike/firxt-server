@@ -18,6 +18,7 @@ import Dashboard from "./components/Dashboard/dashboard";
 import OtherUser from "./components/Dashboard/otheruser";
 import Loading from "./components/Loading/loading";
 import Searched from "./components/SearchResults/searched";
+import Tagged from "./components/SearchResults/tagged";
 import Error from "./components/ErrorPage/404page";
 
 
@@ -79,6 +80,10 @@ function App() {
     getUsers();
   }, [allUsers])
 
+  // console.log(allPosts);
+
+  const trendPosts = [...allPosts].sort((a, b) => (b.upvotes + b.downvotes) - (a.upvotes + a.downvotes));
+
   return (
     <div className="App">
 
@@ -92,8 +97,8 @@ function App() {
             <Route path="loading" element={<Loading h1="PUBLISHING" timer={24.3} />} />
             <Route path="searchloading" element={<Loading h1="SEARCHING" timer={200} />} />
             {/* <Route path="post/*" element={<Loading />} /> */}
-            <Route path="*" element={<Error />} />
             <Route path="search" element={<Searched />} />
+            <Route path="tag" element={<Tagged />} />
 
             {
               Object.keys(categories.cats).map(key =>
@@ -185,7 +190,7 @@ function App() {
               icon={<ImFire />}
               latestOrtrending="TRENDING NOW"
               sub="Hot topics right now..."
-              posts={allPosts.sort((a, b) => (b.upvotes + b.downvotes) - (a.upvotes + a.downvotes))}
+              posts={trendPosts}
             />} />
 
 
@@ -195,6 +200,8 @@ function App() {
               sub="Check out the most recent blogs on Firxt.."
               posts={allPosts}
             />} />
+            <Route path="*" element={<Error />} />
+
             {/* <Route path="*" element={<NoPage />} /> */}
           </Route>
         </Routes>

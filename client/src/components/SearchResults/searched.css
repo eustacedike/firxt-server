@@ -80,6 +80,12 @@
 }
 
 
+
+.Tagged .search-cat button {
+    width: 50%;
+}
+
+
 @media (max-width: 900px) {
     .foundcategories {
 

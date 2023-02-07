@@ -87,7 +87,7 @@ function Post() {
       author: user.name,
       authormail: user.email,
       authorlink: user.link,
-      readtime: postRead,
+      readtime: Math.ceil(postBody.split(" ").length/75),
       category: postCategory,
       link: postTitle.replace(/ +/g, '-').toLowerCase().replace(/^\s+|\s+$/gm,'') + "-" + Math.floor(Math.random()*500000),
       image: imageUrl,
@@ -155,7 +155,7 @@ function Post() {
           }
         </select>
 
-        <select
+        {/* <select
           onChange={(e) => { setPostRead(e.target.value) }}
         >
           <option value={1}>1</option>
@@ -166,7 +166,7 @@ function Post() {
           <option value={15}>15</option>
           <option value={20}>20</option>
           <option value={25}>25</option>
-        </select>
+        </select> */}
 
         <textarea
           name=""

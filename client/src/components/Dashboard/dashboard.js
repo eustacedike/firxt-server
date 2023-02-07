@@ -39,8 +39,8 @@ function Dashboard() {
     // console.log(allUsers.filter(a => {return a.email === cookies.Email})[0].profileimage);
 
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-    let theMonth = parseInt(cookies.JoinDate.slice(5, 7));
-    let myDate = `${months[theMonth - 1]} ${cookies.JoinDate.slice(8, 10)}, ${cookies.JoinDate.slice(0, 4)}`
+    let theMonth = parseInt(cookies.JoinDate?.slice(5, 7));
+    let myDate = `${months[theMonth - 1]} ${cookies.JoinDate?.slice(8, 10)}, ${cookies.JoinDate?.slice(0, 4)}`
 
     const [avatar, setAvatar] = useState("https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg");
     const [gender, setGender] = useState([]);
@@ -295,7 +295,7 @@ function Dashboard() {
 
 
     // const date1 = new Date('7/13/2010');
-    const date1 = new Date(`${cookies.JoinDate.slice(5, 7)}/${cookies.JoinDate.slice(8, 10)}/${cookies.JoinDate.slice(0, 4)}`);
+    const date1 = new Date(`${cookies.JoinDate?.slice(5, 7)}/${cookies.JoinDate?.slice(8, 10)}/${cookies.JoinDate?.slice(0, 4)}`);
     const date2 = new Date();
     const diffTime = Math.abs(date2 - date1);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -615,8 +615,10 @@ function Dashboard() {
 
                                         <div className="post-details">
                                             <div className="author">
-                                                <img src={eachPost.authordp} alt="" />
-                                                <h4>{eachPost.author}</h4>
+                                            <img wait={2000} src={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.profileimage} alt="" />
+
+                                                <h4>{allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.firstname} &nbsp;
+                    {allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.lastname}</h4>
                                             </div>
 
                                             <h5><FaCalendarAlt />  &nbsp;
@@ -627,13 +629,13 @@ function Dashboard() {
 
                                         <div className="cat-act">
                                             <button>{eachPost.category}</button>
-                                            <div className="post-actions">
+                                            {/* <div className="post-actions">
                                                 <p><FaThumbsUp /></p>
                                                 <p><FaThumbsDown /></p>
                                                 <p><FaBookmark /></p>
                                                 <p><FaPenAlt /></p>
                                                 <p><FaTrash /></p>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 )

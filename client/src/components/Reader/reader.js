@@ -187,7 +187,7 @@ function Reader(props) {
                 {thisPost.post}
                 {thisPost.imageUrl !== "" ? <img src={thisPost.imageUrl} /> : ""}
             </p>
-
+{/* <p>{Math.ceil(props.mainpost.split(" ").length/70)}</p> */}
             <div className="cat-act">
                 <button>{thisPost.category}</button>
                 <div className="post-actions">
@@ -256,7 +256,10 @@ function Reader(props) {
                                 <div className="author">
                                     <div>
                                         <img src={props.allUsers.filter(a => { return a.email === eachReply.replyauthoremail })[0]?.profileimage} alt="" />
-                                        <h4>{eachReply.replyauthor}</h4>
+                                        
+                                        <h4>{props.allUsers.filter(a => { return a.email === eachReply.replyauthoremail })[0]?.firstname} &nbsp;
+                    {props.allUsers.filter(a => { return a.email === eachReply.replyauthoremail })[0]?.lastname}</h4>
+                                        {/* <h4>{eachReply.replyauthor}</h4> */}
                                     </div>
                                     <h5><FaCalendarAlt /> {replyTime2}</h5>
                                     <FaTrash

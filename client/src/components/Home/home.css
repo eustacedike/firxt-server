@@ -196,13 +196,17 @@
     justify-content: right;
     gap: 25px;
     cursor: pointer;
+    transition: 0s !important;
+}
 
+.post-actions p {
+    transition: 0s !important;
 }
 
 .post-actions p:hover {
     transform: scale(1.01);
     color: var(--primary);
-    transition: 0s;
+    transition: 0s !important;
 }
 
 .more {
