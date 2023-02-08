@@ -2,7 +2,9 @@
 
 import { Link } from 'react-router-dom';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+
+import Pagination from '../Pagination/Pagination';
 
 import axios from 'axios';
 
@@ -80,6 +82,15 @@ const alertBox = () => {
 };
 
 
+let PageSize = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const postsToDisplay = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return posts?.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, posts]);
+
 const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","Nov","Dec"]
 
 
@@ -146,7 +157,15 @@ const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","No
         })}
       </div>
 
-      <br /> <br /> <br />
+      <br /> 
+      <Pagination
+        className="pagination-bar"
+        currentPage={currentPage}
+        totalCount={posts.length}
+        pageSize={PageSize}
+        onPageChange={page => {setCurrentPage(page); takeUp()}}
+      />
+      <br /> <br />
 
       <hr></hr>
     </div>

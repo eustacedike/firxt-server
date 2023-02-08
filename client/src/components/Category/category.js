@@ -78,7 +78,7 @@ const TopicImages = [motorPic, phonePic, moviePic, musicPic, bookPic, sportPic, 
 
       </div>
       <div className="xplore"
-        style={{ position: xplore ? "fixed" : "", top: xplore ? "62px" : "" }}
+        style={{ position: xplore ? "fixed" : "", top: xplore ? "40px" : "" }}
       >
         <Explore allUsers={props.allUsers} allPosts={props.allPosts}/>
       </div>

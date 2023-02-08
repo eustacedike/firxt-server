@@ -12,6 +12,16 @@
     color: white;
 }
 
+.Loading2 {
+  height: 90vh;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+ 
+  color: var(--primary);
+}
+
 
 .Loading h1 {
     font-size: clamp(22px,2.1vw,40px);

@@ -59,7 +59,7 @@ function Explore(props) {
   }
 
   const sliced = Object.fromEntries(
-    Object.entries(categories.cats).slice(0, 12));
+    Object.entries(categories.cats).slice(0, 9));
 
     // console.log(props.allUsers);
 
@@ -69,7 +69,7 @@ function Explore(props) {
       <h2><FaUsers /> Popular Users</h2>
       <div className="xplore-cats">
 
-        {sortable.slice(1,7).map(user => {
+        {sortable.slice(1,5).map(user => {
           return (
             <button className='pUsers'>
               <Link to={`/user/${props.allUsers.filter(a => { return a.email === user })[0]?.link}`} onClick={takeUp} style={linkStyle}>
@@ -78,7 +78,7 @@ function Explore(props) {
                 {props.allUsers.filter(a => { return a.email === user })[0]?.firstname} &nbsp;
                     {props.allUsers.filter(a => { return a.email === user })[0]?.lastname}
                 </Link>
-                </button>
+              </button>
           )
         })}
       

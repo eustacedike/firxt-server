@@ -140,7 +140,7 @@ function Reader(props) {
         setTimeout(() => { document.getElementById('alert').style.display = "none" }, 3000);
     };
 
-    // console.log(props.authorlink);
+    // console.log(props.replies.slice().reverse());
 
 
     const [reportModal, setReportModal] = useState(false);
@@ -192,7 +192,6 @@ function Reader(props) {
                 {thisPost.post}
                 {thisPost.imageUrl !== "" ? <img src={thisPost.imageUrl} /> : ""}
             </p>
-            {/* <p>{Math.ceil(props.mainpost.split(" ").length/70)}</p> */}
             <div className="cat-act">
                 <button>{thisPost.category}</button>
                 <div className="post-actions">
@@ -236,16 +235,17 @@ function Reader(props) {
                     onChange={(e) => { setReply(value => e.target.value) }}
                 // placeholder="new message on this topic
                 />
-                <button>Comment</button>
+                <button>Reply</button>
             </form>
 
-            <br /> <br />
+            <br />
+            {/* <br /> */}
 
-            <h3>Replies</h3>
+            {/* <h3>REPLIES</h3> */}
 
             <div className="replies">
 
-                {props.replies.reverse().map(eachReply => {
+                {props.replies.slice().reverse().map(eachReply => {
 
                     let replyMonth = parseInt(eachReply.replytime.slice(5, 7));
                     let replyTime2 = `${months[replyMonth - 1]} ${eachReply.replytime.slice(8, 10)}, ${eachReply.replytime.slice(0, 4)}`

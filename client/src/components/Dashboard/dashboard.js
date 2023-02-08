@@ -19,7 +19,7 @@ import categories from "../categories.json";
 
 import { getCurrentUser } from "../actions/getCurrentUser";
 
-
+import PreLoader from "../Loading/profileloading";
 
 
 function Dashboard() {
@@ -43,7 +43,7 @@ function Dashboard() {
     let myDate = `${months[theMonth - 1]} ${user.date?.slice(8, 10)}, ${user.date?.slice(0, 4)}`
 
     const [avatar, setAvatar] = useState("https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg");
-    const [gender, setGender] = useState([]);
+    const [gender, setGender] = useState("");
     const [DOB, setDOB] = useState("");
 
 
@@ -51,7 +51,7 @@ function Dashboard() {
         name: user.name,
         nationality: "Nigeria",
         avatar: avatar,
-        gender: gender,
+        gender: gender.charAt(0).toUpperCase()+gender.slice(1),
         // specialty: "Your major..",
         // desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex commodi dolorem quasi dignissimos temporibus fugit adipisci voluptatibus esse aliquid quod! Exercitationem, facere aut. Voluptates, voluptatum animi quo incidunt aliquam fugiat perferendis ducimus maiores sunt, velit optio est vitae reiciendis molestias",
         dob: `${months[parseInt(DOB.slice(5, 7)) - 1]} ${DOB.slice(8, 10)}, ${DOB.slice(0, 4)}`,
@@ -308,6 +308,13 @@ function Dashboard() {
     }, 0);
 
 
+    //Preloader
+    const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => { setLoading(false) }, 800)
+  }, []);
+
     // console.log(userLikes.length);
 
 
@@ -352,6 +359,11 @@ function Dashboard() {
         Object.entries(categories.cats).slice(0, 8));
 
     return (
+        <>
+      {
+        loading ?
+          <PreLoader h1="LOADING" timer={24.3}/>
+          :
         <div className="Dashboard">
             <div className="dashboard-1">
                 <div className="avatar">
@@ -772,6 +784,8 @@ function Dashboard() {
             </div> */}
 
         </div>
+}
+</>
     );
 }
 

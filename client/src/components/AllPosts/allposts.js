@@ -186,7 +186,7 @@ const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","No
         currentPage={currentPage}
         totalCount={posts.length}
         pageSize={PageSize}
-        onPageChange={page => setCurrentPage(page)}
+        onPageChange={page => {setCurrentPage(page); takeUp()}}
       />
     </div>
   );

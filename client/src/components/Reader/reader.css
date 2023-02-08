@@ -36,8 +36,13 @@
     border: 1px solid grey;
 }
 
+.reply-form {
+    display: flex;
+    /* border: 1px solid red; */
+}
+
 .Reader input {
-    padding: 18px 8px;
+    padding: 15px 8px;
     width: 100%;
     max-width: 480px;
     border: none;
@@ -46,13 +51,13 @@
 }
 
 .Reader .reply-form button {
-    padding: 16px 15px;
-    margin-top: 10px;
+    padding: 15px 15px;
+    /* margin-top: 10px; */
     color: white;
     font-family: 'Roboto', sans-serif;
 
     font-weight: 700;
-    border-radius: 4px;
+    border-radius: 0 4px 4px 0;
     border: 1px solid var(--primary);
     cursor: pointer;
     background-color: var(--primary);
@@ -151,6 +156,7 @@
 
 .report-modal p {
     font-size: clamp(12px,1.5vw,18px);
+    padding: 0 15px;
 }
 
 .report-modal button {
@@ -212,4 +218,14 @@
     .main-post img {
         max-width: 250px;
     }
+
+    
+
+    .Reader input {
+        padding: 13px 6px;
+    }
+    
+    .Reader .reply-form button {
+        padding: 13px 13px;
+        }
 }

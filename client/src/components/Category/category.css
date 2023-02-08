@@ -28,22 +28,30 @@
     /* padding: 0px; */
     /* font-family: 'Righteous', cursive; */
     border-radius: 120px !important;
-    width: 45%;
+    width: 100%;
     height: 40px;
     background-color: white;
     color: var(--primary);
     cursor: pointer;
+    text-align: left;
 }
 
 
 .Categx .xplore img {
-    height: 20px;
+    height: 25px;
+    width: 25px;
+    object-fit: cover;
+
     margin-right: 18px;
     vertical-align: -4px;
     border-radius: 50%;
 }
 
 @media (max-width: 700px) {
+
+    /* .pUsers {
+        width: 100%;
+    } */
 
 
     .Categx .Latest {
