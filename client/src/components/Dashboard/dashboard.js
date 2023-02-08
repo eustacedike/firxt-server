@@ -391,7 +391,7 @@ function Dashboard() {
                     </div>
                 </div>
                 <div className="DP-preview" id="DP-preview">
-                    <img src={dp} />
+                    <img src={preview} />
                     <div>
                         <button
                             onClick={() => { document.getElementById('DP-preview').style.transform = "scale(0)" }}
