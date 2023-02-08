@@ -46,7 +46,7 @@ function Home() {
         
       </div>
       <div className="xplore"
-      style={{position: xplore? "fixed" : "", top: xplore? "15px" : ""}}
+      style={{position: xplore? "fixed" : "", top: xplore? "28px" : ""}}
       >
           <Explore/>
         </div>

@@ -80,7 +80,7 @@ const TopicImages = [motorPic, phonePic, moviePic, musicPic, bookPic, sportPic, 
       <div className="xplore"
         style={{ position: xplore ? "fixed" : "", top: xplore ? "62px" : "" }}
       >
-        <Explore />
+        <Explore allUsers={props.allUsers} allPosts={props.allPosts}/>
       </div>
     </div>
   );

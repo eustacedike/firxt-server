@@ -150,10 +150,10 @@
     cursor: pointer;
 }
 
-.post:hover {
+/* .post:hover {
     transform: scale(1.02);
     background-color: rgb(255, 255, 255, 0.65);
-}
+} */
 
 .post-details {
     display: flex;
@@ -173,6 +173,8 @@
     width: 30px;
     border-radius: 50%;
     background-color: var(--primary);
+   object-fit: cover;
+
 }
 
 .cat-act {
@@ -203,11 +205,11 @@
     transition: 0s !important;
 }
 
-.post-actions p:hover {
+/* .post-actions p:hover {
     transform: scale(1.01);
     color: var(--primary);
     transition: 0s !important;
-}
+} */
 
 .more {
 

@@ -67,6 +67,8 @@ function Reader(props) {
     };
 
 
+    const [deletePostModal, setDeletePostModal] = useState(false);
+
     const deletePost = () => {
 
 
@@ -113,6 +115,9 @@ function Reader(props) {
 
     };
 
+
+    const [deleteReplyModal, setDeleteReplyModal] = useState(false);
+
     const deleteReply = (a) => {
 
 
@@ -151,7 +156,7 @@ function Reader(props) {
                 "https://formspree.io/f/mgebawzn",
                 { email: user.email, post: thisPost.title, reason: reportReason, message: reportInfo }
             )
-            .then(res => {console.log(res); setReportSent(true)})
+            .then(res => { console.log(res); setReportSent(true) })
             .catch(err => console.log(err));
 
 
@@ -187,7 +192,7 @@ function Reader(props) {
                 {thisPost.post}
                 {thisPost.imageUrl !== "" ? <img src={thisPost.imageUrl} /> : ""}
             </p>
-{/* <p>{Math.ceil(props.mainpost.split(" ").length/70)}</p> */}
+            {/* <p>{Math.ceil(props.mainpost.split(" ").length/70)}</p> */}
             <div className="cat-act">
                 <button>{thisPost.category}</button>
                 <div className="post-actions">
@@ -206,7 +211,7 @@ function Reader(props) {
                     <p>{thisPost.downvotes}<FaThumbsDown onClick={()=>{downvote(props.id, user.email)}}/></p>
                     <p><FaBookmark onClick={()=>{bookmark(props.id, user.email)}}/></p> */}
                     <p>{thisPost.authormail === user.email ? <FaTrash
-                        onClick={user.isAuthenticated ? deletePost : alertBox}
+                        onClick={user.isAuthenticated ? () => { setDeletePostModal(true) } : alertBox}
                     /> : <FaExclamationCircle onClick={() => { setReportModal(true) }} />}</p>
 
                 </div>
@@ -256,20 +261,32 @@ function Reader(props) {
                                 <div className="author">
                                     <div>
                                         <img src={props.allUsers.filter(a => { return a.email === eachReply.replyauthoremail })[0]?.profileimage} alt="" />
-                                        
+
                                         <h4>{props.allUsers.filter(a => { return a.email === eachReply.replyauthoremail })[0]?.firstname} &nbsp;
-                    {props.allUsers.filter(a => { return a.email === eachReply.replyauthoremail })[0]?.lastname}</h4>
+                                            {props.allUsers.filter(a => { return a.email === eachReply.replyauthoremail })[0]?.lastname}</h4>
                                         {/* <h4>{eachReply.replyauthor}</h4> */}
                                     </div>
                                     <h5><FaCalendarAlt /> {replyTime2}</h5>
                                     <FaTrash
 
                                         style={{ display: eachReply.replyauthoremail === user.email ? "" : "none" }}
-                                        onClick={() => { deleteReply(props.replies.indexOf(eachReply)) }}
+                                        onClick={() => { setDeleteReplyModal(true) }}
                                     />
                                 </div>
 
                             </div>
+                            <div className="delete-modal" style={{ transform: deleteReplyModal ? "scale(1) translateX(-50%)" : "" }}>
+
+<h3>Delete Reply?</h3>
+<br />
+
+<div>
+    <button onClick={() => { setDeleteReplyModal(false) }}>Cancel</button>
+    <button onClick={() => { deleteReply(props.replies.indexOf(eachReply)); setDeleteReplyModal(false) }} className='procee'>Delete</button>
+</div>
+
+
+</div>
 
                         </div>
                     )
@@ -290,7 +307,7 @@ function Reader(props) {
                                 <br />
 
                                 <button
-                                onClick={() => { setReportModal(false); setReportSent(false) }}>Close</button>
+                                    onClick={() => { setReportModal(false); setReportSent(false) }}>Close</button>
                             </div>
                             :
 
@@ -327,6 +344,23 @@ function Reader(props) {
 
                 </div>
             </div>
+
+
+            <div className="delete-modal" style={{ transform: deletePostModal ? "scale(1) translateX(-50%)" : "" }}>
+
+                <h3>ARE YOU SURE YOU WANT TO DELETE THIS POST?</h3>
+                <h4>"{thisPost.title}"</h4>
+                <br />
+
+                <div>
+                    <button onClick={() => { setDeletePostModal(false) }}>Cancel</button>
+                    <button onClick={deletePost} className='procee'>Delete</button>
+                </div>
+
+
+            </div>
+
+         
 
 
 

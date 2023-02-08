@@ -106,6 +106,8 @@ function App() {
                   desc={categories.cats[key].name}
                   sub={categories.cats[key].desc}
                   id={categories.cats[key].id}
+                  allUsers={allUsers}
+                  allPosts={allPosts}
                 />}
 
                 />

@@ -1,7 +1,7 @@
 
 
 import { useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
+// import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
 import { FaTrash, FaUser, FaUsers, FaBirthdayCake, FaVenusMars, FaHome, FaAward, FaBook, FaBriefcase, FaCogs, FaGraduationCap, FaMagic, FaCalendarAlt, FaClock, FaThumbsUp, FaThumbsDown, FaBookmark, FaPenAlt, FaPen, FaRecycle } from "react-icons/fa";
 import { ImEarth } from 'react-icons/im';
@@ -10,7 +10,7 @@ import axios from "axios";
 
 
 import "./dashboard.css";
-import dp from "./dp4.png";
+import dp from "./dp3.jpg";
 import badge from "./badge.png";
 
 
@@ -26,7 +26,7 @@ function Dashboard() {
 
     const [dashbox, setDashbox] = useState(0);
 
-    const [cookies, setCookie, removeCookie] = useCookies(['user']);
+    // const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
     const [user, setUser] = useState({ isAuthenticated: false });
 
@@ -36,11 +36,11 @@ function Dashboard() {
 
 
 
-    // console.log(allUsers.filter(a => {return a.email === cookies.Email})[0].profileimage);
+    // console.log(user);
 
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-    let theMonth = parseInt(cookies.JoinDate?.slice(5, 7));
-    let myDate = `${months[theMonth - 1]} ${cookies.JoinDate?.slice(8, 10)}, ${cookies.JoinDate?.slice(0, 4)}`
+    let theMonth = parseInt(user.date?.slice(5, 7));
+    let myDate = `${months[theMonth - 1]} ${user.date?.slice(8, 10)}, ${user.date?.slice(0, 4)}`
 
     const [avatar, setAvatar] = useState("https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg");
     const [gender, setGender] = useState([]);
@@ -254,13 +254,13 @@ function Dashboard() {
                 //         return b === a._id
                 //     })}))
 
-                setYourPosts(response.data.filter(a => { return a.authormail === user.email }));
+                setYourPosts(response.data.reverse().filter(a => { return a.authormail === user.email }));
                 setYourBookmarks(response.data.filter((a) => {
                     return userBookmarks.some((b) => {
                         return b === a._id
                     })
-                }))
-                setLatestPosts(response.data.reverse().slice(0, 3));
+                }));
+                setLatestPosts(response.data.slice(0, 3));
             });
 
     };
@@ -295,7 +295,7 @@ function Dashboard() {
 
 
     // const date1 = new Date('7/13/2010');
-    const date1 = new Date(`${cookies.JoinDate?.slice(5, 7)}/${cookies.JoinDate?.slice(8, 10)}/${cookies.JoinDate?.slice(0, 4)}`);
+    const date1 = new Date(`${user.date?.slice(5, 7)}/${user.date?.slice(8, 10)}/${user.date?.slice(0, 4)}`);
     const date2 = new Date();
     const diffTime = Math.abs(date2 - date1);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -370,7 +370,7 @@ function Dashboard() {
                     />
                     <div>
                         <h1>{you.name}</h1>
-                        <i>
+                        <b>
                             {briefInput ?
 
                                 <>
@@ -387,11 +387,11 @@ function Dashboard() {
                                 style={{ display: briefInput ? "none" : "", fontSize: "smaller", marginLeft: "7px", color: "#4A0404", cursor: "pointer" }}
                                 onClick={() => { setBriefInput(true) }}
                             />
-                        </i>
+                        </b>
                     </div>
                 </div>
                 <div className="DP-preview" id="DP-preview">
-                    <img src={preview} />
+                    <img src={dp} />
                     <div>
                         <button
                             onClick={() => { document.getElementById('DP-preview').style.transform = "scale(0)" }}
@@ -400,6 +400,9 @@ function Dashboard() {
                             onClick={changeDP}
                             className="procee">Proceed</button>
                     </div>
+                    <p>
+                        This is how your image will appear on your profile. We advice you use a square fit image.
+                    </p>
 
                 </div>
 

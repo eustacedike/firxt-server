@@ -11,6 +11,8 @@ import axios from 'axios';
 
 import { getCurrentUser } from '../../actions/getCurrentUser';
 
+import SAlert from '../../CustomAlert/searcherroralert';
+
 
 import { FaBolt, FaChevronDown, FaSearch, FaPenFancy, FaClock, FaUser } from 'react-icons/fa';
 import { ImFire } from 'react-icons/im';
@@ -50,21 +52,34 @@ function Navigation() {
   const location = useLocation();
 
 
-  const filteredItems = Topics.filter(
-    item =>
-      item.toLocaleLowerCase().includes(searchitems) ||
-      item.toLocaleLowerCase().includes(searchitems)
-  );
+  // const filteredItems = Topics.filter(
+  //   item =>
+  //     item.toLocaleLowerCase().includes(searchitems) ||
+  //     item.toLocaleLowerCase().includes(searchitems)
+  // );
+
+  const alertBox = () => {
+    document.getElementById('alert').style.display = "block";
+    setTimeout(() => { document.getElementById('alert').style.display = "none" }, 3000);
+};
+
 
 
   const findThem = () => {
     if (!searchitems || searchitems === 0) {
-      alert("Enter a search term")
+      document.getElementById('alert').style.display = "block";
+      setTimeout(() => { document.getElementById('alert').style.display = "none" }, 3000);
     } else {
       setCookie('searchitem', searchitems, { path: '/' });
       navigate(`/search`);
         setTimeout(() => { window.location.reload() }, 200);
     }
+
+    const alertBox = () => {
+      document.getElementById('alert').style.display = "block";
+      setTimeout(() => { document.getElementById('alert').style.display = "none" }, 3000);
+  };
+
     
 
 
@@ -142,6 +157,11 @@ const logoutUser = () => {
   return (
 
     <header>
+      <div id='alert'>
+                <SAlert />
+            </div>
+
+
       <div
         // className={location.pathname === "/blogposts"? "Navigation nav-alt" : "Navigation"}
         className={location.pathname === "/blogposts" ? "Navigation nav-alt" :

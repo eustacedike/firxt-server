@@ -121,7 +121,7 @@ function OtherUser(props) {
                     <img className="avatar-image" src={you.avatar} alt="" />
                     <div>
                         <h1>{you.firstname} {you.lastname}</h1>
-                    {you.specialty === "What do you do?"? <i>Not specified. </i>:  <i>{you.specialty}</i>}
+                    {you.specialty === "What do you do?"? <b>Not specified. </b>:  <b>{you.specialty}</b>}
 
                     </div>
                 </div>

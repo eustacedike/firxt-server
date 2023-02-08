@@ -107,7 +107,7 @@ function Post() {
         // setTimeout(() => {
           navigate(`/post/${thePost.link}`) 
         // } , 3100);
-        setTimeout(() => { window.location.reload() }, 200);
+        setTimeout(() => { window.location.reload() }, 100);
       })
       .catch(err => {
         const errors = err.response.data;

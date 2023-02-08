@@ -89,6 +89,8 @@ function Trending() {
     window.scroll(0, 0)
   };
 
+
+
   return (
     <div className="Latest">
       <h1><ImFire /> TRENDING POSTS</h1>

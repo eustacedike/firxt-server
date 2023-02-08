@@ -97,6 +97,7 @@ router.post("/login", (req, res) => {
           name: user.firstname + " " + user.lastname,
           link: user.link,
           isAuthenticated: true,
+          date: user.date
         };
 
         console.log(user.firstname);

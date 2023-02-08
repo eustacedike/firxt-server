@@ -28,17 +28,19 @@
     /* padding: 0px; */
     /* font-family: 'Righteous', cursive; */
     border-radius: 120px !important;
-    /* width: 130px; */
+    width: 45%;
     height: 40px;
     background-color: white;
     color: var(--primary);
     cursor: pointer;
 }
 
+
 .Categx .xplore img {
     height: 20px;
     margin-right: 18px;
     vertical-align: -4px;
+    border-radius: 50%;
 }
 
 @media (max-width: 700px) {
