@@ -1,6 +1,5 @@
 .Post {
     padding: 5vw;
-    /* background: rgb(74, 4, 4, 0.8); */
     background: url(../Home/assets/giphy.gif), rgb(74, 4, 4, 0.8);
 
 }
@@ -9,17 +8,16 @@
     color: white;
     text-align: center;
     font-family: 'Montserrat Subrayada', sans-serif;
-   padding: 15px 0;
+    padding: 15px 0;
 }
 
 .Post form {
-/* border: 2px solid green; */
-width: 98%;
-max-width: 650px;
-margin: 10px auto;
-padding: 20px 5.5vw;
-border-radius: 4px;
-background-color: rgb(0, 0, 0, 0.95);
+    width: 98%;
+    max-width: 650px;
+    margin: 10px auto;
+    padding: 20px 5.5vw;
+    border-radius: 4px;
+    background-color: rgb(0, 0, 0, 0.95);
 }
 
 .title {
@@ -61,9 +59,7 @@ background-color: rgb(0, 0, 0, 0.95);
     background: none;
     outline: none;
     border: none;
-    /* border-bottom: 2px solid white; */
     font-family: 'Nunito', sans-serif;
-
     font-size: 16px;
 }
 
@@ -95,9 +91,9 @@ background-color: rgb(0, 0, 0, 0.95);
 }
 
 .Post form button:hover {
- transform: scale(1.1);
- background-color: var(--primary);
- color: white;
+    transform: scale(1.1);
+    background-color: var(--primary);
+    color: white;
 }
 
 #remove-image {

@@ -45,7 +45,6 @@ function App() {
   const getPosts = () => {
     axios.get("api/posts/fetchposts")
       .then((response) => {
-        // console.log(response.data);
         setAllPosts(response.data.reverse());
       });
 
@@ -69,7 +68,6 @@ function App() {
   const getUsers = () => {
     axios.get("api/users/fetchusers")
       .then((response) => {
-        // console.log(response.data);
         setAllUsers(response.data.reverse());
       });
 
@@ -80,7 +78,6 @@ function App() {
     getUsers();
   }, [allUsers])
 
-  // console.log(allPosts);
 
   const trendPosts = [...allPosts].sort((a, b) => (b.upvotes + b.downvotes) - (a.upvotes + a.downvotes));
 
@@ -93,10 +90,8 @@ function App() {
             <Route index element={<Home />} />
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
-            {/* <Route path="blog" element={<Reader />} /> */}
             <Route path="loading" element={<Loading h1="PUBLISHING" timer={24.3} />} />
             <Route path="searchloading" element={<Loading h1="SEARCHING" timer={200} />} />
-            {/* <Route path="post/*" element={<Loading />} /> */}
             <Route path="search" element={<Searched />} />
             <Route path="tag" element={<Tagged />} />
 
@@ -185,7 +180,6 @@ function App() {
             }
             />
             <Route path="categories" element={<Topics />} />
-            {/* <Route path="profile/salt-bae" element={<OtherUser />} /> */}
 
 
             <Route path="trending" element={<AllPosts
@@ -204,7 +198,6 @@ function App() {
             />} />
             <Route path="*" element={<Error />} />
 
-            {/* <Route path="*" element={<NoPage />} /> */}
           </Route>
         </Routes>
       </HashRouter>

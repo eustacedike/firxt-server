@@ -1,12 +1,10 @@
-.Topics {
 
-}
 
 .big-tops {
-display: flex;
-flex-wrap: wrap;
-justify-content: space-between;
-padding: 40px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 40px 0;
 }
 
 .topic-hero {
@@ -19,17 +17,14 @@ padding: 40px 0;
     font-family: 'Montserrat Subrayada', sans-serif;
     font-weight: 900;
     font-size: clamp(24px, 6vw, 60px);
-    
     padding: 60px;
 }
 
 .tops {
     display: flex;
-    /* border: 1px solid red; */
     flex-wrap: wrap;
     justify-content: space-between;
     width: 70%;
-    /* margin: 30px 5vw; */
     padding-left: 5vw;
 }
 
@@ -47,7 +42,7 @@ padding: 40px 0;
     align-items: center;
     font-weight: 800;
     gap: 10px;
-box-shadow: 2px 2px 5px 1px grey;
+    box-shadow: 2px 2px 5px 1px grey;
 
 }
 
@@ -79,9 +74,8 @@ box-shadow: 2px 2px 5px 1px grey;
     border: 1px solid var(--primary);
     padding: 7px 14px;
     height: 40px;
-font-family: 'Roboto', sans-serif;
-box-shadow: 2px 2px 5px 1px grey;
-   /* margin-bottom: 0; */
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 2px 2px 5px 1px grey;
     border-radius: 2px;
     background-color: white;
     color: var(--primary);
@@ -97,16 +91,16 @@ box-shadow: 2px 2px 5px 1px grey;
 
 
 @media (max-width: 1000px) {
-    .tops, .tops-2 {
+
+    .tops,
+    .tops-2 {
         width: 100%;
-       padding: 0px 5vw;
-       margin-bottom: 30px;
+        padding: 0px 5vw;
+        margin-bottom: 30px;
     }
 }
 
-@media (max-width: 780px) {
-    
-}
+@media (max-width: 780px) {}
 
 @media (max-width: 480px) {
     .topic {

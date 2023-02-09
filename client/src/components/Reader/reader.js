@@ -140,7 +140,6 @@ function Reader(props) {
         setTimeout(() => { document.getElementById('alert').style.display = "none" }, 3000);
     };
 
-    // console.log(props.replies.slice().reverse());
 
 
     const [reportModal, setReportModal] = useState(false);
@@ -159,8 +158,6 @@ function Reader(props) {
             .then(res => { console.log(res); setReportSent(true) })
             .catch(err => console.log(err));
 
-
-        // setReportModal(false);
     }
 
     return (
@@ -168,21 +165,11 @@ function Reader(props) {
             <div id='alert'>
                 <Alert />
             </div>
-            <h1>
-                {/* <FaClock style={{verticalAlign: "-4.5px"}}/> */}
-                {thisPost.title}</h1>
-
-
-
-
-
-
+            <h1>{thisPost.title}</h1>
             <div className="post-details">
                 <Link onClick={takeUp} to={`/user/${thisPost.authorlink}`} style={linkStyle} className="author">
-                    {/* <div className="author"> */}
                     <img src={thisPost.authordp} alt="" />
                     <h4>{thisPost.author}</h4>
-                    {/* </div> */}
                 </Link>
 
                 <h5><FaCalendarAlt /> {thisPost.date}</h5>
@@ -206,9 +193,7 @@ function Reader(props) {
                     <p style={{ color: props.userbookmarks?.includes(props.id) ? "red" : "" }}>
                         <FaBookmark onClick={user.isAuthenticated ? () => { bookmark(props.id, user.email) } : alertBox} />
                     </p>
-                    {/* <p>{thisPost.upvotes} <FaThumbsUp onClick={()=>{upvote(props.id, user.email)}}/></p>
-                    <p>{thisPost.downvotes}<FaThumbsDown onClick={()=>{downvote(props.id, user.email)}}/></p>
-                    <p><FaBookmark onClick={()=>{bookmark(props.id, user.email)}}/></p> */}
+
                     <p>{thisPost.authormail === user.email ? <FaTrash
                         onClick={user.isAuthenticated ? () => { setDeletePostModal(true) } : alertBox}
                     /> : <FaExclamationCircle onClick={() => { setReportModal(true) }} />}</p>
@@ -220,10 +205,7 @@ function Reader(props) {
             <hr />
             <br /> <br />
 
-            {/* <form action="">
-                <input type="text" /> <br />
-                <button>Comment</button>
-            </form> */}
+
             <form
                 className='reply-form'
                 style={{ display: user.isAuthenticated ? "" : "none" }}
@@ -233,15 +215,12 @@ function Reader(props) {
                     type="text"
                     id="reply-box"
                     onChange={(e) => { setReply(value => e.target.value) }}
-                // placeholder="new message on this topic
                 />
                 <button>Reply</button>
             </form>
 
             <br />
-            {/* <br /> */}
 
-            {/* <h3>REPLIES</h3> */}
 
             <div className="replies">
 
@@ -264,7 +243,6 @@ function Reader(props) {
 
                                         <h4>{props.allUsers.filter(a => { return a.email === eachReply.replyauthoremail })[0]?.firstname} &nbsp;
                                             {props.allUsers.filter(a => { return a.email === eachReply.replyauthoremail })[0]?.lastname}</h4>
-                                        {/* <h4>{eachReply.replyauthor}</h4> */}
                                     </div>
                                     <h5><FaCalendarAlt /> {replyTime2}</h5>
                                     <FaTrash
@@ -277,16 +255,16 @@ function Reader(props) {
                             </div>
                             <div className="delete-modal" style={{ transform: deleteReplyModal ? "scale(1) translateX(-50%)" : "" }}>
 
-<h3>Delete Reply?</h3>
-<br />
+                                <h3>Delete Reply?</h3>
+                                <br />
 
-<div>
-    <button onClick={() => { setDeleteReplyModal(false) }}>Cancel</button>
-    <button onClick={() => { deleteReply(props.replies.indexOf(eachReply)); setDeleteReplyModal(false) }} className='procee'>Delete</button>
-</div>
+                                <div>
+                                    <button onClick={() => { setDeleteReplyModal(false) }}>Cancel</button>
+                                    <button onClick={() => { deleteReply(props.replies.indexOf(eachReply)); setDeleteReplyModal(false) }} className='procee'>Delete</button>
+                                </div>
 
 
-</div>
+                            </div>
 
                         </div>
                     )
@@ -337,7 +315,6 @@ function Reader(props) {
                                 <div className='report-modal-btns'>
                                     <button onClick={() => { setReportModal(false) }}>Cancel</button>
                                     <button onClick={reportPost} className='procee'>Submit</button>
-                                    {/* <button onClick={()=>{setReportSent(true)}} className='procee'>Submit</button> */}
                                 </div>
                             </form>
                     }
@@ -359,10 +336,6 @@ function Reader(props) {
 
 
             </div>
-
-         
-
-
 
 
 

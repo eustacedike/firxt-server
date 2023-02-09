@@ -18,9 +18,9 @@ import { FaExclamationCircle, FaChevronRight, FaClock, FaCalendarAlt, FaBook, Fa
 import Alert from '../CustomAlert/alert';
 
 
-import {upvote} from '../actions/votes.js';
-import {downvote} from '../actions/votes.js';
-import {bookmark} from '../actions/votes.js';
+import { upvote } from '../actions/votes.js';
+import { downvote } from '../actions/votes.js';
+import { bookmark } from '../actions/votes.js';
 
 import { getCurrentUser } from '../actions/getCurrentUser';
 
@@ -28,9 +28,9 @@ import { getCurrentUser } from '../actions/getCurrentUser';
 function Latest(props) {
 
 
-  const [user, setUser] = useState({isAuthenticated: false});
+  const [user, setUser] = useState({ isAuthenticated: false });
 
-  useEffect(()=>{
+  useEffect(() => {
     setUser(getCurrentUser());
   }, []);
 
@@ -43,7 +43,6 @@ function Latest(props) {
   const getUsers = () => {
     axios.get("api/users/fetchusers")
       .then((response) => {
-        // console.log(response.data.filter(a => { return a.email === user.email })[0].profileimage);
         setAllUsers(response.data);
         setUserBookmarks(response.data.filter(a => { return a.email === user.email })[0]?.bookmarked);
         setUserLikes(response.data.filter(a => { return a.email === user.email })[0]?.liked);
@@ -53,15 +52,13 @@ function Latest(props) {
   };
 
 
-  
+
   const [posts, setPosts] = useState([]);
 
   const getPosts = () => {
     axios.get("api/posts/fetchposts")
       .then((response) => {
-
-        // setPosts(response.data.reverse());
-        setPosts(response.data.filter(forThisCategory => {return forThisCategory.category === props.thisCategory}).reverse());
+        setPosts(response.data.filter(forThisCategory => { return forThisCategory.category === props.thisCategory }).reverse());
       });
 
   };
@@ -73,16 +70,16 @@ function Latest(props) {
 
   useEffect(() => {
     getUsers();
-}, [user]);
+  }, [user]);
 
 
-const alertBox = () => {
-  document.getElementById('alert').style.display = "block";
-  setTimeout(() => { document.getElementById('alert').style.display = "none" }, 3000);
-};
+  const alertBox = () => {
+    document.getElementById('alert').style.display = "block";
+    setTimeout(() => { document.getElementById('alert').style.display = "none" }, 3000);
+  };
 
 
-let PageSize = 10;
+  let PageSize = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
   const postsToDisplay = useMemo(() => {
@@ -91,7 +88,7 @@ let PageSize = 10;
     return posts?.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, posts]);
 
-const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","Nov","Dec"]
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 
   const linkStyle = {
@@ -100,13 +97,13 @@ const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","No
   }
 
   const takeUp = () => {
-    window.scroll(0,0)
+    window.scroll(0, 0)
   }
 
   return (
     <div className="Latest">
- <div id='alert'>
-        <Alert/>
+      <div id='alert'>
+        <Alert />
       </div>
       <div className="posts">
 
@@ -114,32 +111,30 @@ const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","No
         {posts.map(eachPost => {
           return (
             <div className="post">
-          <h3>{eachPost.title}</h3> <br />
-          <Link onClick={takeUp} to={`/post/${eachPost.link}`} style={linkStyle}>
+              <h3>{eachPost.title}</h3> <br />
+              <Link onClick={takeUp} to={`/post/${eachPost.link}`} style={linkStyle}>
 
-          <p>
-            <FaBook /> {eachPost.postbody.substring(0,200)}...</p>
-          </Link>
+                <p>
+                  <FaBook /> {eachPost.postbody.substring(0, 200)}...</p>
+              </Link>
 
 
-          <div className="post-details">
-          <Link className='author' onClick={takeUp} to={`/user/${eachPost.authorlink}`} style={linkStyle}>
-                  {/* <div className="author"> */}
+              <div className="post-details">
+                <Link className='author' onClick={takeUp} to={`/user/${eachPost.authorlink}`} style={linkStyle}>
                   <img wait={3000} src={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.profileimage} alt="" />
-                    <h4>{allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.firstname} &nbsp;
+                  <h4>{allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.firstname} &nbsp;
                     {allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.lastname}
-                    </h4>
-                  {/* </div> */}
+                  </h4>
                 </Link>
 
-            <h5><FaCalendarAlt/>  {` ${months[parseInt(eachPost.date.slice(5,7))-1]} ${eachPost.date.slice(8,10)}, ${eachPost.date.slice(0,4)}`}</h5>
-            <h5><FaClock/> {eachPost.readtime} min read</h5>
-          </div>
+                <h5><FaCalendarAlt />  {` ${months[parseInt(eachPost.date.slice(5, 7)) - 1]} ${eachPost.date.slice(8, 10)}, ${eachPost.date.slice(0, 4)}`}</h5>
+                <h5><FaClock /> {eachPost.readtime} min read</h5>
+              </div>
 
-            <div className="cat-act">
-              <button>{eachPost.category}</button>
-          <div className="post-actions">
-          <p style={{ color: userLikes?.includes(eachPost._id) ? "red" : "" }}>
+              <div className="cat-act">
+                <button>{eachPost.category}</button>
+                <div className="post-actions">
+                  <p style={{ color: userLikes?.includes(eachPost._id) ? "red" : "" }}>
                     {eachPost.upvotes} &nbsp;
                     <FaThumbsUp onClick={user.isAuthenticated ? () => { upvote(eachPost._id, user.email); getUsers() } : alertBox} />
                   </p>
@@ -150,20 +145,20 @@ const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","No
                   <p style={{ color: userBookmarks?.includes(eachPost._id) ? "red" : "" }}>
                     <FaBookmark onClick={user.isAuthenticated ? () => { bookmark(eachPost._id, user.email); getUsers() } : alertBox} />
                   </p>
-          </div>
-          </div>
-        </div>
+                </div>
+              </div>
+            </div>
           )
         })}
       </div>
 
-      <br /> 
+      <br />
       <Pagination
         className="pagination-bar"
         currentPage={currentPage}
         totalCount={posts.length}
         pageSize={PageSize}
-        onPageChange={page => {setCurrentPage(page); takeUp()}}
+        onPageChange={page => { setCurrentPage(page); takeUp() }}
       />
       <br /> <br />
 

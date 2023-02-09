@@ -65,8 +65,7 @@ const loginUser = (e) => {
        // Decode token to get user data
        const decoded = jwt_decode(token);
        // Set current user
-       // dispatch(setCurrentUser(decoded));
-       console.log(res.data);
+      //  console.log(res.data);
        setCookie('isAuthenticated', res.data.success, { path: '/' });
        setCookie('FirstName', res.data.userFirstName, { path: '/' });
        setCookie('LastName', res.data.userLastName, { path: '/' });

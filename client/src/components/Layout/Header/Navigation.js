@@ -24,7 +24,7 @@ import categories from "../../categories.json";
 let Topics = [];
 Object.keys(categories.cats).map(key =>
   Topics.push(categories.cats[key].name)
-  )
+)
 
 
 
@@ -35,13 +35,12 @@ function Navigation() {
   const navigate = useNavigate();
 
 
-  const [user, setUser] = useState({isAuthenticated: false});
+  const [user, setUser] = useState({ isAuthenticated: false });
 
-  useEffect(()=>{
+  useEffect(() => {
     setUser(getCurrentUser());
   }, []);
 
-  // console.log(user);
 
   const [whitenav, setWhitenav] = useState(false);
   const [mobile, setMobile] = useState(false);
@@ -52,16 +51,11 @@ function Navigation() {
   const location = useLocation();
 
 
-  // const filteredItems = Topics.filter(
-  //   item =>
-  //     item.toLocaleLowerCase().includes(searchitems) ||
-  //     item.toLocaleLowerCase().includes(searchitems)
-  // );
 
   const alertBox = () => {
     document.getElementById('alert').style.display = "block";
     setTimeout(() => { document.getElementById('alert').style.display = "none" }, 3000);
-};
+  };
 
 
 
@@ -72,15 +66,15 @@ function Navigation() {
     } else {
       setCookie('searchitem', searchitems, { path: '/' });
       navigate(`/search`);
-        setTimeout(() => { window.location.reload() }, 200);
+      setTimeout(() => { window.location.reload() }, 200);
     }
 
     const alertBox = () => {
       document.getElementById('alert').style.display = "block";
       setTimeout(() => { document.getElementById('alert').style.display = "none" }, 3000);
-  };
+    };
 
-    
+
 
 
   }
@@ -93,7 +87,7 @@ function Navigation() {
     window.scroll(0, 0)
   }
 
- 
+
 
 
   window.addEventListener("scroll", () => {
@@ -126,23 +120,22 @@ function Navigation() {
   };
 
   //   Log user out
-const logoutUser = () => {
-  // Remove token from local storage
-  localStorage.removeItem("jwtToken");
-  // Remove auth header for future requests
-  setAuthToken(false);
-  // Set current user to empty object {} which will set isAuthenticated to false
-  setCookie('isAuthenticated', false, { path: '/' });
-  removeCookie('FirstName', { path: '/' });
-  removeCookie('LastName', { path: '/' });
-  removeCookie('Email', { path: '/' });
-  removeCookie('Role', { path: '/' });
-  window.location.reload();
+  const logoutUser = () => {
+    // Remove token from local storage
+    localStorage.removeItem("jwtToken");
+    // Remove auth header for future requests
+    setAuthToken(false);
+    // Set current user to empty object {} which will set isAuthenticated to false
+    setCookie('isAuthenticated', false, { path: '/' });
+    removeCookie('FirstName', { path: '/' });
+    removeCookie('LastName', { path: '/' });
+    removeCookie('Email', { path: '/' });
+    removeCookie('Role', { path: '/' });
+    window.location.reload();
   };
 
 
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
-  // const isAuthenticated = (cookies.isAuthenticated === 'true');
 
 
 
@@ -158,32 +151,28 @@ const logoutUser = () => {
 
     <header>
       <div id='alert'>
-                <SAlert />
-            </div>
+        <SAlert />
+      </div>
 
 
       <div
-        // className={location.pathname === "/blogposts"? "Navigation nav-alt" : "Navigation"}
         className={location.pathname === "/blogposts" ? "Navigation nav-alt" :
           location.pathname === "/trending" ? "Navigation nav-alt" :
             location.pathname === "/write" ? "Navigation nav-alt" :
               location.pathname === "/categories" ? "Navigation nav-alt2" :
                 location.pathname === "/loading" ? "Navigation nav-alt2" :
-                location.pathname === '/error' ? "Navigation nav-alt2" :
-                "Navigation"}
+                  location.pathname === '/error' ? "Navigation nav-alt2" :
+                    "Navigation"}
 
         style={{
           backgroundColor: whitenav ? "white" : "",
           boxShadow: whitenav ? "0px 2px 13px grey" : ""
         }}
 
-      // style={{backgroundColor: location.pathname === "/blogposts"? "black" : "",
-      // boxShadow: location.pathname === "/blogposts"? "0px 2px 13px grey" : ""}}
-
       >
         <Link onClick={takeUp} to="/" style={linkStyle}><h2 className='logo'><FaBolt />Firxt</h2></Link>
 
-       
+
 
         <nav>
           <button className='write'><Link to="/write" style={linkStyle}><span>Post</span><FaPenFancy /></Link></button>
@@ -198,8 +187,8 @@ const logoutUser = () => {
                 <ul>
                   {
                     Object.keys(sliced).map(key =>
-                       <li> <Link onClick={takeUp} to={`/blog/${categories.cats[key].name}`} style={linkStyle}>{categories.cats[key].name}</Link></li>)
-                    }
+                      <li> <Link onClick={takeUp} to={`/blog/${categories.cats[key].name}`} style={linkStyle}>{categories.cats[key].name}</Link></li>)
+                  }
                   <li><Link to="/categories">more...</Link></li>
                 </ul>
               </div>
@@ -207,20 +196,20 @@ const logoutUser = () => {
 
           </ul>
           <div className="auth">
-            <Link onClick={takeUp} to="/profile" style={linkStyle}><button style={{display: user.isAuthenticated? "" : "none"}}><FaUser/></button></Link>
-            <Link onClick={takeUp} to="/login" style={linkStyle}><button style={{display: user.isAuthenticated? "none" : ""}}>Login</button></Link>
-            <Link onClick={takeUp} to="/register" style={linkStyle}><button style={{display: user.isAuthenticated? "none" : ""}}>Sign Up</button></Link>
-            <button onClick={logoutUser} style={{display: user.isAuthenticated? "" : "none"}}>Log Out</button>
+            <Link onClick={takeUp} to="/profile" style={linkStyle}><button style={{ display: user.isAuthenticated ? "" : "none" }}><FaUser /></button></Link>
+            <Link onClick={takeUp} to="/login" style={linkStyle}><button style={{ display: user.isAuthenticated ? "none" : "" }}>Login</button></Link>
+            <Link onClick={takeUp} to="/register" style={linkStyle}><button style={{ display: user.isAuthenticated ? "none" : "" }}>Sign Up</button></Link>
+            <button onClick={logoutUser} style={{ display: user.isAuthenticated ? "" : "none" }}>Log Out</button>
           </div>
           <div className="search">
             <input
-            className='searchinput'
+              className='searchinput'
               value={searchitems}
-              onChange={ (e)=>{setSearchitems(e.target.value.toLocaleLowerCase())}}
+              onChange={(e) => { setSearchitems(e.target.value.toLocaleLowerCase()) }}
               type="text" name="" id="" placeholder='Search...' />
-            <FaSearch style={{cursor: "pointer"}} onClick={findThem} />
-          
-          {/* <div className='search-result'>
+            <FaSearch style={{ cursor: "pointer" }} onClick={findThem} />
+
+            {/* <div className='search-result'>
         {itemsToDisplay.length !== 0 ? <p></p>:<p>Not Found</p>}
           {itemsToDisplay.map(item => (
             <div className='trial'>
@@ -228,7 +217,7 @@ const logoutUser = () => {
             </div>
           ))}
 </div> */}
-        </div>
+          </div>
         </nav>
 
         <div className={mobile ? "menu change" : "menu"}
@@ -256,10 +245,10 @@ const logoutUser = () => {
 
         </ul>
         <div>
-        <Link onClick={takeUp} to="/profile" style={linkStyle}><button style={{display: user.isAuthenticated? "" : "none"}}><FaUser/></button></Link>  
-            <Link onClick={takeUp} to="/login" style={linkStyle}><button style={{display: user.isAuthenticated? "none" : ""}}>Login</button></Link> <br/>
-            <Link onClick={takeUp} to="/register" style={linkStyle}><button style={{display: user.isAuthenticated? "none" : ""}}>Sign Up</button></Link>
-            <button onClick={logoutUser} style={{display: user.isAuthenticated? "" : "none"}}>Log Out</button>
+          <Link onClick={takeUp} to="/profile" style={linkStyle}><button style={{ display: user.isAuthenticated ? "" : "none" }}><FaUser /></button></Link>
+          <Link onClick={takeUp} to="/login" style={linkStyle}><button style={{ display: user.isAuthenticated ? "none" : "" }}>Login</button></Link> <br />
+          <Link onClick={takeUp} to="/register" style={linkStyle}><button style={{ display: user.isAuthenticated ? "none" : "" }}>Sign Up</button></Link>
+          <button onClick={logoutUser} style={{ display: user.isAuthenticated ? "" : "none" }}>Log Out</button>
         </div>
 
       </div>

@@ -1,9 +1,3 @@
-
-.Allposts {
-    /* filter: invert(100); */
-
-}
-
 .Allposts .hero1 h1 {
     width: auto;
     color: white;
@@ -11,18 +5,17 @@
 
 .Allposts .hero {
     height: 180px;
-  background: url(../Home/assets/giphy.gif), var(--primary);
-
+    background: url(../Home/assets/giphy.gif), var(--primary);
     animation: none;
 }
 
 .Allposts .hero p {
- color: rgb(255, 255, 255, 1);
+    color: rgb(255, 255, 255, 1);
 }
 
 .Allposts .hero1 {
-        background: none;
-        width: 100%;
+    background: none;
+    width: 100%;
 }
 
 .Allposts .posts {
@@ -33,5 +26,5 @@
 }
 
 .Allposts .post {
-    background-color: rgb(255, 255, 255,0.65);
+    background-color: rgb(255, 255, 255, 0.65);
 }

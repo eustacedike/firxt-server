@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 import './loading.css';
 
-import { FaExclamationCircle} from 'react-icons/fa';
+import { FaExclamationCircle } from 'react-icons/fa';
 
 
 
@@ -21,32 +21,19 @@ function Loading(props) {
     //         clearInterval(interval)
     //     }
     // }, [count]);
-    
+
 
     return (
         <div className="Loading">
 
             {/* <h1>{props.h1}...</h1> */}
 
-            <div class="ring">{props.h1} 
-            {/* <p>{count<100 ? count : 100}%</p> */}
-  <span></span>
-</div>
+            <div class="ring">{props.h1}
+                {/* <p>{count<100 ? count : 100}%</p> */}
+                <span></span>
+            </div>
 
 
-            {/* <div class="center">
-  <div class="wave"></div>
-  <div class="wave"></div>
-  <div class="wave"></div>
-  <div class="wave"></div>
-  <div class="wave"></div>
-  <div class="wave"></div>
-  <div class="wave"></div>
-  <div class="wave"></div>
-  <div class="wave"></div>
-  <div class="wave"></div>
-</div> */}
-                
 
         </div>
     );

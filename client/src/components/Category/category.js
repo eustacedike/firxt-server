@@ -37,7 +37,6 @@ const TopicImages = [motorPic, phonePic, moviePic, musicPic, bookPic, sportPic, 
 
 
   const [xplore, setXplore] = useState(false);
-  // const homee = useRef();
 
 
   window.onscroll = () => {

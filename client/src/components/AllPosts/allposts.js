@@ -41,7 +41,6 @@ function AllPosts(props) {
   const getUsers = () => {
     axios.get("api/users/fetchusers")
       .then((response) => {
-        // console.log(response.data.filter(a => { return a.email === user.email })[0].profileimage);
         setAllUsers(response.data);
         setUserBookmarks(response.data.filter(a => { return a.email === user.email })[0]?.bookmarked);
         setUserLikes(response.data.filter(a => { return a.email === user.email })[0]?.liked);
@@ -50,29 +49,11 @@ function AllPosts(props) {
 
   };
 
-//   const [posts, setPosts] = useState([]);
 
-//   const getPosts = () => {
-//     axios.get("api/posts/fetchposts")
-//       .then((response) => {
-
-//         setPosts(response.data.reverse());
-//       });
-
-//   };
-
-
-
-
-// useEffect(() => {
-//   getPosts();
-// }, []);
 
 const posts = props.posts;
 
-// console.log(posts);
-// console.log(posts.reverse());
-// console.log(props.posts.reverse());
+
 
 useEffect(() => {
   getUsers();
@@ -107,7 +88,6 @@ const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","No
     return posts?.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, posts]);
 
-// console.log(postsToDisplay)
 
   return (
     <div className="Allposts">
@@ -148,12 +128,9 @@ const months = ["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sep","Oct","No
 
           <div className="post-details">
           <Link className='author' onClick={takeUp} to={`/user/${eachPost.authorlink}`} style={linkStyle}>
-                  {/* <div className="author"> */}
                   <img wait={3000} src={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.profileimage} alt="" />
-                {/* <p wait={3000}>{allUsers.filter(a => { return a.email === eachPost.authormail })[0]._id}</p> */}
                     <h4>{allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.firstname} &nbsp;
                     {allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.lastname}</h4>
-                  {/* </div> */}
                 </Link>
 
             <h5><FaCalendarAlt/>  {` ${months[parseInt(eachPost.date.slice(5,7))-1]} ${eachPost.date.slice(8,10)}, ${eachPost.date.slice(0,4)}`}</h5>

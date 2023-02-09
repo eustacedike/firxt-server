@@ -52,7 +52,6 @@ function Register() {
     const onChange = (b,a) => {
         b(value => a);
 
-        // console.log(newUser)
     }
 
 

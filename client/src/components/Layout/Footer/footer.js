@@ -13,7 +13,7 @@ function Footer() {
     <div className="Footer">
         <h2 className='logo'><FaBolt />Firxt</h2>
       
-      <p>&copy;<a href='https://eustacedike.github.io/eustaced/'>Eustace Dike</a></p>
+      <p>&copy;<a style={{color: "white"}} href='https://eustacedike.github.io/eustaced/'>Eustace Dike</a></p>
       <p></p>
     </div>
   );

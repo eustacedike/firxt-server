@@ -33,7 +33,7 @@ import cryptoPic from "../Images/topics/btc.png";
 
 
 
-const TopicImages = [motorPic, phonePic, moviePic, musicPic, bookPic, sportPic, financePic, techPic,  foodPic, cryptoPic, celebPic, fashionPic, petPic, forexPic, naturePic, lovePic, healthPic, kidPic]
+const TopicImages = [motorPic, phonePic, moviePic, musicPic, bookPic, sportPic, financePic, techPic, foodPic, cryptoPic, celebPic, fashionPic, petPic, forexPic, naturePic, lovePic, healthPic, kidPic]
 
 function Topics() {
 
@@ -43,68 +43,67 @@ function Topics() {
 
 
   const findThem = (a) => {
-    
-      setCookie('searchitem', a, { path: '/' })
 
-      navigate(`/tag`)
+    setCookie('searchitem', a, { path: '/' })
 
-      setTimeout(() => { window.location.reload() }, 200);
-    
+    navigate(`/tag`)
+
+    setTimeout(() => { window.location.reload() }, 200);
+
   }
 
-    const linkStyle = {
-        textDecoration: "none",
-      }
+  const linkStyle = {
+    textDecoration: "none",
+  }
 
-      const takeUp = () => {
-        window.scroll(0,0)
-      }
-    
+  const takeUp = () => {
+    window.scroll(0, 0)
+  }
 
-     const sorted = Object.keys(categories.cats)
+
+  const sorted = Object.keys(categories.cats)
     .sort()
-    .reduce(function (acc, key) { 
-        acc[key] = categories.cats[key];
-        return acc;
+    .reduce(function (acc, key) {
+      acc[key] = categories.cats[key];
+      return acc;
     }, {});
 
-    
+
   return (
     <div className="Topics">
-   <div className='topic-hero'>
+      <div className='topic-hero'>
         <h1>HOT TOPICS</h1>
-        {/* <img src={hot}/> */}
       </div>
-      
-<div className='big-tops'>
-      <div className='tops'>
 
-      
-      {
-      Object.keys(sorted).map(key =>
-          <Link
-          className='topic'
-          onClick={takeUp}
-          to={`/blog/${sorted[key].name}`}
-          style={linkStyle}>
-            <img src={TopicImages[sorted[key].id-1]}/>
-            <p>{sorted[key].name}</p>
-          </Link>
-        )
-    }
-    </div>
+      <div className='big-tops'>
+        <div className='tops'>
 
-    <div className='tops-2'>
 
-    <h2>Popular Hashtags</h2>
+          {
+            Object.keys(sorted).map(key =>
+              <Link
+                className='topic'
+                onClick={takeUp}
+                to={`/blog/${sorted[key].name}`}
+                style={linkStyle}>
+                <img src={TopicImages[sorted[key].id - 1]} />
+                <p>{sorted[key].name}</p>
+              </Link>
+            )
+          }
+        </div>
 
-    {categories.tags.map(tag => {
-          return (
-            <button onClick={()=>{findThem(tag)}} > #{tag} </button>
-          )
-        })}
-    </div>
-    </div>
+        <div className='tops-2'>
+
+          <h2>Popular Hashtags</h2>
+
+          {categories.tags.map(tag => {
+            return (
+              <button onClick={() => { findThem(tag) }} > #{tag} </button>
+            )
+          })}
+        </div>
+      </div>
     </div>
   );
 }

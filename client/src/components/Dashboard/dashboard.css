@@ -1,5 +1,3 @@
-
-
 .Dashboard {
     padding: 30px 4vw;
     display: flex;
@@ -16,7 +14,6 @@
     display: flex;
     align-items: flex-end;
     gap: 40px;
-    /* border: 1px solid red; */
 }
 
 .avatar-image {
@@ -24,8 +21,9 @@
     width: 140px;
     border-radius: 50%;
     background-color: var(--primary);
-    /* border: 2px solid white; */
-    box-shadow: 2px 3px 8px 1px rgb(0,0,0,0.3);
+    box-shadow: 2px 3px 8px 1px rgb(0, 0, 0, 0.3);
+    object-fit: cover;
+
 }
 
 .flag {
@@ -44,8 +42,6 @@
     justify-content: center;
     align-items: center;
     border: 1px solid var(--primary);
-    /* position: fixed; */
-    /* left: 160px; */
     margin-left: -70px;
     cursor: pointer;
 }
@@ -54,7 +50,7 @@
     color: white;
     background-color: var(--primary);
     border: 1px solid white;
-   
+
 }
 
 .avatar h1 {
@@ -65,7 +61,7 @@
 }
 
 .avatar input {
-    background-color: rgb(255,255,255,0.75);
+    background-color: rgb(255, 255, 255, 0.75);
     border: 1px solid var(--primary);
     padding: 4px;
     border-radius: 3px;
@@ -98,14 +94,13 @@
 .DP-preview img {
     height: 40vw;
     width: 40vw;
-   
+
     max-width: 560px;
     max-height: 560px;
     border-radius: 50%;
     object-fit: cover;
-    /* box-shadow: 0px 0px 9px 2px white; */
     background-color: var(--primary);
-    
+
 }
 
 
@@ -126,10 +121,9 @@
 
 .DP-preview p {
     color: white;
-    /* font-weight: bold; */
     padding: 0px 12px;
     text-align: center;
-    font-size: clamp(13px,1.3vw,17px);
+    font-size: clamp(13px, 1.3vw, 17px);
 }
 
 .procee {
@@ -139,20 +133,18 @@
 
 .Dashboard hr {
     border: none;
-    border-bottom: 2px dashed rgb(255, 255, 255,0.7);
-    border-left: 2px solid rgb(255, 255, 255,0.7);
+    border-bottom: 2px dashed rgb(255, 255, 255, 0.7);
+    border-left: 2px solid rgb(255, 255, 255, 0.7);
 }
 
 .about-you h3 {
     color: var(--primary);
-    /* font-family: 'Ubuntu', sans-serif; */
     font-size: var(--h3-font);
-    /* font-weight: 800; */
 }
 
 .about-you textarea {
     width: 100%;
-    background-color: rgb(255,255,255,0.75);
+    background-color: rgb(255, 255, 255, 0.75);
     border: 1px solid var(--primary);
     padding: 6px;
 }
@@ -172,18 +164,16 @@
     justify-content: space-between;
     border-bottom: 2px solid var(--primary);
     padding-bottom: 8px;
-    /* border-style:groove; */
 }
 
 .the-options button {
-    width: 15%;
+    width: 100%;
     background: none;
     border: none;
-    /* border-right: 1px solid white; */
     cursor: pointer;
     padding: 10px 0;
     font-family: 'Roboto', sans-serif;
-   
+
 }
 
 .the-options button:hover {
@@ -205,9 +195,9 @@
     padding: 10px;
 }
 
-.your-profile select, .your-profile input[type=date] {
+.your-profile select,
+.your-profile input[type=date] {
     margin-bottom: 20px;
-    /* background-color: ; */
     border: none;
     border-bottom: 2px solid var(--primary);
     padding: 10px;
@@ -233,18 +223,18 @@
 
 .your-posts::-webkit-scrollbar {
     width: 8px;
-  }
-  
-  
-  .your-posts::-webkit-scrollbar-track {
+}
+
+
+.your-posts::-webkit-scrollbar-track {
     background: #f1f1f1;
-  }
-  
-  
-  .your-posts::-webkit-scrollbar-thumb {
+}
+
+
+.your-posts::-webkit-scrollbar-thumb {
     background: var(--primary);
-  }
-  
+}
+
 .your-stats {
     display: flex;
     flex-wrap: wrap;
@@ -258,7 +248,7 @@
     margin-bottom: 20px;
     padding: 20px 0;
     border-radius: 8px;
-    box-shadow: 4px 4px 11px 2px rgb(0,0,0,0.3);
+    box-shadow: 4px 4px 11px 2px rgb(0, 0, 0, 0.3);
 }
 
 .your-stats h1 {
@@ -267,7 +257,7 @@
     font-family: 'Roboto', sans-serif;
 }
 
-.your-badge {
+/* .your-badge {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -277,27 +267,28 @@
 
 .your-badge img {
     height: 200px;
-}
+} */
 
 
 .dashboard-2 {
     width: 35%;
     padding: 20px 2vw;
-    background-color: rgb(0,0,0,0.2);
+    background-color: rgb(0, 0, 0, 0.2);
     margin-bottom: 40px;
 }
 
 .dashboard-2 h2 {
-    font-size: clamp(18px,1.8vw,30px);
-    line-height: clamp(20px,2.1vw,35px);
+    font-size: clamp(18px, 1.8vw, 30px);
+    line-height: clamp(20px, 2.1vw, 35px);
     color: var(--primary);
     margin-bottom: 10px;
 }
 
 .dashboard-2 p,
 .dashboard-2 h4 {
-    font-size: clamp(12px,1vw,22px);
-    line-height: clamp(14px,1.2vw,26px);;
+    font-size: clamp(12px, 1vw, 22px);
+    line-height: clamp(14px, 1.2vw, 26px);
+    ;
 }
 
 .x-users {
@@ -309,7 +300,7 @@
 .d-img {
     height: 30px;
     width: 30px;
-    background-color:aliceblue;
+    background-color: aliceblue;
     border-radius: 50%;
     margin-right: 10px;
     border: 1px solid white;
@@ -333,9 +324,11 @@
 }
 
 @media (max-width: 900px) {
- .dashboard-1, .dashboard-2{
-    width: 100%;
- }   
+
+    .dashboard-1,
+    .dashboard-2 {
+        width: 100%;
+    }
 }
 
 
@@ -346,7 +339,6 @@
         width: 100px;
         min-width: 100px;
         border-radius: 50%;
-        object-fit: cover;
     }
 
 
@@ -354,30 +346,14 @@
         font-size: smaller;
     }
 
-    /* .profile-options {
-        display: flex;
-        gap: 15px;
-        border-top: 2px dashed rgb(74, 4, 4,0.5);
-        border-bottom: 2px dashed rgb(74, 4, 4, 0.5);
-    }  */
-
-    /* .Dashboard hr {
-        display: none;
-    } */
-
-    /* .the-options {
-        width: 65px;
-        flex-direction: column;
-        border-bottom: none;
-    } */
-
+    
     .odas {
         justify-content: flex-start;
         gap: 35px;
     }
 
     .the-options button {
-        width: 100%; 
+        width: 100%;
     }
 
     .dashboard-box {
@@ -388,16 +364,16 @@
     }
 
     .your-posts {
-         height: auto;
-    overflow-y: visible; 
-    padding: 0;
+        height: auto;
+        overflow-y: visible;
+        padding: 0;
     }
 
     .your-posts .cat-act button {
         font-size: xx-small;
         padding: 5px 7px;
     }
-  
+
 
     .your-stats div {
         width: 45%;
@@ -412,7 +388,7 @@
         gap: 40px;
         padding: 15px;
     }
-    
+
     .your-badge img {
         height: 100px;
     }
@@ -420,25 +396,25 @@
     .creds button {
         padding: 4px 6px;
         font-size: smaller;
-       
+
         border-radius: 3px;
         border: 1px solid var(--primary);
 
     }
 
     .DP-preview {
-       flex-direction: column;
-       gap: 20px;
+        flex-direction: column;
+        gap: 20px;
     }
-    
-    
-    
+
+
+
     .DP-preview div {
         display: flex;
         gap: 20px;
         flex-direction: row;
     }
-    
+
     .DP-preview button {
         padding: 6px 10px;
         font-size: smaller;
@@ -447,12 +423,12 @@
 }
 
 @media (max-width: 650px) {
-    
+
     .avatar input {
         display: block;
     }
 
-        .avatar button {
+    .avatar button {
         padding: 5px 10px;
         margin-left: 0px;
         margin-right: 10px;
@@ -462,15 +438,15 @@
     .DP-preview img {
         height: 80vw;
         width: 80vw;
-        }
+    }
 
     .your-profile p {
-       font-size: smaller;
+        font-size: smaller;
     }
 
     .your-profile select {
-       width: 70%;
-       font-size: 10px;
+        width: 70%;
+        font-size: 10px;
         padding: 4px 0px;
     }
 
@@ -478,9 +454,9 @@
         padding: 3px 6px;
         border-radius: 1px;
         margin-left: 4px;
-       font-size: 10px;
+        font-size: 10px;
     }
-    
+
 
     .flag {
         height: 26px;

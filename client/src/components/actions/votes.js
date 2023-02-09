@@ -41,7 +41,6 @@ export const upvote = (a,b) => {
        .then(res => {
             console.log(parseInt(res.data));
             axios.post("/api/posts/downvote", {id: a, val: parseInt(res.data)})
-             // .then(res2 => console.log(res2))
             .catch(err => {
             console.log(err.response.data);
             });
@@ -63,7 +62,6 @@ export const upvote = (a,b) => {
        .then(res => {
             console.log(parseInt(res.data));
             axios.post("/api/posts/bookmark", {id: a, val: parseInt(res.data)})
-             // .then(res2 => console.log(res2))
             .catch(err => {
             console.log(err.response.data);
             });

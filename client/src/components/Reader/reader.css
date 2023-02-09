@@ -8,14 +8,13 @@
 .Reader h1 {
     color: var(--primary);
     font-family: 'Ubuntu', sans-serif;
-   
     font-size: var(--h1-font);
     font-weight: 700;
 }
 
 .main-post {
     margin: 40px 0;
-    background: rgb(255,255,255);
+    background: rgb(255, 255, 255);
     font-size: clamp(15px, 1.8vw, 18px);
     padding: 10px 8px;
     border-radius: 4px;
@@ -38,7 +37,6 @@
 
 .reply-form {
     display: flex;
-    /* border: 1px solid red; */
 }
 
 .Reader input {
@@ -52,10 +50,8 @@
 
 .Reader .reply-form button {
     padding: 15px 15px;
-    /* margin-top: 10px; */
     color: white;
     font-family: 'Roboto', sans-serif;
-
     font-weight: 700;
     border-radius: 0 4px 4px 0;
     border: 1px solid var(--primary);
@@ -65,19 +61,14 @@
 
 .Reader h3 {
     color: var(--primary);
-   font-family: 'Ubuntu', sans-serif;
-   font-size: var(--h3-font);
+    font-family: 'Ubuntu', sans-serif;
+    font-size: var(--h3-font);
     font-weight: 700;
-}
-
-.replies {
-    /* background-color: rgb(0,0,0,0.1); */
 }
 
 .reply {
     max-width: 480px;
-    /* margin: 0 auto; */
-        background-color: rgb(0,0,0,0.05);
+    background-color: rgb(0, 0, 0, 0.05);
     padding: 3px 7px;
     margin-top: 15px;
     border-radius: 5px;
@@ -87,7 +78,6 @@
 
 .the-reply {
     background-color: white;
-    /* border-radius: 5px; */
     padding: 5px;
     width: 100%;
 }
@@ -115,13 +105,13 @@
 }
 
 .reply .author img {
-   height: 25px;
-   width: 25px;
-   background-color: white;
-   border-radius: 50%;
-   margin-right: 10px;
-   padding: 2px;
-   object-fit: cover;
+    height: 25px;
+    width: 25px;
+    background-color: white;
+    border-radius: 50%;
+    margin-right: 10px;
+    padding: 2px;
+    object-fit: cover;
 }
 
 .report-modal {
@@ -129,7 +119,7 @@
     text-align: center;
     max-width: 520px;
     border-radius: 4px;
-    box-shadow: 2px 4px 10px 3px rgb(0,0,0,0.3);
+    box-shadow: 2px 4px 10px 3px rgb(0, 0, 0, 0.3);
     padding: 15px 0;
     width: 95%;
 
@@ -142,7 +132,6 @@
 .report-modal input,
 .report-modal select,
 .report-modal textarea {
-    /* background-color: white; */
     border: 1px solid var(--primary);
     width: 90%;
     margin: 10px auto;
@@ -155,25 +144,18 @@
 }
 
 .report-modal p {
-    font-size: clamp(12px,1.5vw,18px);
+    font-size: clamp(12px, 1.5vw, 18px);
     padding: 0 15px;
 }
 
 .report-modal button {
     background-color: white;
-    /* color: black; */
     padding: 9px 15px;
-
-    /* padding: 16px 15px; */
-    /* margin-top: 10px; */
-    /* color: white; */
     font-family: 'Roboto', sans-serif;
-
     font-weight: 700;
     border-radius: 4px;
     border: 1px solid var(--primary);
     cursor: pointer;
-    /* background-color: var(--primary); */
 }
 
 .delete-modal {
@@ -181,10 +163,9 @@
     text-align: center;
     max-width: 520px;
     border-radius: 4px;
-    box-shadow: 2px 4px 10px 3px rgb(0,0,0,0.3);
+    box-shadow: 2px 4px 10px 3px rgb(0, 0, 0, 0.3);
     padding: 15px 0;
     width: 95%;
-
     position: fixed;
     top: 15%;
     left: 50%;
@@ -202,7 +183,6 @@
     background-color: white;
     padding: 9px 15px;
     font-family: 'Roboto', sans-serif;
-
     font-weight: 700;
     border-radius: 4px;
     border: 1px solid var(--primary);
@@ -219,13 +199,13 @@
         max-width: 250px;
     }
 
-    
+
 
     .Reader input {
         padding: 13px 6px;
     }
-    
+
     .Reader .reply-form button {
         padding: 13px 13px;
-        }
+    }
 }

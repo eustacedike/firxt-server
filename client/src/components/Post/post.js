@@ -11,7 +11,7 @@ import { useCookies } from 'react-cookie';
 
 import categories from "../categories.json";
 
-import {getCurrentUser} from "../actions/getCurrentUser";
+import { getCurrentUser } from "../actions/getCurrentUser";
 
 
 import './post.css';
@@ -20,10 +20,10 @@ import { FaRegImage } from 'react-icons/fa';
 
 function Post() {
 
-  
-  const [user, setUser] = useState({isAuthenticated: false});
 
-  useEffect(()=>{
+  const [user, setUser] = useState({ isAuthenticated: false });
+
+  useEffect(() => {
     setUser(getCurrentUser());
   }, []);
 
@@ -42,16 +42,15 @@ function Post() {
 
   const [preview, setPreview] = useState();
   function imagePreview(e) {
-      // console.log(e.target.files);
-      setPreview(URL.createObjectURL(e.target.files[0]));
-      setImage(e.target.files[0]);
-      document.getElementById('remove-image').style.display = "block";
+    setPreview(URL.createObjectURL(e.target.files[0]));
+    setImage(e.target.files[0]);
+    document.getElementById('remove-image').style.display = "block";
   }
 
   const rmvImage = () => {
     setPreview();
-      setImage();
-      document.getElementById('remove-image').style.display = "none";
+    setImage();
+    document.getElementById('remove-image').style.display = "none";
   }
 
   const uploadPost = async (e) => {
@@ -87,9 +86,9 @@ function Post() {
       author: user.name,
       authormail: user.email,
       authorlink: user.link,
-      readtime: Math.ceil(postBody.split(" ").length/75),
+      readtime: Math.ceil(postBody.split(" ").length / 75),
       category: postCategory,
-      link: postTitle.replace(/ +/g, '-').toLowerCase().replace(/^\s+|\s+$/gm,'') + "-" + Math.floor(Math.random()*500000),
+      link: postTitle.replace(/ +/g, '-').toLowerCase().replace(/^\s+|\s+$/gm, '') + "-" + Math.floor(Math.random() * 500000),
       image: imageUrl,
     }
 
@@ -99,23 +98,14 @@ function Post() {
       .then(res => {
         console.log(res);
 
-        // navigate(`/loading`);
 
-
-
-
-        // setTimeout(() => {
-          navigate(`/post/${thePost.link}`) 
-        // } , 3100);
+        navigate(`/post/${thePost.link}`)
         setTimeout(() => { window.location.reload() }, 100);
       })
       .catch(err => {
         const errors = err.response.data;
         console.log(err.response.data)
       });
-
-
-
 
   };
 
@@ -155,18 +145,7 @@ function Post() {
           }
         </select>
 
-        {/* <select
-          onChange={(e) => { setPostRead(e.target.value) }}
-        >
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={5}>5</option>
-          <option value={7}>7</option>
-          <option value={10}>10</option>
-          <option value={15}>15</option>
-          <option value={20}>20</option>
-          <option value={25}>25</option>
-        </select> */}
+        
 
         <textarea
           name=""
@@ -177,8 +156,8 @@ function Post() {
           onChange={(e) => { setPostBody(e.target.value) }}
         ></textarea> <br />
 
-<p id="remove-image" onClick={rmvImage}>&#10006;</p>
-<img className="blog-image-preview" src={preview}/>
+        <p id="remove-image" onClick={rmvImage}>&#10006;</p>
+        <img className="blog-image-preview" src={preview} />
 
 
         <label htmlFor="file"><FaRegImage /></label>

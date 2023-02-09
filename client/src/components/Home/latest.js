@@ -51,7 +51,6 @@ function Latest() {
   const getUsers = () => {
     axios.get("api/users/fetchusers")
       .then((response) => {
-        // console.log(response.data.filter(a => { return a.email === user.email })[0].profileimage);
         setAllUsers(response.data);
         setUserBookmarks(response.data.filter(a => { return a.email === user.email })[0]?.bookmarked);
         setUserLikes(response.data.filter(a => { return a.email === user.email })[0]?.liked);
@@ -84,8 +83,6 @@ function Latest() {
     getUsers();
   }, [user]);
 
-  // console.log(userLikes.includes('63da5f20e00a30e89f7f0e6d'));
-  // console.log(user.email);
 
   const linkStyle = {
     textDecoration: "none",
@@ -121,11 +118,9 @@ function Latest() {
               </Link>
               <div className="post-details">
                 <Link className='author' onClick={takeUp} to={`/user/${eachPost.authorlink}`} style={linkStyle}>
-                  {/* <div className="author"> */}
-                    <img wait={2000} src={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.profileimage} alt="" />
-                    <h4>{allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.firstname} &nbsp;
+                  <img wait={2000} src={allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.profileimage} alt="" />
+                  <h4>{allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.firstname} &nbsp;
                     {allUsers.filter(a => { return a.email === eachPost.authormail })[0]?.lastname}</h4>
-                  {/* </div> */}
                 </Link>
 
                 <h5><FaCalendarAlt />

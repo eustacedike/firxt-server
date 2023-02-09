@@ -15,11 +15,11 @@ function Home() {
 
 
   const [xplore, setXplore] = useState(false);
-  
-  
 
 
- window.onscroll = () => {
+
+
+  window.onscroll = () => {
     if (window.pageYOffset > 578) {
       setXplore(true)
     } else {
@@ -30,26 +30,26 @@ function Home() {
   return (
     <div className="Home">
       <div id='alert'>
-        <Alert/>
+        <Alert />
       </div>
-      
+
       <div className="big-hero">
-        <Hero/>
+        <Hero />
       </div>
-      
+
       <div className="posts-section">
-        <Latest/>
-        
+        <Latest />
+
         <Trending />
-        
-        
-        
+
+
+
       </div>
       <div className="xplore"
-      style={{position: xplore? "fixed" : "", top: xplore? "28px" : ""}}
+        style={{ position: xplore ? "fixed" : "", top: xplore ? "28px" : "" }}
       >
-          <Explore/>
-        </div>
+        <Explore />
+      </div>
     </div>
   );
 }
