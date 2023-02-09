@@ -96,8 +96,8 @@
     height: 40vw;
     width: 40vw;
 
-    max-width: 560px;
-    max-height: 560px;
+    max-width: 460px;
+    max-height: 460px;
     border-radius: 50%;
     object-fit: cover;
     background-color: var(--primary);
@@ -108,7 +108,7 @@
 .DP-preview div {
     display: flex;
     gap: 25px;
-    flex-direction: column;
+    /* flex-direction: column; */
 }
 
 .DP-preview button {
