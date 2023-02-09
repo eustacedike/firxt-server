@@ -120,6 +120,7 @@ function Dashboard() {
             });
 
 
+            document.getElementById('DP-preview').style.transform = "scale(0)"
 
 
     };
@@ -647,7 +648,7 @@ function Dashboard() {
                                 {
                                     allUsers.slice(0, 6).map(similarUser => {
                                         return (
-                                            <Link style={xStyle} to={`/user/${similarUser.link}`}>
+                                            <Link style={xStyle} to={`/user/${similarUser.link}`} onClick={takeUp}>
                                                 <img className="d-img" src={similarUser.profileimage} />
                                                 <p>{similarUser.firstname} {similarUser.lastname}</p>
                                             </Link>
