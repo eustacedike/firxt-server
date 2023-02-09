@@ -84,7 +84,7 @@ function App() {
   return (
     <div className="App">
 
-      <HashRouter>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
@@ -200,7 +200,7 @@ function App() {
 
           </Route>
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
     </div>
   );
 }

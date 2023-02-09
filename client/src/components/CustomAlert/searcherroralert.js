@@ -12,7 +12,7 @@ function SAlert() {
 
   return (
     <div className="Alert">
-  <span class="closebtn" onClick={remove}>&times;</span> 
+  <span className="closebtn" onClick={remove}>&times;</span> 
   <strong>Error!</strong> Please, enter a search term.
   <hr/>
     </div>

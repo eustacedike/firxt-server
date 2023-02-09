@@ -12,7 +12,7 @@ function Alert() {
 
   return (
     <div className="Alert">
-  <span class="closebtn" onClick={remove}>&times;</span> 
+  <span className="closebtn" onClick={remove}>&times;</span> 
   <strong>Failed!</strong> Please, login to perform action.
   <hr/>
     </div>
