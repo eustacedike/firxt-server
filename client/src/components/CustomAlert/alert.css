@@ -1,3 +1,17 @@
+
+
+
+#alert,#salert {
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 7;
+    display: none;
+}
+
+
+
 .Alert {
     padding: 20px;
     background-color: rgb(244, 67, 54, 0.95);

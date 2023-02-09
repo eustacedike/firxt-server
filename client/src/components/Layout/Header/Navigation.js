@@ -53,26 +53,26 @@ function Navigation() {
 
 
   const alertBox = () => {
-    document.getElementById('alert').style.display = "block";
-    setTimeout(() => { document.getElementById('alert').style.display = "none" }, 3000);
+    document.getElementById('salert').style.display = "block";
+    setTimeout(() => { document.getElementById('salert').style.display = "none" }, 3000);
   };
 
 
 
   const findThem = () => {
     if (!searchitems || searchitems === 0) {
-      document.getElementById('alert').style.display = "block";
-      setTimeout(() => { document.getElementById('alert').style.display = "none" }, 3000);
+      document.getElementById('salert').style.display = "block";
+      setTimeout(() => { document.getElementById('salert').style.display = "none" }, 3000);
     } else {
       setCookie('searchitem', searchitems, { path: '/' });
       navigate(`/search`);
       setTimeout(() => { window.location.reload() }, 200);
     }
 
-    const alertBox = () => {
-      document.getElementById('alert').style.display = "block";
-      setTimeout(() => { document.getElementById('alert').style.display = "none" }, 3000);
-    };
+    // const alertBox = () => {
+    //   document.getElementById('salert').style.display = "block";
+    //   setTimeout(() => { document.getElementById('salert').style.display = "none" }, 3000);
+    // };
 
 
 
@@ -150,7 +150,7 @@ function Navigation() {
   return (
 
     <header>
-      <div id='alert'>
+      <div id='salert'>
         <SAlert />
       </div>
 
