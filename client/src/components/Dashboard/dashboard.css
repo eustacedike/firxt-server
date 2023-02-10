@@ -349,8 +349,8 @@
 
     
     .odas {
-        justify-content: flex-start;
-        gap: 35px;
+        /* justify-content: flex-start; */
+        /* gap: 35px; */
     }
 
     .the-options button {

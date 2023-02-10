@@ -33,6 +33,7 @@ function OtherUser(props) {
     const you = {
         firstname: props.firstname,
         lastname: props.lastname,
+        name: props.firstname + " " + props.lastname,
         specialty: props.specialty,
         gender: props.gender.charAt(0).toUpperCase() + props.gender.slice(1),
         about: props.about,
@@ -106,7 +107,7 @@ function OtherUser(props) {
                 <div className="avatar">
                     <img className="avatar-image" src={you.avatar} alt="" />
                     <div>
-                        <h1>{you.firstname}&nbsp;{you.lastname}</h1>
+                        <h1>{you.name}</h1>
                         {you.specialty === "What do you do?" ? <b>Not specified. </b> : <b>{you.specialty}</b>}
 
                     </div>
@@ -195,7 +196,7 @@ function OtherUser(props) {
                     {
                         props.allUsers?.slice(0, 6).map(similarUser => {
                             return (
-                                <Link style={xStyle} to={`/user/${similarUser.link}`}>
+                                <Link style={xStyle} to={`/user/${similarUser.link}`} onClick={takeUp}>
                                     <img className="d-img" src={similarUser.profileimage} />
                                     <p>{similarUser.firstname} {similarUser.lastname}</p>
                                 </Link>
